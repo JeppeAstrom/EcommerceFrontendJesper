@@ -17,9 +17,9 @@ const CartModal:NextPage<Props> = ({handleToggleCart}) => {
 
   return (
     <div className="fixed top-0 right-0 w-96 h-full border z-20 bg-white overflow-y-auto">
-      <div className="justify-between flex px-4 border items-center">
+      <div className="justify-between flex px-4 border items-center p-4">
         <CartIcon className="w-8 h-8 items-center"/>
-        <CloseIcon onClick={handleToggleCart}  className="w-8 h-8"/>
+        <CloseIcon onClick={handleToggleCart}  className="w-8 h-8 cursor-pointer"/>
       </div>
       <div className="p-4 flex flex-col">
         {cartItems && cartItems.map((product, index) => (

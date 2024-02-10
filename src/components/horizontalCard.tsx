@@ -7,11 +7,11 @@ product: Product
 
 const HorizontalCard:NextPage<Props> = ({product}) => {
    return(<>
-    <div className="flex flex-row h-[400px]">
-    <figure className="aspect-w-9 aspect-h-13 overflow-hidden h-[400px]">
-    <img src={product.image}/>
+    <div className="flex flex-row p-2">
+    <figure className="w-1/4">
+    <img src={product.image} className="w-full h-full"/>
     </figure>
-    <div className="flex flex-col pl-2">
+    <div className="flex flex-col pl-2 w-3/4">
     <span>{product.title}</span>
     <span className="text-sm line-clamp-2">{product.description}</span>
         <div className="justify-between flex pt-1">
