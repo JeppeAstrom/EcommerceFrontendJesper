@@ -37,22 +37,22 @@ const Header = () => {
 
   return (
     <>
-      <div className="flex w-full sm:flex md:flex p-3 items-center justify-center">
+      <div className="flex w-full p-2">
+        <div className="flex justify-between grid-cols-2 w-full items-center">
+         <div className="flex">
         <Link href="/" className="flex">
           <img
             alt=""
-            className="h-[100px]"
-            src="https://i.ibb.co/rfctdQj/testlogo2.png"
+            className="h-[60px]"
+            src="https://i.ibb.co/f82dWcj/ffffff.png"
           />
         </Link>
-      </div>
-      <div className="w-full items-center flex justify-center">
-        <input
-          className="text-md w-full lg:items-center lg:flex lg:w-1/2 lg:justify-center border px-4 p-2 rounded-xl border-black"
-          placeholder="Sök product, kategori eller varumärke"
-        />
-        <div className="flex items-center px-2 gap-2">
-          <Link href="/favoriter">
+      
+        </div>
+      
+       <div className="flex items-center justify-center gap-4">
+        <div className="flex gap-4">
+       <Link href="/favoriter">
             <HeartIcon className="w-[25px] h-[25px] cursor-pointer" />
           </Link>
           <CartIcon
@@ -61,10 +61,20 @@ const Header = () => {
             openCart={handlerToggleCart}
             className="w-[25px] h-[25px] cursor-pointer"
           />
-          {toggleCart && <CartModal handleToggleCart={handlerToggleCart} />}
-          <Hamburger onClick={handlerToggleModal} className="w-12 h-12 pl-4 cursor-pointer lg:hidden"/>
-
+          </div>
+          {toggleCart && <CartModal  handleToggleCart={handlerToggleCart} />}
+          <Hamburger onClick={handlerToggleModal} className="w-20 h-20 pl-4 cursor-pointer lg:hidden"/>
+         
+          </div>
+       
         </div>
+      </div>
+      <div className="w-full items-center flex justify-center">
+        <input
+          className="text-md w-full lg:items-center lg:flex lg:w-1/2 lg:justify-center border px-4 p-2 rounded-xl border-black"
+          placeholder="Sök product, kategori eller varumärke"
+        />
+        
       </div>
       {toggleModal && (
       <Modal title={'Kategorier'} toggleModal={handlerToggleModal}>
