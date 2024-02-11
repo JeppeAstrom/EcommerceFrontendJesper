@@ -7,11 +7,14 @@ import dropshiplogo from "../../app/images/dropshiplogo.png";
 import HeartIcon from "@/app/icons/hearticon";
 import { Context } from "@/app/context";
 import { Product } from "@/types/product";
+import Hamburger from "@/app/icons/hamburger";
+import Modal from "../modal";
 
 const Header = () => {
   const [toggleCart, setToggleCart] = useState<boolean>(false);
+  const [toggleModal, setToggleModal] = useState<boolean>(false);
   const handlerToggleCart = () => setToggleCart((prev) => !prev);
-
+  const handlerToggleModal = () => setToggleModal((prev) => !prev);
   const context = useContext(Context);
 
   const {cartItems}: any= context;
@@ -46,13 +49,21 @@ const Header = () => {
             <HeartIcon className="w-[25px] h-[25px] cursor-pointer" />
           </Link>
           <CartIcon
+          showCount={true}
           cartCount={cartCount ? cartCount : 0}
             openCart={handlerToggleCart}
             className="w-[25px] h-[25px] cursor-pointer"
           />
           {toggleCart && <CartModal handleToggleCart={handlerToggleCart} />}
+          <Hamburger onClick={handlerToggleModal} className="w-12 h-12 pl-4 cursor-pointer"/>
+
         </div>
       </div>
+      {toggleModal && (
+      <Modal title={'Kategorier'} toggleModal={handlerToggleModal}>
+        <span>hej</span>
+      </Modal>
+         )}
     </>
   );
 };

@@ -7,6 +7,7 @@ interface ContextType {
     cartItems: Product[] | undefined                                                                       
     handleAddToCart: (getCurrentItem: Product) => void;
     getCart: () => void;
+    removeFromCart: (product:Product) => void;
 }
 
 export const Context = createContext<ContextType | null>(null)
@@ -17,11 +18,9 @@ function GlobalState({ children }: { children: ReactNode }) {
 
     function handleAddToCart(getCurrentItem: Product) {
         setCartItems(currentItems => {
-            // If cartItems is not undefined, spread it into a new array and add the new item
             if (currentItems) {
                 return [...currentItems, getCurrentItem];
             } else {
-                // If cartItems is undefined, start a new array with the item
                 return [getCurrentItem];
             }
         });
@@ -32,13 +31,24 @@ function GlobalState({ children }: { children: ReactNode }) {
         return cartItems;                                                               
     }
 
+    function removeFromCart(product: Product) {
+        const index = cartItems?.indexOf(product);
+        if (index !== undefined && index !== -1 && cartItems) {
+            const updatedCartItems = [...cartItems.slice(0, index), ...cartItems.slice(index + 1)];
+            setCartItems(updatedCartItems);
+        }
+    }
+    
+
+
     const contextValue: ContextType = {
         cartItems,
         handleAddToCart,
-        getCart
+        getCart,
+        removeFromCart
     };              
 
-    return <Context.Provider value={{cartItems, handleAddToCart, getCart }}>{children}</Context.Provider>
+    return <Context.Provider value={{cartItems, handleAddToCart, getCart, removeFromCart }}>{children}</Context.Provider>
 }
 
 export default GlobalState;
