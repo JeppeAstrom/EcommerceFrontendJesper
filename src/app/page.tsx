@@ -1,4 +1,4 @@
-"use client"
+
 import ProductRain from "@/components/productrain";
 import { GetAllProducts } from "@/utils/productService";
 

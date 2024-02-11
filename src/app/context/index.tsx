@@ -15,19 +15,16 @@ function GlobalState({ children }: { children: ReactNode }) {
     
     const [cartItems, setCartItems] = useState<Product[]>();
 
-    function handleAddToCart(getCurrentItem:Product){
-        const cart:Product[] | undefined =  cartItems
-
-        if(cart){
-        cart.push(getCurrentItem);
-        setCartItems(cart)
-        }
-        else{
-        const productArray:Product[] = [];
-        productArray.push(getCurrentItem);
-        setCartItems(productArray);
-        }
-    
+    function handleAddToCart(getCurrentItem: Product) {
+        setCartItems(currentItems => {
+            // If cartItems is not undefined, spread it into a new array and add the new item
+            if (currentItems) {
+                return [...currentItems, getCurrentItem];
+            } else {
+                // If cartItems is undefined, start a new array with the item
+                return [getCurrentItem];
+            }
+        });
     }
 
     function getCart(){

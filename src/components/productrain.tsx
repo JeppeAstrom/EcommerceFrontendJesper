@@ -1,4 +1,4 @@
-"use client"
+
 
 import ProductCard from "@/components/productcard";
 import { Product } from "@/types/product";
@@ -14,7 +14,7 @@ const ProductRain:NextPage<Props> = async ({products})  => {
  
   return(<>
   	
-  <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-7 pt-10">
+  <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-7 pt-10">
     {products.map((product, index) => (
       <div key={index}>
         <ProductCard product={product}/>

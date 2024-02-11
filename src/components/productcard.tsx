@@ -25,15 +25,15 @@ return(<>
     </figure>
     <div className="p-4">
  
-    <span className="line-clamp-1">{product.title}</span>
+    <span className="line-clamp-1 text-md">{product.title}</span>
 
     
  
    
     
     <div className="pt-3 flex justify-between">
-    <span>{product.rating.rate} av 5</span>
-    <span>{product.price}</span>
+    <span className="text-sm">{product.rating.rate} av 5</span>
+    <span className="text-sm">{product.price}</span>
 
     </div>
 
