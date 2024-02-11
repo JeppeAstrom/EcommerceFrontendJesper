@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { Context } from "@/app/context";
 import CloseIcon from "@/app/icons/closeIcon";
+import Minus from "@/app/icons/minus";
+import Plus from "@/app/icons/plus";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
 import { useContext } from "react";
@@ -13,7 +15,7 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
 
     const context = useContext(Context);
 
-    const { removeFromCart}: any= context;
+    const { removeFromCart, handleAddToCart}: any= context;
 
    return(<>
     <div className="flex flex-row p-2 shadow-lg rounded-md py-5">
@@ -22,13 +24,21 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
     </figure>
     <div className="flex flex-col pl-2 w-3/4">
     <div className="flex justify-between">
-    <span className="text-serif font-semibold">{product.title}</span>
-    <CloseIcon onClick={() => removeFromCart(product)}  className="w-7 h-7 cursor-pointer "/>
+    <span className="text-serif font-semibold line-clamp-2">{product.title}</span>
+  
     </div>
-    <span className="text-sm line-clamp-2">{product.description}</span>
+    <span className="text-sm line-clamp-3">{product.description}</span>
         <div className="justify-between flex pt-1">
         <span className="text-sm">{product.price} kr</span>
-       
+        <div className="gap-2 flex items-center">
+        <button onClick={() => handleAddToCart(product)}>
+            <Plus className="w-5 h-5"/>
+        </button>
+        <button onClick={() => removeFromCart(product)}>
+            <Minus className="w-5 h-5"/>
+        </button>
+        </div>
+   
         </div>
    
     </div>
