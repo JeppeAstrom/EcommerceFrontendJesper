@@ -31,11 +31,11 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
         <div className="justify-between flex pt-1">
         <span className="text-sm">{product.price} kr</span>
         <div className="gap-2 flex items-center">
-        <button onClick={() => handleAddToCart(product)}>
-            <Plus className="w-5 h-5"/>
-        </button>
         <button onClick={() => removeFromCart(product)}>
             <Minus className="w-5 h-5"/>
+        </button>
+        <button onClick={() => handleAddToCart(product)}>
+            <Plus className="w-5 h-5"/>
         </button>
         </div>
    

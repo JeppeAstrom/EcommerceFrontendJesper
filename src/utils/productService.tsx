@@ -18,4 +18,12 @@ const GetProduct = async (id:string) => {
     return Product;
 }
 
-export { GetAllProducts, GetProduct };
+const getProductsFromCategory = async (category:string) => {
+    let apiRoute = 'https://fakestoreapi.com/products/category/' + category;
+
+    const ProductList: Product[] = await fetch(apiRoute).then(res => res.json())
+
+    return ProductList;
+}
+
+export { GetAllProducts, GetProduct, getProductsFromCategory };

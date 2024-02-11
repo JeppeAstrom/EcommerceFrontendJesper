@@ -11,7 +11,16 @@ import { Product } from "@/types/product";
 import Hamburger from "@/app/icons/hamburger";
 import Modal from "../modal";
 
+import router from "next/navigation";
+import ArrowLeft from "@/app/icons/arrowleft";
+const categories:string[] = ["electronics",
+"jewelery",
+"men's clothing",
+"women's clothing"]
+
 const Header = () => {
+  
+
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [toggleModal, setToggleModal] = useState<boolean>(false);
   const handlerToggleCart = () => setToggleCart((prev) => !prev);
@@ -25,9 +34,6 @@ const Header = () => {
   useEffect(() => {
       setCartCount(cartItems ? cartItems.length : 0)
   },[cartItems])
-
-
- 
 
   return (
     <>
@@ -62,7 +68,14 @@ const Header = () => {
       </div>
       {toggleModal && (
       <Modal title={'Kategorier'} toggleModal={handlerToggleModal}>
-        <span>hej</span>
+        {categories.map((category, index) => (
+       
+          <Link key={index} className="justify-between flex border-b border-black w-full p-2" onClick={handlerToggleModal} href={'/produkter/kategori/' + category} >
+          <span>{category}</span>
+          <ArrowLeft className="rotate-180 h-5 w-5 items-center flex justify-center mr-2"/>
+          </Link>
+        
+      ))}
       </Modal>
          )}
     </>

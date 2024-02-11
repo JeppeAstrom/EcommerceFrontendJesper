@@ -30,9 +30,7 @@ return(<>
     <HeartIcon className="h-5 w-5"/>
     </button>
     </div>
-
-
-    <figure className="aspect-w-9 aspect-h-13 overflow-hidden h-[400px]">
+    <figure className="p-2 aspect-w-9 aspect-h-13 overflow-hidden h-[400px]">
     <Link href={'/produkter/' + product.id}>
     <img alt="" src={product.image} className="w-full h-full object-fit"/>
     </Link>
