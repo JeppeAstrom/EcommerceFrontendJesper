@@ -13,6 +13,8 @@ import Modal from "../modal";
 
 import router from "next/navigation";
 import ArrowLeft from "@/app/icons/arrowleft";
+import Search from "@/app/icons/searchicon";
+import SearchModal from "../searchmodal";
 const categories:string[] = ["electronics",
 "jewelery",
 "men's clothing",
@@ -22,9 +24,15 @@ const Header = () => {
   
 
   const [toggleCart, setToggleCart] = useState<boolean>(false);
-  const [toggleModal, setToggleModal] = useState<boolean>(false);
+  const [toggleCategoryModal, setToggleCategoryModal] = useState<boolean>(false);
+  const [toggleSearchModal, setToggleSearchModal] = useState<boolean>(false);
   const handlerToggleCart = () => setToggleCart((prev) => !prev);
-  const handlerToggleModal = () => setToggleModal((prev) => !prev);
+  const handlerToggleCategoryModal= () => setToggleCategoryModal((prev) => !prev);
+
+
+  const handlerToggleSearchModal = () => setToggleSearchModal((prev) => !prev);
+
+
   const context = useContext(Context);
 
   const {cartItems}: any= context;
@@ -38,8 +46,9 @@ const Header = () => {
   return (
     <>
       <div className="flex w-full p-2">
-        <div className="flex justify-between grid-cols-2 w-full items-center">
-         <div className="flex">
+        <div className="flex justify-between grid-cols-3 w-full items-center">
+         <div className="flex justify-center items-center">
+         <Hamburger onClick={handlerToggleCategoryModal} className="w-20 h-20 cursor-pointer"/>
         <Link href="/" className="flex">
           <img
             alt=""
@@ -47,46 +56,63 @@ const Header = () => {
             src="https://i.ibb.co/f82dWcj/ffffff.png"
           />
         </Link>
+       
+        </div>
+        <div className="w-full items-center justify-center hidden sm:flex">
+        <div className="w-1/2">
+        <div className="flex w-full p-2">
       
         </div>
-      
+        <input
+          className="text-md w-full lg:items-center lg:flex lg:justify-center border px-4 p-2 rounded-xl border-black"
+          placeholder="Sök product, kategori eller varumärke"
+        />
+     </div>
+      </div>
        <div className="flex items-center justify-center gap-4">
-        <div className="flex gap-4">
-       <Link href="/favoriter">
-            <HeartIcon className="w-[25px] h-[25px] cursor-pointer" />
+        <div className="flex gap-6">
+       <Link className="items-center flex justify-center" href="/favoriter">
+            <HeartIcon className="w-14 h-14 cursor-pointer" />
           </Link>
+          <div className="items-center flex justify-center">
           <CartIcon
           showCount={true}
           cartCount={cartCount ? cartCount : 0}
             openCart={handlerToggleCart}
-            className="w-[25px] h-[25px] cursor-pointer"
+            className="w-14 h-14 cursor-pointer"
           />
           </div>
+          <button onClick={handlerToggleSearchModal} className="items-center flex justify-center lg:hidden">
+          <Search className="w-10 h-10 cursor-pointer items-center flex justify-center"/>
+          </button>
+          </div>
           {toggleCart && <CartModal  handleToggleCart={handlerToggleCart} />}
-          <Hamburger onClick={handlerToggleModal} className="w-20 h-20 pl-4 cursor-pointer lg:hidden"/>
+          
          
           </div>
        
         </div>
       </div>
-      <div className="w-full items-center flex justify-center">
-        <input
-          className="text-md w-full lg:items-center lg:flex lg:w-1/2 lg:justify-center border px-4 p-2 rounded-xl border-black"
-          placeholder="Sök product, kategori eller varumärke"
-        />
-        
-      </div>
-      {toggleModal && (
-      <Modal title={'Kategorier'} toggleModal={handlerToggleModal}>
+      
+      {toggleCategoryModal && (
+      <Modal title={'Kategorier'} toggleModal={handlerToggleCategoryModal}>
         {categories.map((category, index) => (
        
-          <Link key={index} className="justify-between flex border-b border-black w-full p-2" onClick={handlerToggleModal} href={'/produkter/kategori/' + category} >
+          <Link key={index} className="justify-between flex border-b border-black w-full p-2" onClick={handlerToggleCategoryModal} href={'/produkter/kategori/' + category} >
           <span>{category}</span>
           <ArrowLeft className="rotate-180 h-5 w-5 items-center flex justify-center mr-2"/>
           </Link>
         
       ))}
       </Modal>
+         )}
+
+      {toggleSearchModal && (
+      <SearchModal toggleModal={handlerToggleSearchModal}>
+        <div>
+          
+        </div>
+      </SearchModal>
          )}
     </>
   );
