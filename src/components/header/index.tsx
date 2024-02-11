@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
@@ -41,7 +42,7 @@ const Header = () => {
       </div>
       <div className="w-full items-center flex justify-center">
         <input
-          className="text-sm w-full lg:items-center lg:flex lg:w-1/2 lg:justify-center border px-4 p-2 rounded-xl border-black"
+          className="text-md w-full lg:items-center lg:flex lg:w-1/2 lg:justify-center border px-4 p-2 rounded-xl border-black"
           placeholder="Sök product, kategori eller varumärke"
         />
         <div className="flex items-center px-2 gap-2">
@@ -55,7 +56,7 @@ const Header = () => {
             className="w-[25px] h-[25px] cursor-pointer"
           />
           {toggleCart && <CartModal handleToggleCart={handlerToggleCart} />}
-          <Hamburger onClick={handlerToggleModal} className="w-12 h-12 pl-4 cursor-pointer"/>
+          <Hamburger onClick={handlerToggleModal} className="w-12 h-12 pl-4 cursor-pointer lg:hidden"/>
 
         </div>
       </div>

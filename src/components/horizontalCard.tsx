@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Context } from "@/app/context";
 import CloseIcon from "@/app/icons/closeIcon";
 import { Product } from "@/types/product";
@@ -17,16 +18,16 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
    return(<>
     <div className="flex flex-row p-2 shadow-lg rounded-md py-5">
     <figure className="w-1/4">
-    <img src={product.image} className="w-full h-full"/>
+    <img alt="" src={product.image} className="w-full h-full"/>
     </figure>
     <div className="flex flex-col pl-2 w-3/4">
     <div className="flex justify-between">
-    <span>{product.title}</span>
+    <span className="text-serif font-semibold">{product.title}</span>
     <CloseIcon onClick={() => removeFromCart(product)}  className="w-7 h-7 cursor-pointer "/>
     </div>
     <span className="text-sm line-clamp-2">{product.description}</span>
         <div className="justify-between flex pt-1">
-        <span>{product.price} kr</span>
+        <span className="text-sm">{product.price} kr</span>
        
         </div>
    

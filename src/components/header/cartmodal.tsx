@@ -28,7 +28,7 @@ const CartModal:NextPage<Props> = ({handleToggleCart}) => {
           <HorizontalCard key={index} product={product} />
         ))}
       </div>
-      {cartItems.length > 0 && (
+      {cartItems && cartItems.length > 0 && (
       <button className="w-full sticky h-10  bottom-0  bg-amber-400 hover:bg-amber-300">Checkout</button>
       )}
     </div>
