@@ -37,7 +37,6 @@ const ProductRain:NextPage<Props> =  ({products})  => {
        <span onClick={() => handlerCategory(category)}    className={"border p-4 text-lg" + (currentCategory ? (currentCategory === category && " p-5 border-black") : "")}  key={index}>{category}</span>
    ))}
     <span onClick={() => {
-      
       setCurrentCategory(undefined);
       setItems(products)}} className="border p-4 text-lg">Alla</span>
     </div>
