@@ -31,7 +31,7 @@ const ProductRain:NextPage<Props> =  ({products})  => {
 
   return(<>
   	
-
+    <div className="py-10">
     <div className="items-center w-full justify-center gap-6 pt-2 hidden sm:flex md:hidden lg:flex">
     {categories.map((category, index) => (
        <span onClick={() => handlerCategory(category)}    className={"border p-4 text-lg" + (currentCategory ? (currentCategory === category && " p-5 border-black") : "")}  key={index}>{category}</span>
@@ -47,7 +47,7 @@ const ProductRain:NextPage<Props> =  ({products})  => {
          </div>
     ))}
   </div>
- 
+  </div>
   </>)
 }
 

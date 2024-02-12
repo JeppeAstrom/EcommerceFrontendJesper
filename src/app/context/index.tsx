@@ -14,8 +14,8 @@ export const Context = createContext<ContextType | null>(null)
 
 function GlobalState({ children }: { children: ReactNode }) {
     
-    const cartStorageJSON: any = localStorage.getItem('cartDropshippinggod');
-    const cartStorage: Product[] = JSON.parse(cartStorageJSON) || [];
+    const cartStorageJSON: string | null = localStorage.getItem('cartDropshippinggod');
+    const cartStorage: Product[] = JSON.parse(cartStorageJSON as string) || [];
     const [cartItems, setCartItems] = useState<Product[]>(cartStorage);
 
     useEffect(() => {

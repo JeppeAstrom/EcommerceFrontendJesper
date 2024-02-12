@@ -1,4 +1,5 @@
 
+import Carousel from "@/components/carousel";
 import ProductRain from "@/components/productrain";
 import { GetAllProducts } from "@/utils/productService";
 
@@ -14,6 +15,10 @@ const Home = async ()  => {
  
   return(<>
   
+    
+    <Carousel title="Trendigt hos oss" products={Products}/>
+ 
+
     <ProductRain products={Products}/>
   </>)
 }

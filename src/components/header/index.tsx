@@ -48,30 +48,36 @@ const Header = () => {
   return (
     <>
       <div className="flex w-full p-2">
-        <div className="flex justify-between grid-cols-3 w-full items-center">
-         <div className="flex justify-center items-center">
+        <div className="flex justify-between lg:grid-cols-3 w-full items-center">
+         <div className="flex justify-center items-center w-1/5">
          <Hamburger onClick={handlerToggleCategoryModal} className="w-20 h-20 cursor-pointer lg:hidden"/>
         <Link href="/" className="flex">
           <img
             alt=""
-            className="h-[60px]"
+            className="h-[60px] w-auto"
             src="https://i.ibb.co/f82dWcj/ffffff.png"
           />
         </Link>
        
         </div>
-        <div className="w-full items-center justify-center hidden sm:flex md:hidden lg:flex">
-        <div className="w-1/2">
+        <div className="items-center justify-center hidden sm:flex md:hidden lg:flex w-3/5 flex-col">
+       
         <div className="flex w-full p-2">
-      
+        {categories.map((category, index) => (
+       <Link key={index} className="items-center justify-center flex w-full" onClick={handlerToggleCategoryModal} href={'/produkter/kategori/' + category} >
+       <span>{category}</span>
+       </Link>
+     
+   ))}
         </div>
         <input
           className="text-md w-full lg:items-center lg:flex lg:justify-center border px-4 p-2 rounded-xl border-black"
           placeholder="Sök product, kategori eller varumärke"
         />
-     </div>
+  
       </div>
-       <div className="flex items-center justify-center gap-4">
+    
+       <div className="flex items-center justify-center gap-4 lg:w-1/5">
         <div className="flex gap-6">
        <Link className="items-center flex justify-center" href="/favoriter">
             <HeartIcon className="w-14 h-14 cursor-pointer" />
@@ -83,10 +89,10 @@ const Header = () => {
             openCart={handlerToggleCart}
             className="w-14 h-14 cursor-pointer"
           />
-          </div>
-          <button onClick={handlerToggleSearchModal} className="items-center flex justify-center lg:hidden">
-          <Search className="w-10 h-10 cursor-pointer items-center flex justify-center"/>
+           <button onClick={handlerToggleSearchModal} className="lg:hidden w-14 h-14 pl-4  cursor-pointer items-center flex justify-center">
+          <Search className=""/>
           </button>
+          </div>
           </div>
           {toggleCart && <CartModal  handleToggleCart={handlerToggleCart} />}
           
