@@ -1,7 +1,7 @@
 "use client"
 
 import { Product } from "@/types/product";
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 
 interface ContextType {
     cartItems: Product[] | undefined                                                                       
@@ -14,16 +14,25 @@ export const Context = createContext<ContextType | null>(null)
 
 function GlobalState({ children }: { children: ReactNode }) {
     
-    const [cartItems, setCartItems] = useState<Product[]>();
+    const cartStorageJSON: any = localStorage.getItem('cartDropshippinggod');
+    const cartStorage: Product[] = JSON.parse(cartStorageJSON) || [];
+    const [cartItems, setCartItems] = useState<Product[]>(cartStorage);
+
+    useEffect(() => {
+        localStorage.setItem('cartDropshippinggod', JSON.stringify(cartItems));
+    }, [cartItems]);
 
     function handleAddToCart(getCurrentItem: Product) {
         setCartItems(currentItems => {
             if (currentItems) {
+            
                 return [...currentItems, getCurrentItem];
             } else {
+
                 return [getCurrentItem];
             }
         });
+
     }
 
     function getCart(){

@@ -15,6 +15,8 @@ import router from "next/navigation";
 import ArrowLeft from "@/app/icons/arrowleft";
 import Search from "@/app/icons/searchicon";
 import SearchModal from "../searchmodal";
+
+
 const categories:string[] = ["electronics",
 "jewelery",
 "men's clothing",
@@ -48,7 +50,7 @@ const Header = () => {
       <div className="flex w-full p-2">
         <div className="flex justify-between grid-cols-3 w-full items-center">
          <div className="flex justify-center items-center">
-         <Hamburger onClick={handlerToggleCategoryModal} className="w-20 h-20 cursor-pointer"/>
+         <Hamburger onClick={handlerToggleCategoryModal} className="w-20 h-20 cursor-pointer lg:hidden"/>
         <Link href="/" className="flex">
           <img
             alt=""
@@ -58,7 +60,7 @@ const Header = () => {
         </Link>
        
         </div>
-        <div className="w-full items-center justify-center hidden sm:flex">
+        <div className="w-full items-center justify-center hidden sm:flex md:hidden lg:flex">
         <div className="w-1/2">
         <div className="flex w-full p-2">
       
