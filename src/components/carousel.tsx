@@ -8,7 +8,8 @@ import HeartIcon from "@/app/icons/hearticon";
 
 import { Product } from "@/types/product";
 import { NextPage } from "next";
-import { useContext, useState } from "react";
+import Link from "next/link";
+import { useContext, useEffect, useState } from "react";
 
 interface Props {
 products: Product[]
@@ -21,50 +22,58 @@ const Carousel:NextPage<Props> = ({products, title}) => {
     const context = useContext(Context);
 
     const {handleAddToCart}:any= useContext(Context)
-
-const [index, setIndex] = useState<number>(0);
-
-const handlerRight = (i:number) => {
-setIndex(index + 1)
-}
-
-const handlerLeft = (i:number) => {
-    setIndex(index -  1)
-}
-
-return(<>
-    <div className="flex items-center justify-center text-pretty text-xl font-semibold py-6">{title}</div>
-    <div className="flex justify-center items-center pb-6">
-    <div className="flex items-center gap-8 h-auto relative w-full justify-center">
-    <div className="relative"> <HeartIcon className="w-5 h-5 left-0 absolute"/>
-    <img alt="" src={products[index].image} className="lg:h-[320px] lg:w-[251px] h-[516px] p-6"/>
-    <BuyIcon product={products[index]} onClick={handleAddToCart} className="w-5 h-5 top-0 right-0 absolute cursor-pointer"/>
-    </div>
-    <div className="relative hidden sm:flex md:hidden lg:flex"> <HeartIcon className="w-5 h-5 left-0 absolute"/>
-    <img alt="" src={products[index + 1].image} className="lg:h-[320px] lg:w-[251px] p-6"/>
-    <BuyIcon product={products[index + 1]} onClick={handleAddToCart} className="w-5 h-5 top-0 right-0 absolute cursor-pointer"/>
-    </div>
-    <div className="relative hidden sm:flex md:hidden lg:flex"> <HeartIcon className="w-5 h-5 left-0 absolute"/>
-    <img alt="" src={products[(index + 2)].image} className="lg:h-[320px] lg:w-[251px] p-6"/>
-    <BuyIcon product={products[index + 2]} onClick={handleAddToCart} className="w-5 h-5 top-0 right-0 absolute cursor-pointer"/>
-    </div>
-   
-    <div className="relative hidden sm:flex md:hidden lg:flex"> <HeartIcon className="w-5 h-5 left-0 absolute"/>
-    <img alt="" src={products[(index + 3)].image} className="lg:h-[320px] lg:w-[251px] p-6"/>
-    <BuyIcon product={products[index + 3]} onClick={handleAddToCart} className="w-5 h-5 top-0 right-0 absolute cursor-pointer"/>
-    </div>
-    {index !== 0 && (
-    <ArrowLeft onClick={() => handlerLeft(index)} className="w-8 h-8 absolute top-1/2 left-0 bg-amber-300"/>
-    )}
-    {index + 4 !== products.length && (
-    <ArrowLeft onClick={() => handlerRight(index)} className="w-8 h-8 absolute top-1/2 right-0 rotate-180 bg-amber-300"/>
-    )}
-    </div>
-    </div>
-    
-
-
-
-</>)
-}
+    const [index, setIndex] = useState(0);
+    const [visibleItems, setVisibleItems] = useState(4); // Default to desktop view
+  
+    const updateVisibleItems = () => {
+      if (window.innerWidth >= 1024) { // Desktop
+        setVisibleItems(4);
+      } else if (window.innerWidth >= 768) { // Tablet
+        setVisibleItems(2);
+      } else { // Mobile
+        setVisibleItems(1);
+      }
+    };
+  
+    useEffect(() => {
+      window.addEventListener('resize', updateVisibleItems);
+      updateVisibleItems(); // Initial check
+      return () => window.removeEventListener('resize', updateVisibleItems);
+    }, []);
+  
+    const handlePrev = () => {
+      if (index > 0) {
+        setIndex(prevIndex => prevIndex - 1);
+      }
+    };
+  
+    const handleNext = () => {
+      if (index + visibleItems < products.length) {
+        setIndex(prevIndex => prevIndex + 1);
+      }
+    };
+  
+    return (
+      <div>
+        <div className="flex items-center justify-center text-xl font-semibold py-6">{title}</div>
+        <div className="flex justify-center items-center pb-6">
+          <div className="flex items-center h-auto relative w-full justify-between">
+            {products.slice(index, index + visibleItems).map((product, i) => (
+              <div key={i} className="relative">
+                <HeartIcon className="w-6 h-6 left-0 absolute" />
+                <Link href={'/produkter/' + product.id}>
+                <img alt="" src={product.image} className="lg:h-[320px] lg:w-[251px] h-[416px] p-6 hover:scale-105 transition-all" />
+                </Link>
+                <BuyIcon product={product} onClick={() => handleAddToCart(product)} className="w-6 h-6 top-0 right-0 absolute cursor-pointer" />
+              </div>
+            ))}
+            <div className="top-3/5 mb-10">
+              {index !== 0 && <ArrowLeft onClick={handlePrev} className="w-8 h-8 absolute left-0" />}
+              {index + visibleItems < products.length && <ArrowLeft onClick={handleNext} className="w-8 h-8 absolute right-0 rotate-180" />}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 export default Carousel;

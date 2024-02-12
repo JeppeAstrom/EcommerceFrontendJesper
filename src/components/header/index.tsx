@@ -49,20 +49,22 @@ const Header = () => {
     <>
       <div className="flex w-full p-2">
         <div className="flex justify-between lg:grid-cols-3 w-full items-center">
-         <div className="flex justify-center items-center w-1/5">
-         <Hamburger onClick={handlerToggleCategoryModal} className="w-20 h-20 cursor-pointer lg:hidden"/>
-        <Link href="/" className="flex">
+        <Hamburger onClick={handlerToggleCategoryModal} className="w-20 h-20 cursor-pointer lg:hidden"/>
+        <Link href="/" className="flex lg:justify-bottom">
           <img
             alt=""
             className="h-[60px] w-auto"
             src="https://i.ibb.co/f82dWcj/ffffff.png"
           />
         </Link>
+         <div className="flex justify-center items-center lg:w-1/5">
+       
+       
        
         </div>
         <div className="items-center justify-center hidden sm:flex md:hidden lg:flex w-3/5 flex-col">
        
-        <div className="flex w-full p-2">
+        <div className="flex w-full">
         {categories.map((category, index) => (
        <Link key={index} className="items-center justify-center flex w-full" onClick={handlerToggleCategoryModal} href={'/produkter/kategori/' + category} >
        <span>{category}</span>
@@ -77,8 +79,8 @@ const Header = () => {
   
       </div>
     
-       <div className="flex items-center justify-center gap-4 lg:w-1/5">
-        <div className="flex gap-6">
+       <div className="flex items-center justify-end gap-4 lg:w-1/5">
+        <div className="flex gap-6 items-baseline">
        <Link className="items-center flex justify-center" href="/favoriter">
             <HeartIcon className="w-14 h-14 cursor-pointer" />
           </Link>

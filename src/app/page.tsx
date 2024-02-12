@@ -15,9 +15,9 @@ const Home = async ()  => {
  
   return(<>
   
-    
+    <div className="shadow-lg mt-10 p-4">
     <Carousel title="Trendigt hos oss" products={Products}/>
- 
+    </div>
 
     <ProductRain products={Products}/>
   </>)
