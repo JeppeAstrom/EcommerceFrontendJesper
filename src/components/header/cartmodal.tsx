@@ -18,7 +18,7 @@ const CartModal:NextPage<Props> = ({handleToggleCart}) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-10">
-    <div className="fixed top-0 right-0 lg:w-96 w-full h-full border z-20 bg-white overflow-y-auto">
+    <div className="fixed top-0 right-0 lg:w-[500px] w-full h-full border z-20 bg-white overflow-y-auto">
       <div className="justify-between flex px-4 border items-center p-4">
      <ArrowLeft onClick={handleToggleCart} className="w-8 h-8 cursor-pointer"/>
         <CloseIcon onClick={handleToggleCart}  className="w-8 h-8 cursor-pointer justify-center"/>

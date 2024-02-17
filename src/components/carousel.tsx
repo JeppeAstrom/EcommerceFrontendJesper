@@ -55,23 +55,29 @@ const Carousel:NextPage<Props> = ({products, title}) => {
   
     return (
       <div className="">
-        <div className="flex items-center justify-center text-xl font-semibold py-6">{title}</div>
-        <div className="flex justify-center items-center pb-6">
-          <div className="flex items-center h-auto relative w-full justify-between mx-auto">
-            {products.slice(index, index + visibleItems).map((product, i) => (
+        
+        <div className="flex text-xl font-semibold py-6">{title}</div>
+
+        <div className="flex pb-6">
+        <div className="flex items-center">
+        {index !== 0 && <ArrowLeft onClick={handlePrev} className="w-8 h-8 left-0" />}
+        </div>
+          <div className="flex items-center h-auto relative w-full justify-evenly">
+            {products.slice(index, index + visibleItems).map((product, i) => ( 
               <div key={i} className="relative">
-                <BuyIcon product={product} onClick={() => handleAddToCart(product)} className="w-6 h-6 top-0  cursor-pointer left-0 absolute " />
+                <BuyIcon product={product} onClick={() => handleAddToCart(product)} className="w-6 h-6 top-0  cursor-pointer left-0 absolute" />
                 <Link href={'/produkter/' + product.id}>
                 <img alt="" src={product.image} className="lg:h-[320px] lg:w-[251px] h-[416px] p-6 transition-all" />
                 </Link>
                 <HeartIcon className="w-6 h-6 right-0 absolute top-0" />
               </div>
             ))}
-            <div className="top-3/5 mb-10">
-              {index !== 0 && <ArrowLeft onClick={handlePrev} className="w-8 h-8 absolute left-0" />}
-              {index + visibleItems < products.length && <ArrowLeft onClick={handleNext} className="w-8 h-8 absolute right-0 rotate-180" />}
-            </div>
+          
           </div>
+          <div className="flex items-center">
+            
+              {index + visibleItems < products.length && <ArrowLeft onClick={handleNext} className="w-8 h-8  right-0 rotate-180" />}
+            </div>
         </div>
       </div>
     );
