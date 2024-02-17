@@ -15,6 +15,7 @@ import router from "next/navigation";
 import ArrowLeft from "@/app/icons/arrowleft";
 import Search from "@/app/icons/searchicon";
 import SearchModal from "../searchmodal";
+import LastAddeditem from "./lastAddedItem";
 
 
 const categories:string[] = ["electronics",
@@ -47,7 +48,7 @@ const Header = () => {
 
   return (
     <>
-      <div className="flex w-full p-2">
+      <div className="flex w-full sticky top-0 z-[25] bg-white p-6 shadow-lg">
         <div className="flex justify-between lg:grid-cols-3 w-full items-center">
         <Hamburger onClick={handlerToggleCategoryModal} className="w-20 h-20 cursor-pointer lg:hidden"/>
         <Link href="/" className="flex lg:justify-bottom">
@@ -102,7 +103,7 @@ const Header = () => {
           </div>
        
         </div>
-      </div>
+   
       
       {toggleCategoryModal && (
       <Modal title={'Kategorier'} toggleModal={handlerToggleCategoryModal}>
@@ -124,6 +125,8 @@ const Header = () => {
         </div>
       </SearchModal>
          )}
+      <LastAddeditem/>
+      </div>
     </>
   );
 };

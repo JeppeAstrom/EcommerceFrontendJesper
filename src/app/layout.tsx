@@ -20,9 +20,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <GlobalState>
-        <div className="main-container">
+      
         <Header/>
-        
+          <div className="main-container">
         {children}
         </div>
         </GlobalState>
