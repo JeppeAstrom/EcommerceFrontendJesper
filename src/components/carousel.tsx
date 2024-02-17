@@ -54,17 +54,17 @@ const Carousel:NextPage<Props> = ({products, title}) => {
     };
   
     return (
-      <div>
+      <div className="">
         <div className="flex items-center justify-center text-xl font-semibold py-6">{title}</div>
         <div className="flex justify-center items-center pb-6">
-          <div className="flex items-center h-auto relative w-full justify-between">
+          <div className="flex items-center h-auto relative w-full justify-between mx-auto">
             {products.slice(index, index + visibleItems).map((product, i) => (
               <div key={i} className="relative">
-                <HeartIcon className="w-6 h-6 left-0 absolute" />
+                <BuyIcon product={product} onClick={() => handleAddToCart(product)} className="w-6 h-6 top-0  cursor-pointer left-0 absolute " />
                 <Link href={'/produkter/' + product.id}>
-                <img alt="" src={product.image} className="lg:h-[320px] lg:w-[251px] h-[416px] p-6 hover:scale-105 transition-all" />
+                <img alt="" src={product.image} className="lg:h-[320px] lg:w-[251px] h-[416px] p-6 transition-all" />
                 </Link>
-                <BuyIcon product={product} onClick={() => handleAddToCart(product)} className="w-6 h-6 top-0 right-0 absolute cursor-pointer" />
+                <HeartIcon className="w-6 h-6 right-0 absolute top-0" />
               </div>
             ))}
             <div className="top-3/5 mb-10">

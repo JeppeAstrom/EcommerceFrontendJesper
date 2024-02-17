@@ -19,8 +19,8 @@ const ProductCard:NextPage<ProductTest> = ({product}) => {
     const {handleAddToCart}:any= useContext(Context)
   
 return(<>
-    <div className="flex flex-col rounded shadow-lg max-w-sm">
-    <div className="p-4 rounded-xl">
+    <div className="flex flex-col rounded shadow-lg max-w-sm items-center justify-center">
+    <div className="p-4 rounded-xl items-center justify-center">
       <div className="flex justify-between">
     <button onClick={() => handleAddToCart(product)}>
       <BuyIcon  className="w-6 h-6"/>
@@ -30,9 +30,9 @@ return(<>
     <HeartIcon className="h-6 w-6"/>
     </button>
     </div>
-    <figure className="p-2 aspect-w-9 aspect-h-13 overflow-hidden h-[400px]">
+    <figure className="p-2 aspect-w-9 aspect-h-13 h-[300px] w-[230px]">
     <Link href={'/produkter/' + product.id}>
-    <img alt="" src={product.image} className="w-full h-full object-fit hover:scale-105 transition-all"/>
+    <img alt="" src={product.image} className="w-full h-full object-fit transition-all"/>
     </Link>
     </figure>
    

@@ -1,8 +1,6 @@
 import { Context } from "@/app/context";
+import CloseIcon from "@/app/icons/closeIcon";
 import { useContext, useEffect } from "react";
-import ProductCard from "../productcard";
-import { Product } from "@/types/product";
-import HorizontalCard from "../horizontalCard";
 
 const LastAddeditem = () => {
 
@@ -23,8 +21,11 @@ const LastAddeditem = () => {
 return(
     <>
 {lastAddedItem && (
-<div className="absolute right-0 top-0 shadow-lg w-[300px] z-[30] bg-white">
-<span className="text-lg flex items-center justify-center pt-4">Produkt tillagd</span>
+<div className="absolute right-0 top-0 shadow-lg w-[400px] z-[30] bg-white">
+<div className="flex justify-between pt-4 px-4 items-center">
+<span className="text-lg">Produkt tillagd</span>
+<CloseIcon onClick={clearLastAddedItem} className="w-8 h-8"/>
+</div>
 <div className="flex flex-row p-2 shadow-lg rounded-md py-5">
     <figure className="w-1/4">
     <img alt="" src={lastAddedItem.image} className="w-full h-full"/>

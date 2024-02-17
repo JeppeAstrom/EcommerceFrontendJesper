@@ -6,7 +6,7 @@ import { ReactNode, createContext, useEffect, useState } from "react";
 interface ContextType {
     lastAddedItem: Product | null
     cartItems: Product[] | undefined                                                                       
-    handleAddToCart: (getCurrentItem: Product) => void;
+    handleAddToCart: (getCurrentItem: Product, skipNotification?:string) => void;
     getCart: () => void;
     removeFromCart: (product:Product) => void;
     clearLastAddedItem: () => void;
@@ -25,13 +25,17 @@ function GlobalState({ children }: { children: ReactNode }) {
         localStorage.setItem('cartDropshippinggod', JSON.stringify(cartItems));
     }, [cartItems]);
 
-    function handleAddToCart(getCurrentItem: Product) {
+    function handleAddToCart(getCurrentItem: Product, skipNotification?:string) {
         setCartItems(currentItems => {
             if (currentItems) {
+                if(!skipNotification){
                 setLastAddedItem(getCurrentItem);
+                }
                 return [...currentItems, getCurrentItem];
             } else {
-                setLastAddedItem(getCurrentItem);
+                if(!skipNotification){
+                    setLastAddedItem(getCurrentItem);
+                    }
                 return [getCurrentItem];
             }
         });

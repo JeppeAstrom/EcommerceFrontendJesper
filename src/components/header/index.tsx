@@ -63,7 +63,7 @@ const Header = () => {
        
        
         </div>
-        <div className="items-center justify-center hidden sm:flex md:hidden lg:flex w-3/5 flex-col">
+        <div className="items-center justify-center hidden sm:flex md:hidden lg:flex w-3/5 flex-col gap-2">
        
         <div className="flex w-full">
         {categories.map((category, index) => (

@@ -5,7 +5,7 @@ interface Props {
     onClick?: () => void;
 }
 
-const CartIcon:NextPage<Props> = ({className, onClick}) => {
+const CloseIcon:NextPage<Props> = ({className, onClick}) => {
     return (
         <>
        <svg onClick={onClick} className={className} xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none">
@@ -14,4 +14,4 @@ const CartIcon:NextPage<Props> = ({className, onClick}) => {
         </>
     )
 }
-export default CartIcon;
+export default CloseIcon;

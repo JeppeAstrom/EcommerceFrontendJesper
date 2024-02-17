@@ -5,6 +5,7 @@ import { Context } from "@/app/context";
 import { GetProduct } from "@/utils/productService";
 import { Product } from "@/types/product";
 import { usePathname } from "next/navigation"; // Import from next/navigation instead of next/router
+import Link from "next/link";
 
 const ProductPage = () => {
     const { handleAddToCart }:any= useContext(Context);
@@ -44,8 +45,8 @@ const ProductPage = () => {
                     <div className="mt-2">
                         <span className="mt-4 text-sm line-clamp-8">{product.description}</span>
                         <div className="flex justify-between pt-4">
-                        <button onClick={() => handleAddToCart(product)} className="right-0 w-[150px] h-[50px] rounded-xl bg-amber-400">Köp</button>
-                        <button className="">{product.price}kr</button>
+                        <Link href='/kassa' onClick={() => handleAddToCart(product, 'YES')} className="right-0 w-[150px] h-[50px] rounded-xl bg-amber-400 items-center justify-center flex">Köp</Link>
+                        <span className="">{product.price}kr</span>
                     </div>
                     </div>
                  
