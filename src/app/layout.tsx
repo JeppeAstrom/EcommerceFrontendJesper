@@ -21,14 +21,16 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <GlobalState>
-        <div className="w-full bg-white shadow-lg">
+       
         <div className="main-container">
         <TestHeader/>
-      
+       
+
          
         {children}
         </div>
-        </div>
+     
+      
         </GlobalState>
         </body>
       

@@ -19,15 +19,16 @@ const ProductCard:NextPage<Props> = ({product}) => {
     const {handleAddToCart}:any= useContext(Context)
   
 return(<>
-    <div className="flex flex-col rounded shadow-lg max-w-sm items-center justify-center">
+    <div className="flex flex-col rounded-xl shadow-lg max-w-sm items-center justify-center">
     <div className="p-4 rounded-xl items-center justify-center flex flex-col">
      <div className="flex justify-between relative w-full">
-    <button onClick={() => handleAddToCart(product)}>
-      <BuyIcon  className="absolute right-0 w-6 h-6"/>
+     <button>
+    <HeartIcon className="h-6 w-6 absolute right-0"/>
     </button>
 
-    <button>
-    <HeartIcon className="h-6 w-6 absolute left-0"/>
+ 
+    <button onClick={() => handleAddToCart(product)}>
+      <BuyIcon  className="absolute left-0 w-6 h-6"/>
     </button>
     </div>
     <figure className="p-2 aspect-w-9 aspect-h-13 h-[250px] w-[200px] overflow-hidden bg-white flex justify-center items-center">
