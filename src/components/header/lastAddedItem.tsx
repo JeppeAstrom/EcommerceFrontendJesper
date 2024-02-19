@@ -1,8 +1,13 @@
 import { Context } from "@/app/context";
 import CloseIcon from "@/app/icons/closeIcon";
+import { NextPage } from "next";
 import { useContext, useEffect } from "react";
 
-const LastAddeditem = () => {
+interface Props {
+showHeader: () => void;
+}
+
+const LastAddeditem:NextPage<Props> = ({showHeader}) => {
 
 
     const context = useContext(Context);
@@ -10,13 +15,14 @@ const LastAddeditem = () => {
     const {lastAddedItem, clearLastAddedItem}:any = context;
 
    useEffect(() => {
+    showHeader();
     if (!lastAddedItem) return;
     const timer = setTimeout(() => {
         clearLastAddedItem();
     }, 3000);
 
     return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
-}, [lastAddedItem, clearLastAddedItem]);
+}, [lastAddedItem, clearLastAddedItem, showHeader]);
 
 return(
     <>

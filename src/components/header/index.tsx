@@ -4,16 +4,11 @@ import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 import CartModal from "./cartmodal";
 import CartIcon from "@/app/icons/cartIcon";
-import dropshiplogo from "../../app/images/dropshiplogo.png";
 import HeartIcon from "@/app/icons/hearticon";
 import { Context } from "@/app/context";
-import { Product } from "@/types/product";
 import Hamburger from "@/app/icons/hamburger";
 import Modal from "../modal";
-
-import router from "next/navigation";
 import ArrowLeft from "@/app/icons/arrowleft";
-import Search from "@/app/icons/searchicon";
 import SearchModal from "../searchmodal";
 import LastAddeditem from "./lastAddedItem";
 import Person from "@/app/icons/person";
@@ -39,7 +34,9 @@ const Header = () => {
   const context = useContext(Context);
 
   const {cartItems}: any= context;
-
+  const showHeader = () => {
+    setVisible(true);
+  }
   const [cartCount, setCartCount] = useState<number>();
 
   useEffect(() => {
@@ -48,13 +45,11 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      // find current scroll position
+  
       const currentScrollPos = document.documentElement.scrollTop;
-  
-      // set state based on location info (compare with previous scroll position)
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 10);
-  
-      // set previous scroll position to current position
+
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50);
+
       setPrevScrollPos(currentScrollPos);
     };
     window.addEventListener('scroll', handleScroll);
@@ -136,7 +131,7 @@ const Header = () => {
           </div>
         </SearchModal>
           )}
-        <LastAddeditem/>
+        <LastAddeditem showHeader={showHeader} />
           </div>
       </div>
       </div>

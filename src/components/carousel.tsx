@@ -37,7 +37,7 @@ const Carousel:NextPage<Props> = ({products, title}) => {
   
     useEffect(() => {
       window.addEventListener('resize', updateVisibleItems);
-      updateVisibleItems(); // Initial check
+      updateVisibleItems(); 
       return () => window.removeEventListener('resize', updateVisibleItems);
     }, []);
   
@@ -56,7 +56,7 @@ const Carousel:NextPage<Props> = ({products, title}) => {
     return (
       <div className="">
         
-        <div className="flex text-xl font-semibold py-6">{title}</div>
+        <div className="flex text-xl font-semibold py-6 justify-center">{title}</div>
 
         <div className="flex pb-6">
         <div className="flex items-center">
