@@ -40,7 +40,7 @@ const ProductRain:NextPage<Props> =  ({products})  => {
       setCurrentCategory(undefined);
       setItems(products)}} className="border p-4 text-lg">Alla</span>
     </div>
-  <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-7 pt-10">
+  <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 gap-7 pt-10 items-center justify-center">
     {items.map((product, index) => (
       <div key={index}>
         <ProductCard product={product}/>
