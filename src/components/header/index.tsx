@@ -28,38 +28,56 @@ const Header = () => {
   const handlerToggleCategoryModal= () => setToggleCategoryModal((prev) => !prev);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
-
+  const [showNotification, setShowNotification] = useState<boolean>(false);
   const handlerToggleSearchModal = () => setToggleSearchModal((prev) => !prev);
 
   const context = useContext(Context);
-
+  const {lastAddedItem, clearLastAddedItem}:any = context;
   const {cartItems}: any= context;
-  const showHeader = () => {
-    setVisible(true);
-  }
+
+
   const [cartCount, setCartCount] = useState<number>();
 
   useEffect(() => {
     setCartCount(cartItems ? cartItems.length : 0)
 },[cartItems])
 
+
+
+
+useEffect(() => {
+if (!lastAddedItem) return;
+if(lastAddedItem){
+    setShowNotification(true);
+    const timer = setTimeout(() => {
+        clearLastAddedItem();
+        setShowNotification(false);
+    }, 3000);
+    return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
+}
+
+}, [lastAddedItem, clearLastAddedItem]);
+
   useEffect(() => {
     const handleScroll = () => {
-  
+    
       const currentScrollPos = document.documentElement.scrollTop;
 
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50);
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 200);
 
       setPrevScrollPos(currentScrollPos);
     };
     window.addEventListener('scroll', handleScroll);
 
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [prevScrollPos, visible, setPrevScrollPos, setVisible]);
-
+  }, [prevScrollPos, visible]);
+  let headerShadow = '';
+  if(window.scrollY !== 0){
+    headerShadow = 'shadow-lg'
+  }
 
   return (
-    <div className={`shadow-lg sticky top-0 bg-white z-10 transition-opacity duration-300 ease-in-out  ${visible ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+    <div className={`sticky top-0 bg-white z-10 transition-opacity duration-300 ease-in-out ${headerShadow}  ${visible || showNotification ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
     <div className="flex justify-center p-5">
       <div className="w-[1400px] mx-auto">
       <div className="flex flex-col py-4">
@@ -131,7 +149,7 @@ const Header = () => {
           </div>
         </SearchModal>
           )}
-        <LastAddeditem showHeader={showHeader} />
+        <LastAddeditem showNotification={showNotification} showHeader={showNotification} clearLastAddedItem={clearLastAddedItem} lastAddedItem={lastAddedItem} />
           </div>
       </div>
       </div>

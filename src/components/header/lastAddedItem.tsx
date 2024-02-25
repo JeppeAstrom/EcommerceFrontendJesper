@@ -1,32 +1,24 @@
+/* eslint-disable @next/next/no-img-element */
 import { Context } from "@/app/context";
 import CloseIcon from "@/app/icons/closeIcon";
+import { Product } from "@/types/product";
 import { NextPage } from "next";
 import { useContext, useEffect } from "react";
 
 interface Props {
-showHeader: () => void;
+showHeader: boolean;
+showNotification: boolean;
+lastAddedItem: Product;
+clearLastAddedItem: () => void;
 }
 
-const LastAddeditem:NextPage<Props> = ({showHeader}) => {
+const LastAddeditem:NextPage<Props> = ({ showNotification, lastAddedItem, clearLastAddedItem}) => {
 
 
-    const context = useContext(Context);
-
-    const {lastAddedItem, clearLastAddedItem}:any = context;
-
-   useEffect(() => {
-    showHeader();
-    if (!lastAddedItem) return;
-    const timer = setTimeout(() => {
-        clearLastAddedItem();
-    }, 3000);
-
-    return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
-}, [lastAddedItem, clearLastAddedItem, showHeader]);
 
 return(
     <>
-{lastAddedItem && (
+{lastAddedItem && showNotification && (
 <div className="absolute right-0 top-0 shadow-lg w-[400px] z-[30] bg-white">
 <div className="flex justify-between pt-4 px-4 items-center">
 <span className="text-lg">Produkt tillagd</span>
