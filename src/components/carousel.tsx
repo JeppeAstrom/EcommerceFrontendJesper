@@ -56,27 +56,31 @@ const Carousel:NextPage<Props> = ({products, title}) => {
     return (
       <div className="">
         
-        <div className="flex text-xl font-semibold py-6 justify-center">{title}</div>
+        <div className="flex py-6 flex-col gap-2">
+          <span className="text-xl font-semibold ">{title}</span>
+          <span>Köp dessa produkter</span>
+          
+          </div>
 
-        <div className="flex pb-6">
-        <div className="flex items-center">
-        {index !== 0 && <ArrowLeft onClick={handlePrev} className="w-8 h-8 left-0" />}
+        <div className="flex pb-6 p-4">
+        <div className="flex items-center ">
+        {index !== 0 && <ArrowLeft onClick={handlePrev} className="w-8 h-8 left-0 bg-gray-400" />}
         </div>
           <div className="flex items-center h-auto relative w-full justify-evenly">
             {products.slice(index, index + visibleItems).map((product, i) => ( 
-              <div key={i} className="relative">
-                <BuyIcon product={product} onClick={() => handleAddToCart(product)} className="w-6 h-6 top-0  cursor-pointer left-0 absolute" />
+              <div key={i} className="relative lg:h-[365px] lg:w-[253px] flex items-center justify-center bg-white p-4">
+                <BuyIcon product={product} onClick={() => handleAddToCart(product)} className="w-8 h-8 top-0  cursor-pointer left-0 absolute" />
                 <Link href={'/produkter/' + product.id}>
-                <img alt="" src={product.image} className="lg:h-[320px] lg:w-[251px] h-[416px] p-6 transition-all" />
+                <img alt="" src={product.image} className="transition-all w-[365px] max-h-[365px]" />
                 </Link>
-                <HeartIcon className="w-6 h-6 right-0 absolute top-0" />
+                <HeartIcon className="w-8 h-8 right-0 absolute top-0" />
               </div>
             ))}
           
           </div>
           <div className="flex items-center">
             
-              {index + visibleItems < products.length && <ArrowLeft onClick={handleNext} className="w-8 h-8  right-0 rotate-180" />}
+              {index + visibleItems < products.length && <ArrowLeft onClick={handleNext} className="w-8 h-8  right-0 rotate-180 bg-gray-400" />}
             </div>
         </div>
       </div>
