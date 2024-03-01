@@ -75,7 +75,7 @@ if(lastAddedItem){
   if(window.scrollY !== 0){
     headerShadow = 'shadow-lg'
   }
-
+  console.log(visible)
   return (
     <div className={`sticky top-0 bg-white z-10 transition-opacity duration-300 ease-in-out ${headerShadow}  ${visible || showNotification ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
     <div className="flex justify-center p-5">
