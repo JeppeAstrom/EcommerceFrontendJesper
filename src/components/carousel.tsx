@@ -58,7 +58,7 @@ const Carousel: NextPage<Props> = ({ products, title }) => {
 
       <div className="flex items-center relative">
         <ArrowLeft onClick={() => scrollCarousel('prev')} className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-10" />
-        <div className="overflow-x-auto hide-scroll-bar lg:w-[1400px] md:w-[768px] sm:w-[600x]" ref={carouselRef}>
+        <div className="overflow-x-hidden hide-scroll-bar lg:w-[1400px] md:w-[768px] sm:w-[600x]" ref={carouselRef}>
           <div className="flex items-center justify-start">
             {products.map((product, i) => (
               <div key={i} className="flex-shrink-0 flex-col lg:h-[365px] lg:w-[350px] md:w-[256px] w-[400px] flex items-center justify-center bg-white">

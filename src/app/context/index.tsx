@@ -1,6 +1,7 @@
 "use client"
 
 import { Product } from "@/types/product";
+import { GetAllProducts } from "@/utils/productService";
 import { ReactNode, createContext, useEffect, useState } from "react";
 
 interface ContextType {
@@ -10,6 +11,7 @@ interface ContextType {
     getCart: () => void;
     removeFromCart: (product:Product) => void;
     clearLastAddedItem: () => void;
+    allProducts: Product[] | undefined;
 }
 
 export const Context = createContext<ContextType | null>(null)
@@ -20,6 +22,15 @@ function GlobalState({ children }: { children: ReactNode }) {
     const cartStorage: Product[] = JSON.parse(cartStorageJSON as string) || [];
     const [cartItems, setCartItems] = useState<Product[]>(cartStorage);
     const [lastAddedItem, setLastAddedItem] = useState<Product | null>(null);
+    const [allProducts, setAllProducts] = useState<Product[]>();
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            const products = await GetAllProducts();
+            setAllProducts(products)
+        }
+        fetchProducts();
+    }, [])    
 
     useEffect(() => {
         localStorage.setItem('cartDropshippinggod', JSON.stringify(cartItems));
@@ -60,7 +71,7 @@ function GlobalState({ children }: { children: ReactNode }) {
     }
          
 
-    return <Context.Provider value={{lastAddedItem, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem }}>{children}</Context.Provider>
+    return <Context.Provider value={{lastAddedItem, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts }}>{children}</Context.Provider>
 }
 
 export default GlobalState;

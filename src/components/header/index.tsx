@@ -13,6 +13,10 @@ import SearchModal from "../searchmodal";
 import LastAddeditem from "./lastAddedItem";
 import Person from "@/app/icons/person";
 import AboutUs from "@/app/icons/aboutus";
+import SearchBar from "./searchbar";
+import { GetAllProducts } from "@/utils/productService";
+import { NextPage } from "next";
+import { Product } from "@/types/product";
 
 
 const categories:string[] = ["electronics",
@@ -20,7 +24,10 @@ const categories:string[] = ["electronics",
 "men's clothing",
 "women's clothing"]
 
-const Header = () => {
+
+
+
+const Header =  () => {
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [toggleCategoryModal, setToggleCategoryModal] = useState<boolean>(false);
   const [toggleSearchModal, setToggleSearchModal] = useState<boolean>(false);
@@ -32,11 +39,10 @@ const Header = () => {
   const handlerToggleSearchModal = () => setToggleSearchModal((prev) => !prev);
 
   const context = useContext(Context);
-  const {lastAddedItem, clearLastAddedItem}:any = context;
+  const {lastAddedItem, clearLastAddedItem, allProducts}:any = context;
   const {cartItems}: any= context;
-
-
   const [cartCount, setCartCount] = useState<number>();
+
 
   useEffect(() => {
     setCartCount(cartItems ? cartItems.length : 0)
@@ -92,11 +98,9 @@ if(lastAddedItem){
             />
           </Link>
           </div>
-          <input
-            className="text-md h-10  w-1/2 border px-4 p-2 rounded-xl border-black items-baseline"
-            placeholder="Sök product, kategori eller varumärke"
-          />
-        
+          <div className="w-1/2 relative">
+         <SearchBar products={allProducts}/>
+          </div>
           <div className="flex items-center gap-2">
           <Link className="items-center flex justify-center" href="/favoriter">
               <HeartIcon className="w-8 h-8 cursor-pointer" />
@@ -104,12 +108,11 @@ if(lastAddedItem){
             <span className="hidden lg:flex md:flex">Favoriter</span>
             </div>
             <div>
-            <button className="flex gap-2">
+            <button onClick={handlerToggleCart} className="flex gap-2">
             <CartIcon
             
             showCount={true}
             cartCount={cartCount ? cartCount : 0}
-              openCart={handlerToggleCart}
               className="w-8 h-8 cursor-pointer"
             />
             <span className="pt-1 pl-2 hidden md:flex lg:flex">
