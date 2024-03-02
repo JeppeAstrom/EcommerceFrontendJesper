@@ -72,7 +72,7 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
 
   return (
     <div className="mb-10">
-      <div className="flex py-6 flex-col gap-2">
+      <div className="flex py-6 sm:px-2 flex-col gap-2">
         <span className="text-xl font-semibold">{title}</span>
        
       </div>
@@ -85,21 +85,14 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
                  <div
                  key={index}
                  className="flex-shrink-0 flex-col flex items-center justify-center bg-white"
-                 style={{ width: `${itemWidth}px` }} // Apply the dynamic width here
+                 style={{ width: `${itemWidth}px` }}
                >
-               
-               
-              
-                    
-                  <img src={promotion.promotionImage} className="transition-all h-[750px] object-cover w-full" />
-          
-      
-             
+                  <img src={promotion.promotionImage} className="transition-all h-[800px] object-cover w-full" />
               </div>
             ))}
           </div>
         </div>
-        { !isAtEnd && <ArrowLeft onClick={() => scrollCarousel('next')} className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-10 rotate-180" /> }
+        { !isAtEnd && <ArrowLeft onClick={() => scrollCarousel('next')} className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-5 rotate-180" /> }
       </div>
     </div>
   );

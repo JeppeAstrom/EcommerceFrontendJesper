@@ -26,6 +26,7 @@ const SearchBar:NextPage<Props> = ({products}) => {
     
     useEffect(() => {
    setActivated(false);
+   setInputText('')
     }, [pageUrl]);
 
     

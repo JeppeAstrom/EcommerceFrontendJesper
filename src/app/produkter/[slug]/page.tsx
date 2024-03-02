@@ -34,13 +34,12 @@ const ProductPage = () => {
 
     return (
         <div className="flex items-center justify-center">
-            <div className="grid lg:grid-cols-2 flex-col lg:w-1/2 w-full">
-                <div className="p-8">
-                    <figure className="aspect-w-9 aspect-h-13 overflow-hidden lg:h-[400px]">
-                        <img className="w-full h-full object-fit" src={product.image} alt={product.title} />
-                    </figure>
-                </div>
-                <div className="lg:p-8 relative">
+            <div className="lg:flex w-full justify-center">
+              <div className="flex justify-center items-center">
+                    
+                        <img className="object-fit lg:w-[400px] h-[400px]" src={product.image} alt={product.title} />
+                        </div>
+                <div className="lg:p-8 relative w-[400px]">
                     <span className="line-clamp-1 border-b border-black text-lg">{product.title}</span>
                     <div className="mt-2">
                         <span className="mt-4 text-sm line-clamp-8">{product.description}</span>
@@ -51,6 +50,7 @@ const ProductPage = () => {
                     </div>
                  
                 </div>
+             
             </div>
         </div>
     );
