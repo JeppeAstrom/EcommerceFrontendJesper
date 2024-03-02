@@ -81,33 +81,25 @@ if(lastAddedItem){
   if(window.scrollY !== 0){
     headerShadow = 'shadow-lg'
   }
-  console.log(visible)
+
   return (
     <div className={`sticky top-0 bg-white z-10 transition-opacity duration-300 ease-in-out ${headerShadow}  ${visible || showNotification ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
     <div className="flex justify-center p-5">
       <div className="w-[1400px] mx-auto">
       <div className="flex flex-col py-4">
-      <div className="grid lg:grid-cols-1 md:grid-cols-2 sm:grid-cols-1">
-          <div className="flex w-full gap-2 lg:gap-4 items-center">
-            <div>
-          <Link href="/">
-            <img
-              alt=""
-              className="h-[60px] w-auto"
-              src="https://i.ibb.co/f82dWcj/ffffff.png"
-            />
-          </Link>
-          </div>
-          <div className="w-1/2 relative">
-         <SearchBar products={allProducts}/>
-          </div>
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+    
+
+            <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
           <Link className="items-center flex justify-center" href="/favoriter">
               <HeartIcon className="w-8 h-8 cursor-pointer" />
             </Link>
             <span className="hidden lg:flex md:flex">Favoriter</span>
             </div>
-            <div>
+
+
+            <div className="">
             <button onClick={handlerToggleCart} className="flex gap-2">
             <CartIcon
             
@@ -120,6 +112,13 @@ if(lastAddedItem){
             </span>
             </button>
             </div>
+            </div>
+
+          <div className="w-full relative">
+         <SearchBar products={allProducts}/>
+          </div>
+        
+          <div className="flex gap-4 justify-end">
             <div className="flex items-center gap-2">
             <Person className="h-8 w-8"/>
             <span className="hidden lg:flex md:flex">Logga in</span>
@@ -131,6 +130,7 @@ if(lastAddedItem){
             <div>
             <Hamburger onClick={handlerToggleCategoryModal} className="w-8 h-8 cursor-pointer md:hidden lg:hidden"/>
             </div>  
+            </div>
             {toggleCart && <CartModal  handleToggleCart={handlerToggleCart} />}
             {toggleCategoryModal && (
         <Modal title={'Kategorier'} toggleModal={handlerToggleCategoryModal}>
@@ -153,7 +153,7 @@ if(lastAddedItem){
         </SearchModal>
           )}
         <LastAddeditem showNotification={showNotification} showHeader={showNotification} clearLastAddedItem={clearLastAddedItem} lastAddedItem={lastAddedItem} />
-          </div>
+        
       </div>
       </div>
       </div>
