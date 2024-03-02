@@ -81,25 +81,43 @@ if(lastAddedItem){
   if(window.scrollY !== 0){
     headerShadow = 'shadow-lg'
   }
-
+ 
+ 
   return (
     <div className={`sticky top-0 bg-white z-10 transition-opacity duration-300 ease-in-out ${headerShadow}  ${visible || showNotification ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
     <div className="flex justify-center p-5">
       <div className="w-[1400px] mx-auto">
-      <div className="flex flex-col py-4">
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1">
+      <div className="flex flex-col py-2">
+      <div className="flex lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 items-center justify-center">
     
 
-            <div className="flex items-center gap-4">
+           <div className="flex items-center justify-center w-1/3 gap-x-3">
           <div className="flex items-center gap-2">
           <Link className="items-center flex justify-center" href="/favoriter">
               <HeartIcon className="w-8 h-8 cursor-pointer" />
             </Link>
-            <span className="hidden lg:flex md:flex">Favoriter</span>
+            <span className="hidden lg:flex md:flex font-light">Favoriter</span>
             </div>
+            <div className="items-center gap-2 lg:hidden">
+            <Person className="h-8 w-8"/>
+            <span className="hidden lg:flex md:flex font-light">Logga in</span>
+            </div>
+            <div className="lg:flex items-center gap-2 hidden">
+            <AboutUs className="h-8 w-8"/>
+            <span className="font-light">Om oss</span>
+            </div>
+          </div>
+        
+               
+  <div className="w-full items-center justify-center">
+  <Link href='/' className="flex items-center justify-center p-2 font-semibold text-lg">ShittyDropShitting</Link>
+  </div>
+       
+          <div className="flex gap-x-3 w-1/3"> 
+            <div className="gap-4 justify-end flex w-full lg:hidden">
+          
 
-
-            <div className="">
+   
             <button onClick={handlerToggleCart} className="flex gap-2">
             <CartIcon
             
@@ -107,30 +125,45 @@ if(lastAddedItem){
             cartCount={cartCount ? cartCount : 0}
               className="w-8 h-8 cursor-pointer"
             />
-            <span className="pt-1 pl-2 hidden md:flex lg:flex">
+            <span className="pt-1 pl-2 hidden md:flex lg:flex font-light">
             Varukorg
             </span>
             </button>
-            </div>
-            </div>
+     
 
-          <div className="w-full relative">
-         <SearchBar products={allProducts}/>
-          </div>
-        
-          <div className="flex gap-4 justify-end">
-            <div className="flex items-center gap-2">
-            <Person className="h-8 w-8"/>
-            <span className="hidden lg:flex md:flex">Logga in</span>
-            </div>
-            <div className="lg:flex md:flex items-center gap-2 hidden">
-            <AboutUs className="h-8 w-8"/>
-            <span className="">Om oss</span>
-            </div>
+
             <div>
             <Hamburger onClick={handlerToggleCategoryModal} className="w-8 h-8 cursor-pointer md:hidden lg:hidden"/>
             </div>  
             </div>
+          
+
+
+          <div className=" gap-4 justify-end hidden lg:flex">
+            <div className="flex items-center gap-2">
+            <Person className="h-8 w-8"/>
+            <span className="hidden lg:flex md:flex font-light">Logga in</span>
+            </div>
+             
+            <button onClick={handlerToggleCart} className="flex gap-2 items-center">
+            <CartIcon
+            
+            showCount={true}
+            cartCount={cartCount ? cartCount : 0}
+              className="w-8 h-8 cursor-pointer"
+            />
+            <span className="pt-1 pl-2 hidden md:flex lg:flex font-light">
+            Varukorg
+            </span>
+            </button>
+            <div>
+            <Hamburger onClick={handlerToggleCategoryModal} className="w-8 h-8 cursor-pointer md:hidden lg:hidden"/>
+            </div>  
+            </div>
+            </div>
+
+
+            
             {toggleCart && <CartModal  handleToggleCart={handlerToggleCart} />}
             {toggleCategoryModal && (
         <Modal title={'Kategorier'} toggleModal={handlerToggleCategoryModal}>
@@ -156,7 +189,12 @@ if(lastAddedItem){
         
       </div>
       </div>
+      <div className="sm:w-full lg:w-2/4 items-center justify-center mx-auto relative">
+          
+          <SearchBar products={allProducts}/>
+           </div>
       </div>
+      
       </div>
       </div>
   );

@@ -16,12 +16,12 @@ const SearchResultCard:NextPage<Props> = ({product}) => {
 
    return(<>
 <Link href={'/produkter/' + product.id} className="flex flex-col">
-    <figure className="w-[120px] h-[120px]">
+    <figure className="p-4">
     <img className="w-full h-full" src={product.image}/>
     </figure>
     <div className="flex flex-col">
-    <span className="text-md line-clamp-1 w-[120px]">{product.title}</span>
-    <span className="text-sm line-clamp-1 w-[120px] font-light">{product.description}</span>
+    <span className="text-md line-clamp-1">{product.title}</span>
+    <span className="text-sm line-clamp-1 font-light">{product.description}</span>
     <span className="text-sm pt-1">{product.price} kr</span>
     </div>
 

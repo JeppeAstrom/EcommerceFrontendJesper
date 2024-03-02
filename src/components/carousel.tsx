@@ -42,7 +42,7 @@ const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTable
       setItemWidth(itemWidth);
     }
   };
-
+  
   const updateArrowVisibility = (scrollPosition:number) => {
     if (carouselRef.current) {
       const maxScrollLeft = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
@@ -50,7 +50,6 @@ const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTable
       setIsAtEnd(scrollPosition >= maxScrollLeft);
     }
   };
-
 
   useEffect(() => {
     window.addEventListener('resize', updateVisibleItemsAndWidth);
@@ -67,6 +66,7 @@ const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTable
         left: direction === 'next' ? currentScroll + scrollAmount : currentScroll - scrollAmount,
         behavior: 'smooth',
       });
+      updateArrowVisibility(newScrollPosition);
     }
   };
 
