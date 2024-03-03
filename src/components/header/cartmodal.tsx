@@ -30,7 +30,7 @@ const CartModal:NextPage<Props> = ({handleToggleCart}) => {
         ))}
       </div>
       {cartItems && cartItems.length > 0 && (
-      <button className="w-full sticky h-10  bottom-0 border-b border-t border-black">Checkout</button>
+      <button className="w-full sticky h-10 bg-white bottom-0 border-b border-t border-black">Checkout</button>
       )}
     </div>
    
