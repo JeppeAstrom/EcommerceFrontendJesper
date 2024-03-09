@@ -25,15 +25,15 @@ function GlobalState({ children }: { children: ReactNode }) {
     const [allProducts, setAllProducts] = useState<Product[]>();
 
     useEffect(() => {
-        const cartStorageJSON = typeof window !== "undefined" ? localStorage.getItem('cartDropshippinggod') : null;
-        const cartStorage: Product[] = cartStorageJSON ? JSON.parse(cartStorageJSON) : [];
-        setCartItems(cartStorage);
-    }, []);
+        const fetchProducts = async () => {
+            const products = await GetAllProducts();
+            setAllProducts(products)
+        }
+        fetchProducts();
+    }, [])    
 
     useEffect(() => {
-        if (typeof window !== "undefined") {
-            localStorage.setItem('cartDropshippinggod', JSON.stringify(cartItems));
-        }
+        localStorage.setItem('cartDropshippinggod', JSON.stringify(cartItems));
     }, [cartItems]);
 
     function handleAddToCart(getCurrentItem: Product, skipNotification?:string) {
