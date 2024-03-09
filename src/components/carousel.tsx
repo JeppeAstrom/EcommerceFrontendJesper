@@ -24,6 +24,16 @@ const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTable
   const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
   const [isAtEnd, setIsAtEnd] = useState(false); 
 
+  const updateArrowVisibility = (scrollPosition:number) => {
+    if (carouselRef.current) {
+      const maxScrollLeft = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
+      setIsAtStart(scrollPosition === 0);
+      setIsAtEnd(scrollPosition >= maxScrollLeft);
+    }
+  };
+
+  useEffect(() => {
+    
   const updateVisibleItemsAndWidth = () => {
     let visible = 4; // Default visible items
     if (window.innerWidth >= 1024) {
@@ -43,19 +53,10 @@ const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTable
     }
   };
   
-  const updateArrowVisibility = (scrollPosition:number) => {
-    if (carouselRef.current) {
-      const maxScrollLeft = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
-      setIsAtStart(scrollPosition === 0);
-      setIsAtEnd(scrollPosition >= maxScrollLeft);
-    }
-  };
-
-  useEffect(() => {
     window.addEventListener('resize', updateVisibleItemsAndWidth);
     updateVisibleItemsAndWidth(); // Initial update
     return () => window.removeEventListener('resize', updateVisibleItemsAndWidth);
-  }, []);
+  }, [slidesDesktop, slidesPhone, slidesTablet]);
 
   const scrollCarousel = (direction:'next' |'prev') => {
     if (carouselRef.current) {
