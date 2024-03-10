@@ -18,19 +18,38 @@ export const Context = createContext<ContextType | null>(null)
 
 function GlobalState({ children }: { children: ReactNode }) {
     
-    const cartStorageJSON: string | null = localStorage.getItem('cartDropshippinggod');
-    const cartStorage: Product[] = JSON.parse(cartStorageJSON as string) || [];
-    const [cartItems, setCartItems] = useState<Product[]>(cartStorage);
+  
+   
+    const [cartItems, setCartItems] = useState<Product[] | undefined>();
     const [lastAddedItem, setLastAddedItem] = useState<Product | null>(null);
-    const [allProducts, setAllProducts] = useState<Product[]>();
+    const [allProducts, setAllProducts] = useState<Product[]>([]);
 
     useEffect(() => {
+
+        const cartStorageJSON: string | null = localStorage.getItem('cartDropshippinggod');
+        
+
+        let cartStorage: Product[] = [];
+        if (cartStorageJSON && cartStorageJSON !== "undefined") {
+            try {
+                cartStorage = JSON.parse(cartStorageJSON);
+            } catch (error) {
+                console.error("Error parsing cart storage JSON:", error);
+   
+                cartStorage = [];
+            }
+        }
+        setCartItems(cartStorage);
+
         const fetchProducts = async () => {
             const products = await GetAllProducts();
-            setAllProducts(products)
-        }
+            if (products) {
+                setAllProducts(products);
+            }
+        };
+
         fetchProducts();
-    }, [])    
+    }, []);
 
     useEffect(() => {
         localStorage.setItem('cartDropshippinggod', JSON.stringify(cartItems));

@@ -14,9 +14,6 @@ import LastAddeditem from "./lastAddedItem";
 import Person from "@/app/icons/person";
 import AboutUs from "@/app/icons/aboutus";
 import SearchBar from "./searchbar";
-import { GetAllProducts } from "@/utils/productService";
-import { NextPage } from "next";
-import { Product } from "@/types/product";
 
 
 const categories:string[] = ["electronics",
@@ -37,7 +34,7 @@ const Header =  () => {
   const [visible, setVisible] = useState(true);
   const [showNotification, setShowNotification] = useState<boolean>(false);
   const handlerToggleSearchModal = () => setToggleSearchModal((prev) => !prev);
-
+  const [headerShadow, setHeaderShadow] = useState('');
   const context = useContext(Context);
   const {lastAddedItem, clearLastAddedItem, allProducts}:any = context;
   const {cartItems}: any= context;
@@ -59,7 +56,7 @@ if(lastAddedItem){
         clearLastAddedItem();
         setShowNotification(false);
     }, 3000);
-    return () => clearTimeout(timer); // Cleanup the timer if the component unmounts
+    return () => clearTimeout(timer);
 }
 
 }, [lastAddedItem, clearLastAddedItem]);
@@ -77,10 +74,21 @@ if(lastAddedItem){
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [prevScrollPos, visible]);
-  let headerShadow = '';
-  if(window.scrollY !== 0){
-    headerShadow = 'shadow-lg'
-  }
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY !== 0) {
+        setHeaderShadow('shadow-lg');
+      } else {
+        setHeaderShadow('');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []); 
+ 
  
  
   return (
