@@ -19,7 +19,7 @@ slidesPhone: number;
 
 const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop, slidesTablet, slidesPhone }) => {
   const [visibleItems, setVisibleItems] = useState(4); // Default number of visible items
-  const [itemWidth, setItemWidth] = useState(0); // State to hold the dynamic width of each item
+  const [itemWidth, setItemWidth] = useState(700); // State to hold the dynamic width of each item
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
   const [isAtEnd, setIsAtEnd] = useState(false); 
@@ -69,25 +69,25 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
       updateArrowVisibility(newScrollPosition);
     }
   };
-
+  console.log(itemWidth)
   return (
     <div className="mb-10">
       <div className="flex py-6 sm:px-2 flex-col gap-2">
-        <span className="text-xl font-semibold">{title}</span>
+        <span className="text-xl font-semibold px-4">{title}</span>
        
       </div>
 
       <div className="flex items-center relative">
       { !isAtStart && <ArrowLeft onClick={() => scrollCarousel('prev')} className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-10" /> }
-        <div className="overflow-x-hidden hide-scroll-bar lg:w-[1400px] md:w-[768px] sm:w-[600x]" ref={carouselRef}>
-       <div className="flex items-center justify-start">
+        <div className="overflow-x-hidden hide-scroll-bar lg:w-[1400px] md:w-[768px]" ref={carouselRef}>
+       <div className="flex items-center lg:justify-start">
             {promotion.map((promotion, index) => (
                  <div
                  key={index}
-                 className="flex-shrink-0 flex-col flex items-center justify-center bg-white"
+                 className="flex-shrink-0 flex-col flex items-center justify-center p-4"
                  style={{ width: `${itemWidth}px` }}
                >
-                  <img src={promotion.promotionImage} className="transition-all h-[800px] object-cover w-full" />
+                  <img src={promotion.promotionImage} className="transition-all h-[800px] object-cover  w-full" />
               </div>
             ))}
           </div>

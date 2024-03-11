@@ -17,12 +17,13 @@ async function GetData(slug:string) {
 
   export default async function Page({
     params: { slug },
-  }: {
+  }: {  
     params: { slug: string }
   }) {
     const data = await GetData(slug)
 
 return(<>
+    
     <ProductRain products={data}/>
 </>)
 

@@ -19,7 +19,7 @@ slidesPhone: number;
 
 const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTablet, slidesPhone }) => {
   const [visibleItems, setVisibleItems] = useState(4); // Default number of visible items
-  const [itemWidth, setItemWidth] = useState(0); // State to hold the dynamic width of each item
+  const [itemWidth, setItemWidth] = useState(400); // State to hold the dynamic width of each item
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
   const [isAtEnd, setIsAtEnd] = useState(false); 

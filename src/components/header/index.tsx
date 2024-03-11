@@ -96,7 +96,7 @@ if(lastAddedItem){
     <div className="flex justify-center p-5">
       <div className="w-[1400px] mx-auto">
       <div className="flex flex-col py-2">
-      <div className="flex lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-3 items-center justify-center">
+      <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
     
 
            <div className="flex items-center justify-center w-1/3 gap-x-3">
@@ -133,39 +133,37 @@ if(lastAddedItem){
             cartCount={cartCount ? cartCount : 0}
               className="w-8 h-8 cursor-pointer"
             />
-            <span className="pt-1 pl-2 hidden md:flex lg:flex font-light">
+            <span className="pt-1 pl-2 hidden lg:flex font-light">
             Varukorg
             </span>
             </button>
      
 
 
-            <div>
-            <Hamburger onClick={handlerToggleCategoryModal} className="w-8 h-8 cursor-pointer md:hidden lg:hidden"/>
-            </div>  
+       
             </div>
           
 
 
-          <div className=" gap-4 justify-end hidden lg:flex">
-            <div className="flex items-center gap-2">
+          <div className="gap-4 justify-end flex">
+            <div className="items-center gap-2 hidden lg:flex">
             <Person className="h-8 w-8"/>
-            <span className="hidden lg:flex md:flex font-light">Logga in</span>
+            <span className="hidden lg:flex font-light">Logga in</span>
             </div>
              
-            <button onClick={handlerToggleCart} className="flex gap-2 items-center">
+            <button onClick={handlerToggleCart} className="gap-2 items-center hidden lg:flex">
             <CartIcon
             
             showCount={true}
             cartCount={cartCount ? cartCount : 0}
               className="w-8 h-8 cursor-pointer"
             />
-            <span className="pt-1 pl-2 hidden md:flex lg:flex font-light">
+            <span className="pt-1 pl-2 hidden lg:flex font-light">
             Varukorg
             </span>
             </button>
             <div>
-            <Hamburger onClick={handlerToggleCategoryModal} className="w-8 h-8 cursor-pointer md:hidden lg:hidden"/>
+            <Hamburger onClick={handlerToggleCategoryModal} className="w-8 h-8 cursor-pointer lg:hidden"/>
             </div>  
             </div>
             </div>
