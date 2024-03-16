@@ -17,7 +17,7 @@ const promotion:Promotion[] = [{promotionTitle:'Rabatt', promotionImage: 'https:
 const Home = async ()  => {
 
   const Products = await GetAllProducts();
- 
+
   return(<>
   
 

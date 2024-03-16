@@ -5,6 +5,7 @@ import ArrowLeft from "@/app/icons/arrowleft";
 /* eslint-disable jsx-a11y/alt-text */
 
 import { Product } from "@/types/product";
+import { GetAllProducts } from "@/utils/productService";
 import { NextPage } from "next";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -17,13 +18,12 @@ slidesTablet:number;
 slidesPhone: number;
 }
 
-const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTablet, slidesPhone }) => {
+const Carousel: NextPage<Props> =  ({ products, title, slidesDesktop, slidesTablet, slidesPhone }) => {
   const [visibleItems, setVisibleItems] = useState(4); // Default number of visible items
   const [itemWidth, setItemWidth] = useState(400); // State to hold the dynamic width of each item
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
   const [isAtEnd, setIsAtEnd] = useState(false); 
-
   const updateArrowVisibility = (scrollPosition:number) => {
     if (carouselRef.current) {
       const maxScrollLeft = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
@@ -31,7 +31,7 @@ const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTable
       setIsAtEnd(scrollPosition >= maxScrollLeft);
     }
   };
-
+console.log(products)
   useEffect(() => {
     
   const updateVisibleItemsAndWidth = () => {
@@ -91,7 +91,7 @@ const Carousel: NextPage<Props> = ({ products, title, slidesDesktop, slidesTable
                
                 <Link className="p-4" href={`/produkter/${product.id}`}>
                   
-                  <img src={product.image} className="transition-all max-h-[500px]" />
+                  <img src={product.images.$values[0] ? product.images.$values[0].imageUrl : 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAOVBMVEXm6ezb3uGXoazq7e/Dyc/l6ey/xcyrs7vX3OCnr7jV2d6Zo63O09ibpa+5wMezusLv8fTP1NnIzdMlnmvOAAABdElEQVR4nO3Z0ZKaMBiAUUwQlsaIy/s/bAHdabXxdmn7n3PDCDeZb0JA0nUAAAAAAAAAAAAAAAAAAAAAAAAAAP+u3HT0qA6UT/3Q1J+iZslDemsIGmVJpY5NtaTl6NEdItcyt5eTnMdSY06UlD7eXMk/UvrWofwtzu+bdNGb5NPl4/VGCd4kz+tjZnq5FrxJn8pqfp4psZvkqVxvfUmabB5Naulvn78S3NsEbzKkMpYy3lvkft6PsZt03bSusfW8n8rXVPblNnqTfBkeL/JbkrJHid6k+1pe1yRp/txnSvgmD3uSnC9bFE129yTbrbRG0WTzleQepVZNfkuyR9HkOck9Svgmz0nW30uJ3uQ1iWdxI0n4Jo0k0Zu0kgRv0kwStsn23T63k4RtkmsZb+s/4euttb8zxdzfWbYvA7WO0x9qSZejR3eM3Ke0ZmnuF/cxp8m2s7MMfctyjpoEAAAAAAAAAAAAAAAAAAAAAAAAAPgPnHj1E96TDiAitj9wAAAAAElFTkSuQmCC'} className="transition-all max-h-[500px]" />
                 </Link>
       
              

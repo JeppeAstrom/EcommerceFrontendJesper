@@ -17,7 +17,7 @@ interface Props {
 const ProductCard:NextPage<Props> = ({product}) => {
 
     const {handleAddToCart}:any= useContext(Context)
-  
+
 return(<>
     <div className="flex flex-col rounded-xl shadow-lg max-w-sm items-center justify-center">
     <div className="p-4 rounded-xl items-center justify-center flex flex-col w-full">
@@ -33,7 +33,7 @@ return(<>
     </div>
     <figure className="p-2 h-[250px] w-[200px] overflow-hidden bg-white flex justify-center items-center">
     <Link href={'/produkter/' + product.id}>
-        <img alt="" src={product.image} className="max-h-[250px] max-w-[200px] object-contain transition-all"/>
+        <img alt="" src={product.images.$values[0] ? product.images.$values[0].imageUrl : '' } className="max-h-[250px] max-w-[200px] object-contain transition-all"/>
     </Link>
     </figure>
 

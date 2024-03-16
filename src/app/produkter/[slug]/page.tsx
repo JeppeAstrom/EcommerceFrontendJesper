@@ -37,10 +37,10 @@ const ProductPage = () => {
             <div className="lg:flex w-full justify-center">
               <div className="flex justify-center items-center">
                     
-                        <img className="object-fit lg:w-[400px] h-[400px]" src={product.image} alt={product.title} />
+                        <img className="object-fit lg:w-[400px] h-[400px]" src={product.images.$values[0] ? product.images.$values[0].imageUrl : ''} alt={product.title} />
                         </div>
                 <div className="lg:p-8 relative w-[400px]">
-                    <span className="line-clamp-1 border-b border-black text-lg">{product.title}</span>
+                    <span className="line-clamp-1 border-b border-black text-lg">{product.name}</span>
                     <div className="mt-2">
                         <span className="mt-4 text-sm line-clamp-8">{product.description}</span>
                         <div className="flex justify-between pt-4">

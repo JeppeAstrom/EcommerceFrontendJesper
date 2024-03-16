@@ -69,7 +69,7 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
       updateArrowVisibility(newScrollPosition);
     }
   };
-  console.log(itemWidth)
+
   return (
     <div className="mb-10">
       <div className="flex py-6 sm:px-2 flex-col gap-2">
