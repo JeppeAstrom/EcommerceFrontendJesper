@@ -23,7 +23,7 @@ const Home = async ()  => {
 
     <Campaign image="https://images6.alphacoders.com/653/653764.jpg"/>
       <div className="mb-10">
-      <PromotionalCarousel title="Spana in Sandler kollektionen" promotion={promotion} slidesDesktop={2} slidesPhone={1} slidesTablet={1}/>
+      <PromotionalCarousel title="Spana in Sandler kollektionen" promotion={promotion} slidesDesktop={4} slidesPhone={1} slidesTablet={1}/>
       </div>
     <div className="mt-10 p-4">
     <Carousel slidesDesktop={4} slidesTablet={3} slidesPhone={1} title="Trendigt hos oss" products={Products}/>

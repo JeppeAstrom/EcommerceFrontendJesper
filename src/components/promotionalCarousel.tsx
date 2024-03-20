@@ -23,25 +23,6 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
   const [isAtEnd, setIsAtEnd] = useState(false); 
-
-  const updateVisibleItemsAndWidth = () => {
-    let visible = 4; // Default visible items
-    if (window.innerWidth >= 1024) {
-      visible = slidesDesktop;
-    } else if (window.innerWidth >= 768) {
-      visible = slidesTablet;
-    } else {
-      visible = slidesPhone;
-    }
-    setVisibleItems(visible);
-
-    // Calculate the width of each item based on the carousel width and the number of visible items
-    if (carouselRef.current) {
-      const containerWidth = carouselRef.current.offsetWidth;
-      const itemWidth = containerWidth / visible;
-      setItemWidth(itemWidth);
-    }
-  };
   
   const updateArrowVisibility = (scrollPosition:number) => {
     if (carouselRef.current) {
@@ -52,10 +33,28 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
   };
 
   useEffect(() => {
+    const updateVisibleItemsAndWidth = () => {
+      let visible = 4; // Default visible items
+      if (window.innerWidth >= 1024) {
+        visible = slidesDesktop;
+      } else if (window.innerWidth >= 768) {
+        visible = slidesTablet;
+      } else {
+        visible = slidesPhone;
+      }
+      setVisibleItems(visible);
+  
+      // Calculate the width of each item based on the carousel width and the number of visible items
+      if (carouselRef.current) {
+        const containerWidth = carouselRef.current.offsetWidth;
+        const itemWidth = containerWidth / visible;
+        setItemWidth(itemWidth);
+      }
+    };
     window.addEventListener('resize', updateVisibleItemsAndWidth);
     updateVisibleItemsAndWidth(); // Initial update
     return () => window.removeEventListener('resize', updateVisibleItemsAndWidth);
-  }, []);
+  }, );
 
   const scrollCarousel = (direction:'next' |'prev') => {
     if (carouselRef.current) {
@@ -72,14 +71,14 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
 
   return (
     <div className="mb-10">
-      <div className="flex py-6 sm:px-2 flex-col gap-2">
+      <div className="flex py-6 sm:px-2 flex-col">
         <span className="text-xl font-semibold px-4">{title}</span>
        
       </div>
 
-      <div className="flex items-center relative">
+      <div className="flex items-center relative justify-center mx-auto">
       { !isAtStart && <ArrowLeft onClick={() => scrollCarousel('prev')} className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-10" /> }
-        <div className="overflow-x-hidden hide-scroll-bar lg:w-[1400px] md:w-[768px]" ref={carouselRef}>
+        <div className="overflow-x-hidden overflow-y-hidden hide-scroll-bar" ref={carouselRef}>
        <div className="flex items-center lg:justify-start">
             {promotion.map((promotion, index) => (
                  <div
@@ -87,7 +86,11 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
                  className="flex-shrink-0 flex-col flex items-center justify-center p-4"
                  style={{ width: `${itemWidth}px` }}
                >
-                  <img src={promotion.promotionImage} className="transition-all h-[800px] object-cover  w-full" />
+              
+                <figure className="aspect-[9/13] min-w-full  justify-center items-center flex h-[500px]">
+                  <img src={promotion.promotionImage} className="transition-all object-contain h-full w-full" />
+                  </figure>
+              
               </div>
             ))}
           </div>

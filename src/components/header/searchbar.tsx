@@ -22,14 +22,16 @@ const SearchBar:NextPage<Props> = ({products}) => {
            result && setActivated(true);
         }
        
-    },[inputText])
+    },[inputText, products])
     
     useEffect(() => {
    setActivated(false);
    setInputText('')
     }, [pageUrl]);
 
-
+    
+    console.log(products)
+    console.log(searchResult)
     return(<>
 
 <div className="relative flex items-center border border-gray-500 rounded-xl">
