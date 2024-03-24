@@ -2,7 +2,7 @@ import { Product } from "@/types/product";
 
 
 const GetAllProducts = async () => {
-    let apiRoute = 'http://localhost:5247/api/Products';
+    let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Products';
 
     const ProductList: Product[] = await fetch(apiRoute).then(res => res.json())
   
@@ -11,7 +11,7 @@ const GetAllProducts = async () => {
 }
 
 const GetProduct = async (id:string) => {
-    let apiRoute =  'http://localhost:5247/Products/ById/' + id;
+    let apiRoute =  'https://wa-okx-jesper-aa.azurewebsites.net/Products/ById/' + id;
 
     const Product:Product = await fetch(apiRoute).then(res=> res.json());
 
@@ -19,11 +19,19 @@ const GetProduct = async (id:string) => {
 }
 
 const getProductsFromCategory = async (category:string) => {
-    let apiRoute = 'http://localhost:5247/api/Products/' + category;
+    let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Products/' + category;
 
     const ProductList: Product[] = await fetch(apiRoute).then(res => res.json())
 
     return ProductList.$values;
 }
 
-export { GetAllProducts, GetProduct, getProductsFromCategory };
+const getMainCategories = async() => {
+    let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Categories';
+
+    const categories = await fetch(apiRoute).then(res => res.json());
+
+    return categories.$values;
+}
+
+export { GetAllProducts, GetProduct, getProductsFromCategory, getMainCategories };

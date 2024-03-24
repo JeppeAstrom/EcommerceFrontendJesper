@@ -16,14 +16,6 @@ import AboutUs from "@/app/icons/aboutus";
 import SearchBar from "./searchbar";
 
 
-const categories:string[] = ["electronics",
-"jewelery",
-"men's clothing",
-"women's clothing"]
-
-
-
-
 const Header =  () => {
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [toggleCategoryModal, setToggleCategoryModal] = useState<boolean>(false);
@@ -36,7 +28,7 @@ const Header =  () => {
   const handlerToggleSearchModal = () => setToggleSearchModal((prev) => !prev);
   const [headerShadow, setHeaderShadow] = useState('');
   const context = useContext(Context);
-  const {lastAddedItem, clearLastAddedItem, allProducts}:any = context;
+  const {lastAddedItem, clearLastAddedItem, allProducts, categories}:any = context;
   const {cartItems}: any= context;
   const [cartCount, setCartCount] = useState<number>();
 
@@ -89,8 +81,7 @@ if(lastAddedItem){
     return () => window.removeEventListener('scroll', handleScroll);
   }, []); 
  
- 
- 
+
   return (
     <div className={`sticky top-0 bg-white z-10 transition-opacity duration-300 ease-in-out ${headerShadow}  ${visible || showNotification ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
     <div className="flex justify-center p-5">
@@ -175,8 +166,8 @@ if(lastAddedItem){
         <Modal title={'Kategorier'} toggleModal={handlerToggleCategoryModal}>
           {categories.map((category, index) => (
         
-            <Link key={index} className="justify-between flex border-b border-black w-full p-2" onClick={handlerToggleCategoryModal} href={'/produkter/kategori/' + category} >
-            <span>{category}</span>
+            <Link key={index} className="justify-between flex border-b border-black w-full p-2" onClick={handlerToggleCategoryModal} href={'/produkter/kategori/' + category.name} >
+            <span>{category.name}</span>
             <ArrowLeft className="rotate-180 h-5 w-5 items-center flex justify-center mr-2"/>
             </Link>
           

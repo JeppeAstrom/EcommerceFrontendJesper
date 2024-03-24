@@ -31,7 +31,7 @@ return(<>
       <BuyIcon  className="absolute left-0 w-6 h-6"/>
     </button>
     </div>
-    <figure className="p-2 h-[250px] w-[200px] overflow-hidden bg-white flex justify-center items-center">
+    <figure className="p-2 aspect-[9/13] overflow-hidden bg-white flex justify-center items-center">
     <Link href={'/produkter/' + product.id}>
         <img alt="" src={product.images.$values[0] ? product.images.$values[0].imageUrl : '' } className="max-h-[250px] max-w-[200px] object-contain transition-all"/>
     </Link>

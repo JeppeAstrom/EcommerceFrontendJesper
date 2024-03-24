@@ -1,7 +1,8 @@
 "use client"
 
+import { Category } from "@/types/category";
 import { Product } from "@/types/product";
-import { GetAllProducts } from "@/utils/productService";
+import { GetAllProducts, getMainCategories } from "@/utils/productService";
 import { ReactNode, createContext, useEffect, useState } from "react";
 
 interface ContextType {
@@ -12,6 +13,7 @@ interface ContextType {
     removeFromCart: (product:Product) => void;
     clearLastAddedItem: () => void;
     allProducts: Product[] | undefined;
+    categories: Category[] | undefined
 }
 
 export const Context = createContext<ContextType | null>(null)
@@ -23,7 +25,7 @@ function GlobalState({ children }: { children: ReactNode }) {
     const [cartItems, setCartItems] = useState<Product[] | undefined>();
     const [lastAddedItem, setLastAddedItem] = useState<Product | null>(null);
     const [allProducts, setAllProducts] = useState<Product[]>([]);
-
+    const [categories, setCategories] = useState<Category[]>([]);
     useEffect(() => {
 
         const cartStorageJSON: string | null = localStorage.getItem('cartDropshippinggod');
@@ -41,14 +43,18 @@ function GlobalState({ children }: { children: ReactNode }) {
         }
         setCartItems(cartStorage);
 
-        const fetchProducts = async () => {
+        const fetchProductsAndCategories = async () => {
             const products = await GetAllProducts();
+            const categories = await getMainCategories();
             if (products) {
                 setAllProducts(products);
             }
+            if(categories){
+                setCategories(categories);
+            }
         };
 
-        fetchProducts();
+        fetchProductsAndCategories();
     }, []);
 
     useEffect(() => {
@@ -90,7 +96,7 @@ function GlobalState({ children }: { children: ReactNode }) {
     }
          
 
-    return <Context.Provider value={{lastAddedItem, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts }}>{children}</Context.Provider>
+    return <Context.Provider value={{lastAddedItem, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts, categories }}>{children}</Context.Provider>
 }
 
 export default GlobalState;

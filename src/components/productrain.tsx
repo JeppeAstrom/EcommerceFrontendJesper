@@ -12,10 +12,6 @@ interface Props {
 products: Product[];
 }
 
-const categories:string[] = ["electronics",
-"jewelery",
-"men's clothing",
-"women's clothing"]
 
 const ProductRain:NextPage<Props> =  ({products})  => {
 
