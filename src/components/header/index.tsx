@@ -91,7 +91,7 @@ const Header = () => {
         <div className="w-[1400px] mx-auto">
           <div className="flex flex-col py-2">
             <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
-              <div className="flex items-center justify-center w-1/3 gap-x-3">
+              <div className="flex items-center justify-start w-1/3 gap-x-3">
                 <div className="flex items-center gap-2">
                   <Link
                     className="items-center flex justify-center"
@@ -99,13 +99,13 @@ const Header = () => {
                   >
                     <HeartIcon className="w-8 h-8 cursor-pointer" />
                   </Link>
-                  <span className="hidden lg:flex md:flex font-light">
+                  <span className="hidden lg:flex font-light">
                     Favoriter
                   </span>
                 </div>
                 <div className="items-center gap-2 lg:hidden">
                   <Person className="h-8 w-8" />
-                  <span className="hidden lg:flex md:flex font-light">
+                  <span className="hidden lg:flex font-light">
                     Logga in
                   </span>
                 </div>
@@ -200,6 +200,7 @@ const Header = () => {
             </div>
           </div>
           <div className="sm:w-full lg:w-2/4 items-center justify-center mx-auto relative">
+            <div className="hidden lg:flex">
           {(categories as Category[]).map((category, index) => (
                     <Link
                       key={index}
@@ -209,6 +210,7 @@ const Header = () => {
                       {category.name}
                     </Link>
                   ))}
+                  </div>
             <SearchBar products={allProducts} />
           </div>
         </div>
