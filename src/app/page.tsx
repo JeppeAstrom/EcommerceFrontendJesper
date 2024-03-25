@@ -1,8 +1,7 @@
 
 import Campaign from "@/components/campaign";
 import Carousel from "@/components/carousel";
-import FilterBar from "@/components/filterBar";
-import ProductRain from "@/components/productrain";
+
 import PromotionalCarousel from "@/components/promotionalCarousel";
 import { Promotion } from "@/types/promotion";
 import { GetAllProducts } from "@/utils/productService";
@@ -17,7 +16,7 @@ const promotion:Promotion[] = [{promotionTitle:'Rabatt', promotionImage: 'https:
 const Home = async ()  => {
 
   const Products = await GetAllProducts();
-
+ 
   return(<>
   
 

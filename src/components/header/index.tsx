@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { ContextType, useContext, useEffect, useState } from "react";
 import CartModal from "./cartmodal";
 import CartIcon from "@/app/icons/cartIcon";
 import HeartIcon from "@/app/icons/hearticon";
@@ -14,6 +14,8 @@ import LastAddeditem from "./lastAddedItem";
 import Person from "@/app/icons/person";
 import AboutUs from "@/app/icons/aboutus";
 import SearchBar from "./searchbar";
+import { Product } from "@/types/product";
+import { Category } from "@/types/category";
 
 
 const Header =  () => {
@@ -164,7 +166,7 @@ if(lastAddedItem){
             {toggleCart && <CartModal  handleToggleCart={handlerToggleCart} />}
             {toggleCategoryModal && (
         <Modal title={'Kategorier'} toggleModal={handlerToggleCategoryModal}>
-          {categories.map((category, index) => (
+          {(categories as Category[]).map((category, index) => (
         
             <Link key={index} className="justify-between flex border-b border-black w-full p-2" onClick={handlerToggleCategoryModal} href={'/produkter/kategori/' + category.name} >
             <span>{category.name}</span>

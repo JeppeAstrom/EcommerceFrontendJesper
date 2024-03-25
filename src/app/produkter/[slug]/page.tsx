@@ -33,13 +33,12 @@ const ProductPage = () => {
     }
 
     return (
-        <div className="flex items-center justify-center">
-            <div className="lg:flex w-full justify-center">
-              <div className="flex justify-center items-center">
-                    
-                        <img className="object-fit lg:w-[400px] h-[400px]" src={product.images.$values[0] ? product.images.$values[0].imageUrl : ''} alt={product.title} />
+        <div className="flex w-3/4 justify-center items-center mx-auto">
+            <div className="lg:flex w-full">
+                         <div className="flex aspect-[9/13] bg-white">   
+                        <img className="object-contain w-full h-full" src={product.images[0] ? product.images[0].imageUrl : ''} alt={product.name} />
                         </div>
-                <div className="lg:p-8 relative w-[400px]">
+                <div className="lg:p-8 relative ">
                     <span className="line-clamp-1 border-b border-black text-lg">{product.name}</span>
                     <div className="mt-2">
                         <span className="mt-4 text-sm line-clamp-8">{product.description}</span>

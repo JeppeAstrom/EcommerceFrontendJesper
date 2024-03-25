@@ -5,8 +5,8 @@ const GetAllProducts = async () => {
     let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Products';
 
     const ProductList: Product[] = await fetch(apiRoute).then(res => res.json())
-  
-    return ProductList.$values;
+ 
+    return ProductList;
 
 }
 
@@ -23,7 +23,7 @@ const getProductsFromCategory = async (category:string) => {
 
     const ProductList: Product[] = await fetch(apiRoute).then(res => res.json())
 
-    return ProductList.$values;
+    return ProductList;
 }
 
 const getMainCategories = async() => {
@@ -31,7 +31,7 @@ const getMainCategories = async() => {
 
     const categories = await fetch(apiRoute).then(res => res.json());
 
-    return categories.$values;
+    return categories;
 }
 
 export { GetAllProducts, GetProduct, getProductsFromCategory, getMainCategories };

@@ -17,7 +17,7 @@ const SearchBar:NextPage<Props> = ({products}) => {
     const [searchResult, setSearchresult] = useState<Product[]>();
     useEffect(() => {
         if(inputText){
-           const result = products.filter((p) => (p.title.toLowerCase().startsWith(inputText)))  
+           const result = products.filter((p) => (p.name.toLowerCase().startsWith(inputText)))  
            setSearchresult(result)
            result && setActivated(true);
         }
@@ -45,7 +45,7 @@ const SearchBar:NextPage<Props> = ({products}) => {
 
           {inputText && searchResult && activated&& (
              <div className="absolute w-full bg-white p-4 ">
-                <div className="grid grid-cols-4 justify-evenly p-2">
+                <div className="grid md:grid-cols-5  grid-cols-3 justify-evenly p-2">
                 {searchResult.map((product, index) => 
                 <SearchResultCard key={index} product={product}/>
                 )}

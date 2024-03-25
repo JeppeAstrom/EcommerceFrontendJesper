@@ -15,7 +15,7 @@ products: Product[];
 
 const ProductRain:NextPage<Props> =  ({products})  => {
 
-  
+   
   return(<>
   <div className="mb-10">
   <div className="flex items-center justify-center"> 

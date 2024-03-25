@@ -20,11 +20,11 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
    return(<>
     <div className="flex flex-row p-2  py-5">
     <figure className="w-1/4">
-    <img alt="" src={product.image} className="w-full h-full"/>
+    <img alt="" src={product.images[0].imageUrl} className="w-full h-full"/>
     </figure>
     <div className="flex flex-col pl-2 w-3/4">
     <div className="flex justify-between">
-    <span className="text-serif font-semibold line-clamp-2">{product.title}</span>
+    <span className="text-serif font-semibold line-clamp-2">{product.name}</span>
   
     </div>
     <span className="text-sm line-clamp-3 font-light">{product.description}</span>

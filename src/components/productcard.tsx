@@ -33,7 +33,7 @@ return(<>
     </div>
     <figure className="p-2 aspect-[9/13] overflow-hidden bg-white flex justify-center items-center">
     <Link href={'/produkter/' + product.id}>
-        <img alt="" src={product.images.$values[0] ? product.images.$values[0].imageUrl : '' } className="max-h-[250px] max-w-[200px] object-contain transition-all"/>
+        <img alt="" src={product.images[0] ? product.images[0].imageUrl : '' } className="max-h-[250px] max-w-[200px] object-contain transition-all"/>
     </Link>
     </figure>
 
@@ -41,7 +41,7 @@ return(<>
 
    
     
-    <span className="line-clamp-1 text-md font-sans">{product.title}</span>
+    <span className="line-clamp-1 text-start w-full text-md font-sans">{product.name}</span>
   
     <div className="pt-3 flex  relative w-full justify-between">
   
