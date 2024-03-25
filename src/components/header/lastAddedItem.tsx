@@ -26,11 +26,11 @@ return(
 </div>
 <div className="flex flex-row p-2 shadow-lg rounded-md py-5">
     <figure className="w-1/4">
-    <img alt="" src={lastAddedItem.image} className="w-full h-full"/>
+    <img alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full"/>
     </figure>
     <div className="flex flex-col pl-2 w-3/4">
     <div className="flex justify-between">
-    <span className="text-serif font-semibold line-clamp-2">{lastAddedItem.title}</span>
+    <span className="text-serif font-semibold line-clamp-2">{lastAddedItem.name}</span>
   
     </div>
     <span className="text-sm line-clamp-3">{lastAddedItem.description}</span>
