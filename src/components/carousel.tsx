@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 
 interface Props {
   products: Product[] | Image[];
-  type: "PRODUCTS" | "IMAGES";
+  type?: "PRODUCTS" | "IMAGES";
   currentProduct?: Product;
   slidesDesktop: number;
   slidesTablet: number;
