@@ -99,15 +99,11 @@ const Header = () => {
                   >
                     <HeartIcon className="w-8 h-8 cursor-pointer" />
                   </Link>
-                  <span className="hidden lg:flex font-light">
-                    Favoriter
-                  </span>
+                  <span className="hidden lg:flex font-light">Favoriter</span>
                 </div>
                 <div className="items-center gap-2 lg:hidden">
                   <Person className="h-8 w-8" />
-                  <span className="hidden lg:flex font-light">
-                    Logga in
-                  </span>
+                  <span className="hidden lg:flex font-light">Logga in</span>
                 </div>
                 <div className="lg:flex items-center gap-2 hidden">
                   <AboutUs className="h-8 w-8" />
@@ -199,18 +195,18 @@ const Header = () => {
               />
             </div>
           </div>
-          <div className="sm:w-full lg:w-2/4 items-center justify-center mx-auto relative">
-            <div className="hidden lg:flex">
-          {(categories as Category[]).map((category, index) => (
-                    <Link
-                      key={index}
-                      className="justify-center flex w-full pb-1"
-                      href={"/produkter/kategori/" + category.name}
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                  </div>
+          <div className="sm:w-full lg:w-2/4 mx-auto relative">
+            <div className="hidden lg:flex items-center gap-x-6 justify-center">
+              {(categories as Category[]).map((category, index) => (
+                <Link
+                  key={index}
+                  className="flex pb-1"
+                  href={"/produkter/kategori/" + category.name}
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </div>
             <SearchBar products={allProducts} />
           </div>
         </div>

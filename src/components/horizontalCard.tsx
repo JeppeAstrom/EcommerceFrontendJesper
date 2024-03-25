@@ -29,7 +29,7 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
     </div>
     <span className="text-sm line-clamp-3 font-light">{product.description}</span>
         <div className="justify-between flex pt-1">
-        <span className="text-sm font-semibold">{product.price} kr</span>
+        <span className="text-sm font-semibold">{product.price}SEK</span>
         <div className="gap-2 flex items-center">
         <button onClick={() => removeFromCart(product)}>
             <Minus className="w-5 h-5"/>
