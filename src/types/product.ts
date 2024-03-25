@@ -7,7 +7,7 @@ export interface Product {
   images: Image[];
 }
 
-interface Image {
+export interface Image {
   id: number;
   imageUrl: string;
 }
