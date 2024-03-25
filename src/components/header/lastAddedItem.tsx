@@ -25,9 +25,11 @@ return(
 <CloseIcon onClick={clearLastAddedItem} className="w-8 h-8"/>
 </div>
 <div className="flex flex-row p-2 shadow-lg rounded-md py-5">
-    <figure className="w-1/4">
-    <img alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full"/>
+    <div className="w-1/4 p-4">
+    <figure className="min-w-full min-h-full aspect-[9/13]">
+    <img alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full object-contain"/>
     </figure>
+    </div>
     <div className="flex flex-col pl-2 w-3/4">
     <div className="flex justify-between">
     <span className="text-serif font-semibold line-clamp-2">{lastAddedItem.name}</span>

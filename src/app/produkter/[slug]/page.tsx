@@ -35,8 +35,8 @@ const ProductPage = () => {
     return (
         <div className="flex w-3/4 justify-center items-center mx-auto">
             <div className="lg:flex w-full">
-                         <div className="flex aspect-[9/13] bg-white">   
-                        <img className="object-contain w-full h-full" src={product.images[0].imageUrl} alt={product.name} />
+                         <div className="flex aspect-[9/13] bg-white min-h-full w-full">   
+                        <img className="object-contain w-full min-h-full" src={product.images[0].imageUrl} alt={product.name} />
                         </div>
                 <div className="lg:p-8 relative">
                     <span className="line-clamp-1 border-b border-black text-lg">{product.name}</span>

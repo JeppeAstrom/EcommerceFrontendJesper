@@ -16,6 +16,7 @@ import AboutUs from "@/app/icons/aboutus";
 import SearchBar from "./searchbar";
 import { Product } from "@/types/product";
 import { Category } from "@/types/category";
+import { getMainCategories } from "@/utils/productService";
 
 const Header = () => {
   const [toggleCart, setToggleCart] = useState<boolean>(false);

@@ -18,19 +18,21 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
     const { removeFromCart, handleAddToCart}: any= context;
 
    return(<>
-    <div className="flex flex-row p-2  py-5">
-    <figure className="w-1/4">
-    <img alt="" src={product.images[0].imageUrl} className="w-full h-full"/>
+    <div className="flex flex-row p-4 w-full">
+        
+    <div className="w-1/3 items-center flex justify-center p-4">
+ 
+    <figure className="aspect-[13/9] bg-white items-center justify-center flex min-w-full min-h-full">
+        
+    <img alt="" src={product.images[0].imageUrl} className="object-contain object-center min-h-full min-w-full"/>
+    
     </figure>
-    <div className="flex flex-col pl-2 w-3/4">
+    
+  </div>
+    <div className="flex flex-col pl-2 w-2/3">
     <div className="flex justify-between">
     <span className="text-serif font-semibold line-clamp-2">{product.name}</span>
-  
-    </div>
-    <span className="text-sm line-clamp-3 font-light">{product.description}</span>
-        <div className="justify-between flex pt-1">
-        <span className="text-sm font-semibold">{product.price}SEK</span>
-        <div className="gap-2 flex items-center">
+     <div className="gap-2 flex justify-end w-full">
         <button onClick={() => removeFromCart(product)}>
             <Minus className="w-5 h-5"/>
         </button>
@@ -38,6 +40,11 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
             <Plus className="w-5 h-5"/>
         </button>
         </div>
+    </div>
+    <span className="text-sm line-clamp-3 font-light">{product.description}</span>
+        <div className="justify-between flex pt-1">
+        <span className="text-sm font-semibold">{product.price}SEK</span>
+     
    
         </div>
    
