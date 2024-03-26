@@ -12,8 +12,7 @@ const Modal:NextPage<Props> = ({children, toggleModal, title}) => {
 
 
    return(<>
-     <div className="fixed inset-0 bg-black bg-opacity-50 z-10">
-    
+     <div className="fixed inset-0 bg-black bg-opacity-50 z-20">
     <div className="fixed top-0 right-0 lg:w-96 w-full h-full border z-20 bg-white overflow-y-auto">
         <div className="flex justify-between p-2 border-b border-black items-center">
             <span>{title}</span>
