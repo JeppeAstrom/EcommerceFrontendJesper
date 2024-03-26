@@ -101,7 +101,7 @@ const Carousel: NextPage<Props> = ({
             <Link
               key={index}
               style={{ width: `${itemWidth}px` }}
-              className={`p-4 aspect-[9/13] ${window.innerWidth < 768 || type === 'IMAGES' ? 'min-w-full' : 'w-[200px] lg:h-[400px]' }`}
+              className={`p-4 aspect-[9/13] ${window.innerWidth && window.innerWidth < 768 || type === 'IMAGES' ? 'min-w-full' : 'w-[200px] lg:h-[400px]' }`}
               href={`/produkter/${
                 type === "PRODUCTS" ? product.id : currentProduct?.id
               }`}
