@@ -32,6 +32,7 @@ const Carousel: NextPage<Props> = ({
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
   const [isAtEnd, setIsAtEnd] = useState(false);
+  const [pageWidth, setPageWidth] = useState<number>();
   const updateArrowVisibility = (scrollPosition: number) => {
     if (carouselRef.current) {
       const maxScrollLeft =
@@ -42,6 +43,7 @@ const Carousel: NextPage<Props> = ({
   };
 
   useEffect(() => {
+    setPageWidth(window.innerWidth);
     const updateVisibleItemsAndWidth = () => {
       let visible = 4; // Default visible items
       if (window.innerWidth >= 1024) {
@@ -101,7 +103,7 @@ const Carousel: NextPage<Props> = ({
             <Link
               key={index}
               style={{ width: `${itemWidth}px` }}
-              className={`p-4 aspect-[9/13] ${window.innerWidth && window.innerWidth < 768 || type === 'IMAGES' ? 'min-w-full' : 'w-[200px] lg:h-[400px]' }`}
+              className={`p-4 aspect-[9/13] ${pageWidth && pageWidth < 768 || type === 'IMAGES' ? 'min-w-full' : 'w-[200px] lg:h-[400px]' }`}
               href={`/produkter/${
                 type === "PRODUCTS" ? product.id : currentProduct?.id
               }`}
