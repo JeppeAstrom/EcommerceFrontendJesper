@@ -88,7 +88,8 @@ const Carousel: NextPage<Props> = ({
   return (
     <div>
       <div className="flex items-center relative">
-        {!isAtStart && (
+        {!isAtStart && type === "IMAGES" &&
+           (products as Image[]).length > 1 &&  (
           <ArrowLeft
             onClick={() => scrollCarousel("prev")}
             className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-10"
@@ -103,7 +104,11 @@ const Carousel: NextPage<Props> = ({
             <Link
               key={index}
               style={{ width: `${itemWidth}px` }}
-              className={`p-4 aspect-[9/13] ${pageWidth && pageWidth < 768 || type === 'IMAGES' ? 'min-w-full' : 'w-[200px] lg:h-[400px]' }`}
+              className={`p-4 aspect-[9/13] ${
+                (pageWidth && pageWidth < 768) || type === "IMAGES"
+                  ? "min-w-full"
+                  : "w-[200px] lg:h-[400px]"
+              }`}
               href={`/produkter/${
                 type === "PRODUCTS" ? product.id : currentProduct?.id
               }`}
@@ -122,12 +127,13 @@ const Carousel: NextPage<Props> = ({
           ))}
         </div>
 
-        {!isAtEnd && (
-          <ArrowLeft
-            onClick={() => scrollCarousel("next")}
-            className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-10 rotate-180"
-          />
-        )}
+        {!isAtEnd && type === "IMAGES" &&
+           (products as Image[]).length > 1 &&  (
+              <ArrowLeft
+                onClick={() => scrollCarousel("next")}
+                className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-10 rotate-180"
+              />
+            )}
       </div>
     </div>
   );

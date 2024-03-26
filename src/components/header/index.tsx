@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Link from "next/link";
-import { ContextType, useContext, useEffect, useState } from "react";
+import { ContextType, useContext, useEffect, useRef, useState } from "react";
 import CartModal from "./cartmodal";
 import CartIcon from "@/app/icons/cartIcon";
 import HeartIcon from "@/app/icons/hearticon";
@@ -19,6 +19,8 @@ import { Category } from "@/types/category";
 import { getMainCategories } from "@/utils/productService";
 
 const Header = () => {
+
+
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [toggleCategoryModal, setToggleCategoryModal] =
     useState<boolean>(false);
@@ -163,7 +165,9 @@ const Header = () => {
                 </div>
               </div>
 
-              {toggleCart && <CartModal handleToggleCart={handlerToggleCart} />}
+              {toggleCart && 
+                <CartModal isOpen={toggleCart} handleToggleCart={handlerToggleCart} />
+                }
               {toggleCategoryModal && (
                 <Modal
                   title={"Kategorier"}
