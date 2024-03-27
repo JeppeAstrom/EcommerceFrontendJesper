@@ -28,7 +28,7 @@ const Carousel: NextPage<Props> = ({
   currentProduct,
 }) => {
   const [visibleItems, setVisibleItems] = useState(1);
-  const [itemWidth, setItemWidth] = useState(200); 
+  const [itemWidth, setItemWidth] = useState(400); 
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isAtStart, setIsAtStart] = useState(true); 
   const [isAtEnd, setIsAtEnd] = useState(false);
@@ -86,7 +86,7 @@ const Carousel: NextPage<Props> = ({
   };
 
   return (
-    <div>
+    <div className={`${type === 'IMAGES' && 'lg:w-2/4'}`}>
       <div className="flex items-center relative">
         {!isAtStart  &&
            (products as Image[]).length > 1 &&  (
@@ -98,13 +98,13 @@ const Carousel: NextPage<Props> = ({
   
         <div
           ref={carouselRef}
-          className="flex items-center  justify-start bg-white min-h-full min-w-full overflow-x-hidden hide-scroll-bar relative"
+          className="flex items-center justify-start bg-white min-h-full min-w-full overflow-x-hidden hide-scroll-bar relative"
         >
           {products.map((product, index) => (
             <Link
               key={index}
               style={{ width: `${itemWidth}px` }}
-              className={` aspect-[9/13] ${
+              className={` bg-white ${
                 (pageWidth && pageWidth < 768) || type === "IMAGES"
                   ? "min-w-full"
                   : "w-[200px] lg:h-[400px]"
@@ -113,6 +113,7 @@ const Carousel: NextPage<Props> = ({
                 type === "PRODUCTS" ? product.id : currentProduct?.id
               }`}
             >
+              <figure className="bg-white aspect-[9/13] items-center flex">
               <img
                 width={900}
                 height={1300}
@@ -121,8 +122,9 @@ const Carousel: NextPage<Props> = ({
                     ? (product as Product).images[0].imageUrl
                     : (product as Image).imageUrl
                 }
-                className="transition-all h-full w-full object-contain"
+                className="transition-all max-h-full max-w-full object-contain"
               />
+           </figure>
             </Link>
           ))}
         </div>

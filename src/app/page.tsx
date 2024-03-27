@@ -24,9 +24,7 @@ const Home = async ()  => {
       <div className="mb-10">
       <PromotionalCarousel title="Spana in Sandler kollektionen" promotion={promotion} slidesDesktop={4} slidesPhone={1} slidesTablet={1}/>
       </div>
-    <div className="mt-10 p-4">
-    <Carousel slidesDesktop={4} slidesTablet={3} slidesPhone={1} products={Products}/>
-    </div>
+  
   </>)
 }
 
