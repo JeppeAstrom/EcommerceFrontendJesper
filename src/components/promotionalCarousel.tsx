@@ -18,23 +18,24 @@ slidesPhone: number;
 }
 
 const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop, slidesTablet, slidesPhone }) => {
-  const [visibleItems, setVisibleItems] = useState(4); // Default number of visible items
-  const [itemWidth, setItemWidth] = useState(700); // State to hold the dynamic width of each item
+  const [visibleItems, setVisibleItems] = useState(4);
+  const [itemWidth, setItemWidth] = useState(700);  
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
+  const [isAtStart, setIsAtStart] = useState(true); 
   const [isAtEnd, setIsAtEnd] = useState(false); 
-  
-  const updateArrowVisibility = (scrollPosition:number) => {
+
+  const updateArrowVisibility = (scrollPosition: number) => {
     if (carouselRef.current) {
-      const maxScrollLeft = carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
-      setIsAtStart(scrollPosition === 0);
-      setIsAtEnd(scrollPosition >= maxScrollLeft);
+      const maxScrollLeft =
+        carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
+      setIsAtStart(scrollPosition <= 0);
+      setIsAtEnd(scrollPosition >= maxScrollLeft - 1); 
     }
   };
 
   useEffect(() => {
     const updateVisibleItemsAndWidth = () => {
-      let visible = 4; // Default visible items
+      let visible = 4; 
       if (window.innerWidth >= 1024) {
         visible = slidesDesktop;
       } else if (window.innerWidth >= 768) {
@@ -44,7 +45,6 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
       }
       setVisibleItems(visible);
   
-      // Calculate the width of each item based on the carousel width and the number of visible items
       if (carouselRef.current) {
         const containerWidth = carouselRef.current.offsetWidth;
         const itemWidth = containerWidth / visible;
@@ -52,13 +52,13 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
       }
     };
     window.addEventListener('resize', updateVisibleItemsAndWidth);
-    updateVisibleItemsAndWidth(); // Initial update
+    updateVisibleItemsAndWidth();
     return () => window.removeEventListener('resize', updateVisibleItemsAndWidth);
   }, );
 
   const scrollCarousel = (direction:'next' |'prev') => {
     if (carouselRef.current) {
-      const scrollAmount = itemWidth; // Use the dynamically set item width for scrolling
+      const scrollAmount = itemWidth; 
       const currentScroll = carouselRef.current.scrollLeft;
       const newScrollPosition = direction === 'next' ? currentScroll + scrollAmount : currentScroll - scrollAmount;
       carouselRef.current.scrollTo({
@@ -83,19 +83,19 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
             {promotion.map((promotion, index) => (
                  <div
                  key={index}
-                 className="flex-shrink-0 flex-col flex items-center justify-center p-4"
+                 className="flex-shrink-0 flex-col flex items-center justify-center px-2"
                  style={{ width: `${itemWidth}px` }}
                >
               
-                <figure className="aspect-[9/13] min-w-full  justify-center items-center flex h-[500px]">
-                  <img src={promotion.promotionImage} className="transition-all object-contain h-full w-full" />
+                <figure className="aspect-[9/13] min-w-full  justify-center items-center flex h-[500px] bg-gray-300">
+                  <img src={promotion.promotionImage} className="transition-all object-contain min-h-full min-w-full" />
                   </figure>
               
               </div>
             ))}
           </div>
         </div>
-        { !isAtEnd && <ArrowLeft onClick={() => scrollCarousel('next')} className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-5 rotate-180" /> }
+        { !isAtEnd &&  <ArrowLeft onClick={() => scrollCarousel('next')} className={`w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-5 rotate-180 ${slidesDesktop <= promotion.length && 'lg:hidden'} ${slidesTablet <= promotion.length && ' md:hidden'} ${slidesPhone <= promotion.length && 'sm:hidden'}`} /> }
       </div>
     </div>
   );
