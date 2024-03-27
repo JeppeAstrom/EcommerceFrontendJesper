@@ -27,10 +27,10 @@ const Carousel: NextPage<Props> = ({
   type = "PRODUCTS",
   currentProduct,
 }) => {
-  const [visibleItems, setVisibleItems] = useState(1);
-  const [itemWidth, setItemWidth] = useState(400); 
+  const [visibleItems, setVisibleItems] = useState(1); // Default number of visible items
+  const [itemWidth, setItemWidth] = useState(200); // State to hold the dynamic width of each item
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [isAtStart, setIsAtStart] = useState(true); 
+  const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
   const [isAtEnd, setIsAtEnd] = useState(false);
   const [pageWidth, setPageWidth] = useState<number>();
   const updateArrowVisibility = (scrollPosition: number) => {
@@ -38,7 +38,7 @@ const Carousel: NextPage<Props> = ({
       const maxScrollLeft =
         carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
       setIsAtStart(scrollPosition <= 0);
-      setIsAtEnd(scrollPosition >= maxScrollLeft - 1);
+      setIsAtEnd(scrollPosition >= maxScrollLeft - 1); // Adjusted with a small buffer
     }
   };
 
@@ -86,25 +86,25 @@ const Carousel: NextPage<Props> = ({
   };
 
   return (
-    <div className={`${type === 'IMAGES' && 'lg:w-2/4'}`}>
+    <div>
       <div className="flex items-center relative">
-        {!isAtStart  &&
+        {!isAtStart && type === "IMAGES" &&
            (products as Image[]).length > 1 &&  (
           <ArrowLeft
             onClick={() => scrollCarousel("prev")}
             className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-10"
           />
         )}
-  
+
         <div
           ref={carouselRef}
-          className="flex items-center justify-start bg-white min-h-full min-w-full overflow-x-hidden hide-scroll-bar relative"
+          className="flex items-center w-[400px] lg:-[1200px] justify-start bg-white min-h-full min-w-full overflow-x-hidden hide-scroll-bar relative"
         >
           {products.map((product, index) => (
             <Link
               key={index}
               style={{ width: `${itemWidth}px` }}
-              className={` bg-white ${
+              className={`p-4 aspect-[9/13] ${
                 (pageWidth && pageWidth < 768) || type === "IMAGES"
                   ? "min-w-full"
                   : "w-[200px] lg:h-[400px]"
@@ -113,7 +113,6 @@ const Carousel: NextPage<Props> = ({
                 type === "PRODUCTS" ? product.id : currentProduct?.id
               }`}
             >
-              <figure className="bg-white aspect-[9/13] items-center flex">
               <img
                 width={900}
                 height={1300}
@@ -122,14 +121,13 @@ const Carousel: NextPage<Props> = ({
                     ? (product as Product).images[0].imageUrl
                     : (product as Image).imageUrl
                 }
-                className="transition-all max-h-full max-w-full object-contain"
+                className="transition-all h-full w-full object-contain"
               />
-           </figure>
             </Link>
           ))}
         </div>
 
-        {!isAtEnd  &&
+        {!isAtEnd && type === "IMAGES" &&
            (products as Image[]).length > 1 &&  (
               <ArrowLeft
                 onClick={() => scrollCarousel("next")}
