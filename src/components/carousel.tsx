@@ -88,7 +88,7 @@ const Carousel: NextPage<Props> = ({
   return (
     <div>
       <div className="flex items-center relative">
-        {!isAtStart && type === "IMAGES" &&
+        {!isAtStart && 
            (products as Image[]).length > 1 &&  (
           <ArrowLeft
             onClick={() => scrollCarousel("prev")}
@@ -107,7 +107,7 @@ const Carousel: NextPage<Props> = ({
               className={`p-4 aspect-[9/13] ${
                 (pageWidth && pageWidth < 768) || type === "IMAGES"
                   ? "min-w-full"
-                  : "w-[200px] lg:h-[400px]"
+                  : "w-[200px] lg:h-[600px]"
               }`}
               href={`/produkter/${
                 type === "PRODUCTS" ? product.id : currentProduct?.id
@@ -121,13 +121,13 @@ const Carousel: NextPage<Props> = ({
                     ? (product as Product).images[0].imageUrl
                     : (product as Image).imageUrl
                 }
-                className="transition-all h-full w-full object-contain"
+                className="transition-all h-full max-h-full min-w-full object-contain"
               />
             </Link>
           ))}
         </div>
 
-        {!isAtEnd && type === "IMAGES" &&
+        {!isAtEnd && 
            (products as Image[]).length > 1 &&  (
               <ArrowLeft
                 onClick={() => scrollCarousel("next")}

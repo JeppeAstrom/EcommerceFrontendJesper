@@ -19,7 +19,7 @@ const ProductRain:NextPage<Props> =  ({products})  => {
   return(<>
   <div className="mb-10">
   <div className="flex items-center justify-center"> 
-  <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-7 items-center justify-between">
+  <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 gap-7 p-4 items-center justify-between">
     {products.map((product, index) => (
       <div key={index}>
         <ProductCard product={product}/>

@@ -1,6 +1,7 @@
 
 import Campaign from "@/components/campaign";
 import Carousel from "@/components/carousel";
+import ProductRain from "@/components/productrain";
 
 import PromotionalCarousel from "@/components/promotionalCarousel";
 import { Promotion } from "@/types/promotion";
@@ -26,6 +27,9 @@ const Home = async ()  => {
       </div>
       <div className="mt-10 p-4">
     <Carousel slidesDesktop={4} slidesTablet={3} slidesPhone={1} products={Products}/>
+    </div>
+    <div>
+      <ProductRain products={Products}/>
     </div>
   </>)
 }

@@ -13,7 +13,6 @@ interface Props {
 }
 
 const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
-  console.log(isOpen);
 
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

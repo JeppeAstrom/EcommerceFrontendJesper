@@ -36,7 +36,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               height={1300}
                 alt=""
                 src={product.images[0] ? product.images[0].imageUrl : ""}
-                className="object-contain transition-all min-h-full min-w-full"
+                className="object-contain transition-all min-h-full max-h-full min-w-full"
               />
             </figure>
           </Link>
