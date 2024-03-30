@@ -1,5 +1,5 @@
 'use client'
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../context";
 import { Product } from "@/types/product";
 import ProductRain from "@/components/productrain";
@@ -7,9 +7,12 @@ import ProductRain from "@/components/productrain";
 const Favourites = () => {
 
     const {getFavouritesFromLocalStorage}: any = useContext(Context);
+    const [favourites, setFavourites] = useState<Product[]>([]);
 
-    const favourites:Product[] = getFavouritesFromLocalStorage();
-    console.log(favourites)
+    useEffect(() => {
+        const favs = getFavouritesFromLocalStorage();
+        setFavourites(favs);
+    }, []);
     return(<>
     <ProductRain products={favourites}/>
     </>)
