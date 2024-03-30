@@ -14,13 +14,11 @@ import LastAddeditem from "./lastAddedItem";
 import Person from "@/app/icons/person";
 import AboutUs from "@/app/icons/aboutus";
 import SearchBar from "./searchbar";
-import { Product } from "@/types/product";
+
 import { Category } from "@/types/category";
-import { getMainCategories } from "@/utils/productService";
+
 
 const Header = () => {
-
-
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [toggleCategoryModal, setToggleCategoryModal] =
     useState<boolean>(false);
@@ -83,9 +81,10 @@ const Header = () => {
   }, []);
 
   return (
+    <div className="sticky top-0 z-10">
     <div
-      className={`sticky top-0 bg-white z-10 transition-opacity duration-300 ease-in-out ${headerShadow}  ${
-        visible || showNotification
+      className={` bg-white  transition-opacity duration-300 ease-in-out ${headerShadow}  ${
+        visible 
           ? "opacity-100"
           : "opacity-0 pointer-events-none"
       }`}
@@ -95,15 +94,10 @@ const Header = () => {
           <div className="flex flex-col py-2">
             <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
               <div className="flex items-center justify-start w-1/3 gap-x-3">
-                <div className="flex items-center gap-2">
-                  <Link
-                    className="items-center flex justify-center"
-                    href="/favoriter"
-                  >
-                    <HeartIcon className="w-8 h-8 cursor-pointer" />
-                  </Link>
+                <Link href="/favoriter" className="flex items-center gap-2">
+                  <HeartIcon className="w-8 h-8 cursor-pointer" />
                   <span className="hidden lg:flex font-light">Favoriter</span>
-                </div>
+                </Link>
                 <div className="items-center gap-2 lg:hidden">
                   <Person className="h-8 w-8" />
                   <span className="hidden lg:flex font-light">Logga in</span>
@@ -165,9 +159,12 @@ const Header = () => {
                 </div>
               </div>
 
-              {toggleCart && 
-                <CartModal isOpen={toggleCart} handleToggleCart={handlerToggleCart} />
-                }
+              {toggleCart && (
+                <CartModal
+                  isOpen={toggleCart}
+                  handleToggleCart={handlerToggleCart}
+                />
+              )}
               {toggleCategoryModal && (
                 <Modal
                   title={"Kategorier"}
@@ -192,12 +189,7 @@ const Header = () => {
                   <div></div>
                 </SearchModal>
               )}
-              <LastAddeditem
-                showNotification={showNotification}
-                showHeader={showNotification}
-                clearLastAddedItem={clearLastAddedItem}
-                lastAddedItem={lastAddedItem}
-              />
+            
             </div>
           </div>
           <div className="sm:w-full lg:w-2/4 mx-auto relative">
@@ -216,6 +208,13 @@ const Header = () => {
           </div>
         </div>
       </div>
+    </div>
+      <LastAddeditem
+      showNotification={showNotification}
+      showHeader={showNotification}
+      clearLastAddedItem={clearLastAddedItem}
+      lastAddedItem={lastAddedItem}
+    />
     </div>
   );
 };

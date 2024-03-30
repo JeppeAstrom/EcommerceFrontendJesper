@@ -15,7 +15,6 @@ clearLastAddedItem: () => void;
 const LastAddeditem:NextPage<Props> = ({ showNotification, lastAddedItem, clearLastAddedItem}) => {
 
 
-
 return(
     <>
 {lastAddedItem && showNotification && (

@@ -7,22 +7,33 @@ import HeartIcon from "@/app/icons/hearticon";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 interface Props {
   product: Product;
 }
 
 const ProductCard: NextPage<Props> = ({ product }) => {
-  const { handleAddToCart }: any = useContext(Context);
+  const { handleAddToCart, getFavouritesFromLocalStorage, addProductToFavouritesLocalStorage }: any = useContext(Context);
+
+  const [favourite, setFavourite] = useState<boolean>(false);
+  const toggleFavourite = () => {
+    addProductToFavouritesLocalStorage(product);
+    setFavourite(!favourite); // Toggle the state
+  };
+  useEffect(() => {
+    const favouriteProducts:Product[] = getFavouritesFromLocalStorage();
+    setFavourite(favouriteProducts.some(p => p.id === product.id));
+  }, [product]);
+
 
   return (
     <>
       <div className="flex flex-col rounded-xl shadow-lg max-w-sm items-center justify-center">
         <div className="p-4 rounded-xl items-center justify-center flex flex-col w-full">
           <div className="flex justify-between relative w-full">
-            <button>
-              <HeartIcon className="h-6 w-6 absolute right-0" />
+            <button onClick={() => toggleFavourite()}>
+              <HeartIcon className={`h-6 w-6 absolute right-0 ${favourite ? "fill-red-400" : ''}`} />
             </button>
 
             <button onClick={() => handleAddToCart(product)}>
@@ -41,19 +52,19 @@ const ProductCard: NextPage<Props> = ({ product }) => {
             </figure>
           </Link>
 
-          <span className="line-clamp-1 text-start w-full text-md font-sans">
+          <span className="line-clamp-1 text-start w-full text-md font-light">
             {product.name}
           </span>
 
-          <div className="pt-3 flex  relative w-full justify-between">
+          <div className="pt-3 flex relative w-full justify-between">
             <div>
-              <span className="text-sm">{product.price}SEK</span>
+              <span className="text-sm font-sans font-light">{product.price}SEK</span>
             </div>
             <div>
               <Link
                 href="/kassa"
                 onClick={() => handleAddToCart(product, "NO")}
-                className=" bg-red-200 rounded-xl w-[100px] items-center justify-center flex text-lg"
+                className=" bg-red-200 rounded-xl w-[100px] items-center justify-center flex md:text-lg text-sm p-1"
               >
                 Köp nu
               </Link>
