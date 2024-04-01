@@ -16,6 +16,7 @@ import AboutUs from "@/app/icons/aboutus";
 import SearchBar from "./searchbar";
 
 import { Category } from "@/types/category";
+import Login from "../forms/login";
 
 
 const Header = () => {
@@ -36,6 +37,9 @@ const Header = () => {
     context;
   const { cartItems }: any = context;
   const [cartCount, setCartCount] = useState<number>();
+  const [loginModal, setLoginModal] = useState<boolean>();
+
+  const handleOpenLoginModal = () => setLoginModal(prev => !prev);
 
   useEffect(() => {
     setCartCount(cartItems ? cartItems.length : 0);
@@ -98,10 +102,10 @@ const Header = () => {
                   <HeartIcon className="w-8 h-8 cursor-pointer" />
                   <span className="hidden lg:flex font-light">Favoriter</span>
                 </Link>
-                <div className="items-center gap-2 lg:hidden">
+                <button onClick={handleOpenLoginModal} className="items-center gap-2 lg:hidden">
                   <Person className="h-8 w-8" />
                   <span className="hidden lg:flex font-light">Logga in</span>
-                </div>
+                </button>
                 <div className="lg:flex items-center gap-2 hidden">
                   <AboutUs className="h-8 w-8" />
                   <span className="font-light">Om oss</span>
@@ -132,10 +136,10 @@ const Header = () => {
                 </div>
 
                 <div className="gap-4 justify-end flex">
-                  <div className="items-center gap-2 hidden lg:flex">
+                  <button onClick={handleOpenLoginModal} className="items-center gap-2 hidden lg:flex">
                     <Person className="h-8 w-8" />
                     <span className="hidden lg:flex font-light">Logga in</span>
-                  </div>
+                  </button>
 
                   <button
                     onClick={handlerToggleCart}
@@ -215,6 +219,10 @@ const Header = () => {
       clearLastAddedItem={clearLastAddedItem}
       lastAddedItem={lastAddedItem}
     />
+    {loginModal && (
+      <Login openModal={handleOpenLoginModal}/>
+    )}
+
     </div>
   );
 };
