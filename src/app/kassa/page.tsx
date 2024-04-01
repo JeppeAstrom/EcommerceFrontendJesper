@@ -29,7 +29,7 @@ const Checkout = () => {
     <div className="flex flex-col justify-center items-center">
         <button className="flex items-center mx-auto justify-center w-full" onClick={handleToggleBag}>
         <Dropdown className={`w-10 h-10 ${toggleBag ? 'rotate-180' : ''}`}/>
-        <span>{`Shopping bag ${cartItems.length}`}</span>
+        <span>{`Shopping bag ${cartItems && cartItems.length}`}</span>
         </button>
     
         
