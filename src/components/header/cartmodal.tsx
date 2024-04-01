@@ -1,11 +1,12 @@
 import { Context } from "@/app/context";
 import { NextPage } from "next";
 import { useContext, useEffect, useRef } from "react";
-import CartIcon from "@/app/icons/cartIcon";
 import CloseIcon from "@/app/icons/closeIcon";
 import HorizontalCard from "../horizontalCard";
 import { Product } from "@/types/product";
 import ArrowLeft from "@/app/icons/arrowleft";
+import Link from "next/link";
+import router, { useRouter } from "next/router";
 
 interface Props {
   handleToggleCart: () => void;
@@ -13,6 +14,7 @@ interface Props {
 }
 
 const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
+
 
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -31,6 +33,10 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
       document.removeEventListener("click", handleClickOutside);
     };
   }, [handleToggleCart, isOpen]);
+
+  useEffect(() => {
+
+  })
 
   const context = useContext(Context);
 
@@ -60,9 +66,9 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             ))}
         </div>
         {cartItems && cartItems.length > 0 && (
-          <button className="w-full sticky h-10 bg-white bottom-0 border-b border-t border-black">
+          <Link onClick={handleToggleCart} href='/kassa' className="w-full sticky h-10 bg-white bottom-0 border-b border-t border-black items-center flex justify-center">
             Checkout
-          </button>
+          </Link>
         )}
       </div>
     </div>

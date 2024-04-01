@@ -92,7 +92,7 @@ const Carousel: NextPage<Props> = ({
            (products as Image[]).length > 1 &&  (
           <ArrowLeft
             onClick={() => scrollCarousel("prev")}
-            className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-10"
+            className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-5"
           />
         )}
 
@@ -131,7 +131,7 @@ const Carousel: NextPage<Props> = ({
            (products as Image[]).length > 1 &&  (
               <ArrowLeft
                 onClick={() => scrollCarousel("next")}
-                className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-10 rotate-180"
+                className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-5 rotate-180"
               />
             )}
       </div>
