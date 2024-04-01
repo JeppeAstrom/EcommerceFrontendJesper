@@ -18,7 +18,7 @@ const Checkout = () => {
 
     const handleToggleBag = () => setToggleBag(prev => !prev);
 
-    if (cartItems.length === 0) {
+    if (!cartItems || cartItems.length === 0) {
         return <div className="flex justify-center">Tom varukorg</div>;
     }
     
