@@ -41,7 +41,7 @@ const Carousel: NextPage<Props> = ({
       setIsAtEnd(scrollPosition >= maxScrollLeft - 1); // Adjusted with a small buffer
     }
   };
-
+  console.log(isAtStart)
   useEffect(() => {
     setPageWidth(window.innerWidth);
     const updateVisibleItemsAndWidth = () => {
@@ -87,15 +87,16 @@ const Carousel: NextPage<Props> = ({
 
   return (
     <div>
+      
       <div className="flex items-center relative">
-        {!isAtStart && 
+     
+      {!isAtStart && 
            (products as Image[]).length > 1 &&  (
           <ArrowLeft
             onClick={() => scrollCarousel("prev")}
-            className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-5"
+            className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-[9]"
           />
         )}
-
         <div
           ref={carouselRef}
           className="flex items-center w-[400px] lg:-[1200px] justify-start bg-white min-h-full min-w-full overflow-x-hidden hide-scroll-bar relative"
@@ -131,7 +132,7 @@ const Carousel: NextPage<Props> = ({
            (products as Image[]).length > 1 &&  (
               <ArrowLeft
                 onClick={() => scrollCarousel("next")}
-                className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-5 rotate-180"
+                className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-[9] rotate-180"
               />
             )}
       </div>

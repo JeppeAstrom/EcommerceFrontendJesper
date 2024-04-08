@@ -4,11 +4,13 @@ import { useContext, useEffect, useState } from "react";
 import { Context } from "@/app/context";
 import { GetProduct } from "@/utils/productService";
 import { Product } from "@/types/product";
-import { usePathname } from "next/navigation"; // Import from next/navigation instead of next/router
+import { usePathname, useSearchParams } from "next/navigation"; // Import from next/navigation instead of next/router
 import Link from "next/link";
 import Carousel from "@/components/carousel";
+import { useRouter } from "next/router";
 
 const ProductPage = () => {
+ 
   const { handleAddToCart }: any = useContext(Context);
   const pageUrl = usePathname();
   const id = pageUrl.split("/").pop(); // Extract the id from the URL path
