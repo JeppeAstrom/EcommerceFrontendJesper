@@ -4,10 +4,10 @@ export interface Product {
   price: number;
   description: string;
   category: string;
-  images: Image[];
+  images: ImageType[];
 }
 
-export interface Image {
+export interface ImageType {
   id: number;
   imageUrl: string;
 }

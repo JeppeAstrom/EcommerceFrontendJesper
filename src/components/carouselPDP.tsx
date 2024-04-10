@@ -4,13 +4,11 @@ import ArrowLeft from "@/app/icons/arrowleft";
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable jsx-a11y/alt-text */
 
-import { Product } from "@/types/product";
-import { ImageType } from "@/types/product";
+import { ImageType, Product } from "@/types/product";
+
 import { NextPage } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import ProductCard from "./productcard";
 
 interface Props {
   products: Product[] | ImageType[];
@@ -21,7 +19,7 @@ interface Props {
   slidesPhone: number;
 }
 
-const Carousel: NextPage<Props> = ({
+const CarouselPDP: NextPage<Props> = ({
   products,
   slidesDesktop,
   slidesTablet,
@@ -88,6 +86,7 @@ const Carousel: NextPage<Props> = ({
   };
 
   return (
+    <div>
       
       <div className="flex items-center relative">
      
@@ -100,12 +99,32 @@ const Carousel: NextPage<Props> = ({
         )}
         <div
           ref={carouselRef}
-          className="flex items-center w-auto justify-start mx-auto bg-white sm:py-10 lg:min-h-[700px] overflow-x-hidden hide-scroll-bar relative"
+          className="flex items-center w-[400px] lg:-[1200px] justify-start bg-white min-h-full min-w-full overflow-x-hidden hide-scroll-bar relative"
         >
           {products.map((product, index) => (
-            <div className={`min-w-[${itemWidth}px] p-4`} key={index}>
-            <ProductCard product={product as Product}/>
-            </div>
+            <Link
+              key={index}
+              style={{ width: `${itemWidth}px` }}
+              className={`p-4 aspect-[9/13] ${
+                (pageWidth && pageWidth < 768) || type === "IMAGES"
+                  ? "min-w-full"
+                  : "w-[200px] lg:h-[600px]"
+              }`}
+              href={`/produkter/${
+                type === "PRODUCTS" ? product.id : currentProduct?.id
+              }`}
+            >
+              <img
+                width={900}
+                height={1300}
+                src={
+                  type === "PRODUCTS"
+                    ? (product as Product).images[0].imageUrl
+                    : (product as ImageType).imageUrl
+                }
+                className="transition-all h-full max-h-full min-w-full object-contain"
+              />
+            </Link>
           ))}
         </div>
 
@@ -117,8 +136,8 @@ const Carousel: NextPage<Props> = ({
               />
             )}
       </div>
-  
+    </div>
   );
 };
 
-export default Carousel;
+export default CarouselPDP;

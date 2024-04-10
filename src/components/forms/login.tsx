@@ -36,7 +36,6 @@ const handleSubmit = async () => {
     <RegistrationModal title={`${register ? 'Skapa nytt konto': 'Logga in'}`} toggleModal={openModal}>
         <form method="post" onSubmit={(e) => {
             e.preventDefault();
-            console.log("test")
            void handleSubmit()}} className="flex flex-col w-full justify-center items-center px-4 h-auto gap-y-2">
         {register && (
         <input onChange={(e) => setEmail(e.target.value)} placeholder="Email" className="w-full rounded-xl border p-3"/>

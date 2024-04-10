@@ -26,7 +26,7 @@ const Checkout = () => {
     
     return(
    
-    <div className="flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center h-auto">
         <button className="flex items-center mx-auto justify-center w-full" onClick={handleToggleBag}>
         <Dropdown className={`w-10 h-10 ${toggleBag ? 'rotate-180' : ''}`}/>
         <span>{`Shopping bag ${cartItems.length !== undefined && cartItems.length}`}</span>
@@ -41,8 +41,8 @@ const Checkout = () => {
         </div>
         )}
              
-      <div className={`w-full justify-center flex bottom-0 md:bottom-10 ${toggleBag ? 'sticky' : 'absolute'}`}>
-    <button className="w-full md:w-[400px] md:rounded-xl bg-red-400 p-3 font-serif">Köp nu</button>
+      <div className='w-full justify-center flex pt-10'>
+    <button className="w-[300px] md:rounded-xl bg-white border border-black p-3 font-serif">Köp nu</button>
     </div>
     </div>
  

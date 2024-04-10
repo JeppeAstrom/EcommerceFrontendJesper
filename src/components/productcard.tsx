@@ -6,6 +6,7 @@ import BuyIcon from "@/app/icons/buyicon";
 import HeartIcon from "@/app/icons/hearticon";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { useContext, useEffect, useState } from "react";
 
@@ -24,7 +25,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
   useEffect(() => {
     const favouriteProducts:Product[] = getFavouritesFromLocalStorage();
     setFavourite(favouriteProducts.some(p => p.id === product.id));
-  }, [product]);
+  }, [getFavouritesFromLocalStorage, product.id]);
 
 
   return (
@@ -33,7 +34,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
         <div className="p-4 rounded-xl items-center justify-center flex flex-col w-full">
           <div className="flex justify-between relative w-full">
             <button onClick={() => toggleFavourite()}>
-              <HeartIcon className={`h-6 w-6 absolute right-0 ${favourite ? "fill-red-400" : ''}`} />
+              <HeartIcon className={`h-6 w-6 absolute right-0 ${favourite ? "fill-red-400" : 'hover:fill-red-400'}`} />
             </button>
 
             <button onClick={() => handleAddToCart(product)}>
@@ -42,7 +43,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
           </div>
           <Link className="min-w-full min-h-full" href={"/produkter/" + product.id}>
             <figure className="p-5 aspect-[9/13] min-h-full w-full bg-white flex justify-center items-center">
-              <img
+              <Image
               width={900}
               height={1300}
                 alt=""
@@ -64,7 +65,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               <Link
                 href="/kassa"
                 onClick={() => handleAddToCart(product, "NO")}
-                className=" bg-red-200 rounded-xl w-[100px] items-center justify-center flex md:text-lg text-sm p-1"
+                className=" bg-white border border-black rounded-xl hover:w-[120px] transition-all w-[100px] items-center justify-center flex md:text-lg text-sm p-1"
               >
                 Köp nu
               </Link>

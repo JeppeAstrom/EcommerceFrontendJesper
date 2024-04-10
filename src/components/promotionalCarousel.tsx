@@ -6,6 +6,7 @@ import ArrowLeft from "@/app/icons/arrowleft";
 
 import { Promotion } from "@/types/promotion";
 import { NextPage } from "next";
+import Image from "next/image";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -88,7 +89,7 @@ const PromotionalCarousel: NextPage<Props> = ({ promotion, title, slidesDesktop,
                >
               
                 <figure className="aspect-[9/13] min-w-full  justify-center items-center flex h-[500px] bg-gray-300">
-                  <img src={promotion.promotionImage} className="transition-all object-contain min-h-full min-w-full" />
+                  <Image width={1300} height={900} alt="" src={promotion.promotionImage} className="transition-all object-contain min-h-full min-w-full" />
                   </figure>
               
               </div>

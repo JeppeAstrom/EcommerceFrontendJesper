@@ -8,6 +8,7 @@ import { usePathname, useSearchParams } from "next/navigation"; // Import from n
 import Link from "next/link";
 import Carousel from "@/components/carousel";
 import { useRouter } from "next/router";
+import CarouselPDP from "@/components/carouselPDP";
 
 const ProductPage = () => {
  
@@ -42,7 +43,7 @@ const ProductPage = () => {
   return (
     <div className="flex w-3/4 justify-center items-center mx-auto">
       <div className="lg:flex w-full">
-        <Carousel
+        <CarouselPDP
           type="IMAGES"
           slidesDesktop={1}
           slidesTablet={1}

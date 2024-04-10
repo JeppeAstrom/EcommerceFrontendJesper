@@ -3,6 +3,7 @@ import { Context } from "@/app/context";
 import CloseIcon from "@/app/icons/closeIcon";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
+import Image from "next/image";
 import { useContext, useEffect } from "react";
 
 interface Props {
@@ -26,7 +27,7 @@ return(
 <div className="flex flex-row p-2 shadow-lg rounded-md py-5">
     <div className="w-1/4 p-4">
     <figure className="min-w-full min-h-full aspect-[9/13]">
-    <img alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full object-contain"/>
+    <Image width={1300} height={900} alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full object-contain"/>
     </figure>
     </div>
     <div className="flex flex-col pl-2 w-3/4">

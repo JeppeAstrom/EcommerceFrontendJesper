@@ -5,6 +5,7 @@ import Minus from "@/app/icons/minus";
 import Plus from "@/app/icons/plus";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
+import Image from "next/image";
 import { useContext } from "react";
 
 interface Props {
@@ -24,7 +25,7 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
  
     <figure className="aspect-[13/9] bg-white items-center justify-center flex min-w-full min-h-full">
         
-    <img alt="" src={product.images[0].imageUrl} className="object-contain object-center min-h-full min-w-full"/>
+    <Image width={1300} height={900} alt="" src={product.images[0].imageUrl} className="object-contain object-center min-h-full min-w-full"/>
     
     </figure>
     
