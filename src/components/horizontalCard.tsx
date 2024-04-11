@@ -37,7 +37,7 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
         <button onClick={() => removeFromCart(product)}>
             <Minus className="w-5 h-5"/>
         </button>
-        <button onClick={() => handleAddToCart(product)}>
+        <button onClick={() => handleAddToCart(product, 'YES')}>
             <Plus className="w-5 h-5"/>
         </button>
         </div>
