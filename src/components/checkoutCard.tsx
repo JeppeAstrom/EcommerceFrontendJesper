@@ -10,9 +10,10 @@ import { useContext } from "react";
 
 interface Props {
 product: Product
+quantity:number
 }
 
-const CheckoutCard:NextPage<Props> = ({product}) => {
+const CheckoutCard:NextPage<Props> = ({product, quantity}) => {
 
     const context = useContext(Context);
 
@@ -33,20 +34,29 @@ const CheckoutCard:NextPage<Props> = ({product}) => {
     <div className="flex flex-col pl-2 w-2/3">
     <div className="flex justify-between">
     <span className="text-serif font-semibold line-clamp-2">{product.name}</span>
-     <div className="gap-2 flex justify-end w-full">
-        <button onClick={() => removeFromCart(product)}>
+
+    </div>
+    
+    <span className="text-sm line-clamp-3 font-light">{product.description} </span>
+    
+        <div className="justify-between flex pt-1">
+        <span className="text-sm font-semibold">{product.price}SEK</span>
+        <div className="gap-2 flex justify-end w-full items-center">
+        {quantity && (
+        <div className="flex border border-black w-[80px] text-sm py-1">
+       <p className="text-sm justify-start ml-2">{quantity} </p>
+       <div className="flex justify-end w-full gap-1">
+    <button onClick={() => removeFromCart(product)}>
             <Minus className="w-5 h-5"/>
         </button>
-        <button onClick={() => handleAddToCart(product, 'SKIP')}>
+        <button onClick={() => handleAddToCart(product, 'YES')}>
             <Plus className="w-5 h-5"/>
         </button>
         </div>
-    </div>
-    <span className="text-sm line-clamp-3 font-light">{product.description}</span>
-        <div className="justify-between flex pt-1">
-        <span className="text-sm font-semibold">{product.price}SEK</span>
-     
+        </div>
+         )}
    
+        </div>
         </div>
    
     </div>

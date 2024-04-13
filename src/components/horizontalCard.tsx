@@ -10,18 +10,19 @@ import { useContext } from "react";
 
 interface Props {
 product: Product
+quantity?: number;
 }
 
-const HorizontalCard:NextPage<Props> = ({product}) => {
+const HorizontalCard:NextPage<Props> = ({product, quantity}) => {
 
     const context = useContext(Context);
 
     const { removeFromCart, handleAddToCart}: any= context;
 
    return(<>
-    <div className="flex flex-row p-4 w-full">
+    <div className="flex flex-row p-2 lg:p-8 w-full">
         
-    <div className="w-1/3 items-center flex justify-center p-4">
+    <div className="w-1/4 items-center flex justify-center p-4">
  
     <figure className="aspect-[13/9] bg-white items-center justify-center flex min-w-full min-h-full">
         
@@ -30,23 +31,32 @@ const HorizontalCard:NextPage<Props> = ({product}) => {
     </figure>
     
   </div>
-    <div className="flex flex-col pl-2 w-2/3">
+    <div className="flex flex-col pl-2 w-3/4">
     <div className="flex justify-between">
     <span className="text-serif font-semibold line-clamp-2">{product.name}</span>
-     <div className="gap-2 flex justify-end w-full">
-        <button onClick={() => removeFromCart(product)}>
+
+    </div>
+    
+    <span className="text-sm line-clamp-3 font-light">{product.description} </span>
+    
+        <div className="justify-between flex pt-1">
+        <span className="text-sm font-semibold">{product.price}SEK</span>
+        <div className="gap-2 flex justify-end w-full items-center">
+        {quantity && (
+        <div className="flex border border-black w-[80px] text-sm py-1">
+       <p className="text-sm justify-start ml-2">{quantity} </p>
+       <div className="flex justify-end w-full gap-1">
+    <button onClick={() => removeFromCart(product)}>
             <Minus className="w-5 h-5"/>
         </button>
         <button onClick={() => handleAddToCart(product, 'YES')}>
             <Plus className="w-5 h-5"/>
         </button>
         </div>
-    </div>
-    <span className="text-sm line-clamp-3 font-light">{product.description}</span>
-        <div className="justify-between flex pt-1">
-        <span className="text-sm font-semibold">{product.price}SEK</span>
-     
+        </div>
+         )}
    
+        </div>
         </div>
    
     </div>
