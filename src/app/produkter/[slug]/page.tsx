@@ -9,9 +9,9 @@ import Link from "next/link";
 import Carousel from "@/components/carousel";
 import { useRouter } from "next/router";
 import CarouselPDP from "@/components/carouselPDP";
+import Image from "next/image";
 
 const ProductPage = () => {
- 
   const { handleAddToCart }: any = useContext(Context);
   const pageUrl = usePathname();
   const id = pageUrl.split("/").pop(); // Extract the id from the URL path
@@ -41,16 +41,30 @@ const ProductPage = () => {
   }
 
   return (
-    <div className="flex w-3/4 justify-center items-center mx-auto">
+    <div className="flex w-3/4 justify-center items-center mx-auto mb-10">
       <div className="lg:flex w-full">
-        <CarouselPDP
-          type="IMAGES"
-          slidesDesktop={1}
-          slidesTablet={1}
-          slidesPhone={1}
-          products={product.images}
-          currentProduct={product}
-        />
+        <div className="aspect-[9/13] bg-white h-full w-full relative">
+          <Carousel
+            visibleSlidesCountDesktop={1}
+            visibleSlidesCountMobile={1}
+            visibleSlidesCountTablet={1}
+          >
+            {product.images.map((image, index) => (
+              <figure
+                key={index}
+                className="aspect-[9/13] bg-white min-h-full min-w-full"
+              >
+                <Image
+                  className="min-w-full object-center h-full object-contain"
+                  width={900}
+                  height={1300}
+                  alt={product.name}
+                  src={image.imageUrl}
+                />
+              </figure>
+            ))}
+          </Carousel>
+        </div>
         <div className="lg:p-8 relative">
           <span className="line-clamp-1 border-b border-black text-lg">
             {product.name}

@@ -1,123 +1,363 @@
-"use client";
-import ArrowLeft from "@/app/icons/arrowleft";
+'use client'
+import ArrowLeft from '@/app/icons/arrowleft';
+import EventHelper from '@/helpers/eventHelper';
+import { createRef, useCallback, useEffect, useRef, useState } from 'react';
 
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable jsx-a11y/alt-text */
 
-import { Product } from "@/types/product";
-import { ImageType } from "@/types/product";
-import { NextPage } from "next";
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import ProductCard from "./productcard";
-
-interface Props {
-  products: Product[] | ImageType[];
-  type?: "PRODUCTS" | "IMAGES";
-  currentProduct?: Product;
-  slidesDesktop: number;
-  slidesTablet: number;
-  slidesPhone: number;
+interface CalculationValues {
+  startX: number;
+  startY: number;
+  startScrollLeft: number;
+  isScrolling: boolean;
 }
 
-const Carousel: NextPage<Props> = ({
-  products,
-  slidesDesktop,
-  slidesTablet,
-  slidesPhone,
-  type = "PRODUCTS",
-  currentProduct,
+const defaultCalculationValues: CalculationValues = {
+  startX: 0,
+  startY: 0,
+  startScrollLeft: 0,
+  isScrolling: false,
+};
+
+interface Props {
+  children: React.ReactNode[];
+  visibleSlidesCountMobile: 1 | 2 | 3;
+  visibleSlidesCountTablet: 1 | 2 | 3 | 4;
+  visibleSlidesCountDesktop: 1 | 2 | 3 | 4 | 5 | 6;
+  disableDrag?: boolean;
+}
+
+const Carousel: React.FC<Props> = ({
+  children: slides,
+  visibleSlidesCountMobile,
+  visibleSlidesCountTablet,
+  visibleSlidesCountDesktop,
+  disableDrag = false,
 }) => {
-  const [visibleItems, setVisibleItems] = useState(1); // Default number of visible items
-  const [itemWidth, setItemWidth] = useState(200); // State to hold the dynamic width of each item
-  const carouselRef = useRef<HTMLDivElement>(null);
-  const [isAtStart, setIsAtStart] = useState(true); // New state to track if the carousel is at the start
-  const [isAtEnd, setIsAtEnd] = useState(false);
-  const [pageWidth, setPageWidth] = useState<number>();
-  const updateArrowVisibility = (scrollPosition: number) => {
-    if (carouselRef.current) {
-      const maxScrollLeft =
-        carouselRef.current.scrollWidth - carouselRef.current.clientWidth;
-      setIsAtStart(scrollPosition <= 0);
-      setIsAtEnd(scrollPosition >= maxScrollLeft - 1); // Adjusted with a small buffer
-    }
-  };
+  // STATE
+  const [calculationValues, setCalculationValues] =
+    useState<CalculationValues>(defaultCalculationValues);
+  const [visibleIndexes, setVisibleIndexes] = useState<number[]>([]);
+
+  // REFS
+  const sliderRef = createRef<HTMLDivElement>();
+  const slidesRef = useRef<HTMLDivElement[]>([]);
+
+  // HANDLERS
+  const handleDirectionClick = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      const { current: slider } = sliderRef;
+      const { current: slides } = slidesRef;
+      if (!slider || slides.length <= 0) {
+        return;
+      }
+
+      const direction = e.currentTarget.dataset.direction;
+      const index = slides.findIndex((slide) => {
+        if (direction === 'PREV') {
+          return (
+            slide.offsetLeft + slide.clientWidth >= slider.scrollLeft - slide.clientWidth &&
+            slide.offsetLeft <= slider.scrollLeft
+          );
+        } else if (direction === 'NEXT') {
+          return slide.offsetLeft >= slider.scrollLeft + slide.clientWidth;
+        }
+      });
+
+      if (index <= -1) {
+        return;
+      }
+
+      slider.scrollTo({ left: slides[index].offsetLeft, behavior: 'smooth' });
+    },
+    [sliderRef]
+  );
+
+  const initialLoadRef = useRef<boolean>(true);
 
   useEffect(() => {
-    setPageWidth(window.innerWidth);
-    const updateVisibleItemsAndWidth = () => {
-      let visible = 4; // Default visible items
-      if (window.innerWidth >= 1024) {
-        visible = slidesDesktop;
-      } else if (window.innerWidth >= 768) {
-        visible = slidesTablet;
-      } else {
-        visible = slidesPhone;
-      }
-      setVisibleItems(visible);
+    const { current: slider } = sliderRef;
+    const { current: slides } = slidesRef;
+    if (!slider || !slides) {
+      return;
+    }
 
-      // Calculate the width of each item based on the carousel width and the number of visible items
-      if (carouselRef.current) {
-        const containerWidth = carouselRef.current.offsetWidth;
-        const itemWidth = containerWidth / visible;
-        setItemWidth(itemWidth);
+    const getCurrentXposition = (
+      e:
+        | React.MouseEvent<HTMLDivElement>
+        | React.TouchEvent<HTMLDivElement>
+        | MouseEvent
+        | TouchEvent
+    ): number => {
+      const { current: slider } = sliderRef;
+      if (!slider) {
+        return 0;
+      }
+
+      return EventHelper.isTouchEvent(e)
+        ? e.targetTouches[0].pageX
+        : (e as unknown as MouseEvent).pageX - slider.getBoundingClientRect().left;
+    };
+
+    const getCurrentYposition = (
+      e:
+        | React.MouseEvent<HTMLDivElement>
+        | React.TouchEvent<HTMLDivElement>
+        | MouseEvent
+        | TouchEvent
+    ): number => (EventHelper.isTouchEvent(e) ? e.targetTouches[0].clientY : 0);
+
+    const handleStart = (
+      e:
+        | React.MouseEvent<HTMLDivElement>
+        | React.TouchEvent<HTMLDivElement>
+        | MouseEvent
+        | TouchEvent
+    ) => {
+      const { current: slider } = sliderRef;
+      if (!slider || calculationValues.isScrolling) {
+        return;
+      }
+
+      setCalculationValues({
+        startX: getCurrentXposition(e),
+        startY: getCurrentYposition(e),
+        startScrollLeft: slider.scrollLeft || 0,
+        isScrolling: true,
+      });
+    };
+
+    // scroll div when moving on mouse/touch move
+    const handleMove = (
+      e:
+        | React.MouseEvent<HTMLDivElement>
+        | React.TouchEvent<HTMLDivElement>
+        | MouseEvent
+        | TouchEvent
+    ): void => {
+      const { current: slider } = sliderRef;
+      if (!slider) {
+        return;
+      }
+
+      const currentX = getCurrentXposition(e);
+      // Determines if we're scrolling vertically, rather than horizontally and if so,
+      // return without preventDefault to be able to scroll down
+      if (
+        EventHelper.isTouchEvent(e) &&
+        Math.abs(getCurrentYposition(e) - calculationValues.startY) >
+          Math.abs(currentX - calculationValues.startX)
+      ) {
+        return;
+      }
+
+      // Don't slide if more than one touch event. Makes the elements flicker
+      if (
+        calculationValues.isScrolling &&
+        (EventHelper.isMouseEvent(e) ||
+          (EventHelper.isTouchEvent(e) &&
+            !(e.touches?.length == 2 && e.targetTouches?.length == 2)))
+      ) {
+        e.preventDefault();
+        e.stopPropagation();
+        slider.scrollTo({
+          left: calculationValues.startScrollLeft - (currentX - calculationValues.startX),
+        });
       }
     };
 
-    window.addEventListener("resize", updateVisibleItemsAndWidth);
-    updateVisibleItemsAndWidth(); // Initial update
-    return () =>
-      window.removeEventListener("resize", updateVisibleItemsAndWidth);
-  }, [slidesDesktop, slidesPhone, slidesTablet]);
+    // Scroll current slide into view on mouseup/mouseleave or touchend/touchcancel
+    const handleEnd = (
+      _:
+        | React.MouseEvent<HTMLDivElement>
+        | React.TouchEvent<HTMLDivElement>
+        | MouseEvent
+        | TouchEvent
+    ) => {
+      const { current: slider } = sliderRef;
+      const { current: slides } = slidesRef;
+      if (!slider || !calculationValues.isScrolling) {
+        return;
+      }
 
-  const scrollCarousel = (direction: "next" | "prev") => {
-    if (carouselRef.current) {
-      const scrollAmount = itemWidth; // Use the dynamically set item width for scrolling
-      const currentScroll = carouselRef.current.scrollLeft;
-      const newScrollPosition =
-        direction === "next"
-          ? currentScroll + scrollAmount
-          : currentScroll - scrollAmount;
-      carouselRef.current.scrollTo({
-        left: newScrollPosition, // Use newScrollPosition here
-        behavior: "smooth",
+      const { scrollLeft } = slider;
+
+      const index = slides.findIndex((slide) => {
+        const pos =
+          // If true -> next image, else previous image
+          scrollLeft > calculationValues.startScrollLeft
+            ? scrollLeft + slide.clientWidth
+            : scrollLeft;
+        return pos >= slide.offsetLeft && pos <= slide.offsetLeft + slide.clientWidth;
       });
-      updateArrowVisibility(newScrollPosition);
+
+      setCalculationValues(defaultCalculationValues);
+
+      if (index <= -1) {
+        return;
+      }
+
+      slider.scrollTo({ left: slides[index].offsetLeft, behavior: 'smooth' });
+    };
+
+    const handleVisibleIndexes = () => {
+      const visibleIndexes: number[] = [];
+      slides.forEach((slide, index) => {
+        if (
+          slide.offsetLeft + slide.clientWidth >= slider.scrollLeft &&
+          slide.offsetLeft <= slider.scrollLeft + slider.clientWidth
+        ) {
+          visibleIndexes.push(index);
+        }
+      });
+      setVisibleIndexes(visibleIndexes);
+    };
+
+    // Set visible indexes on scroll. The timeout is to ensure that is happens when the scroll event has finished
+    let timeout: number | undefined;
+    const handleScroll = () => {
+      timeout = window.setTimeout(handleVisibleIndexes, 10);
+    };
+
+    // Function that ensures a correct scroll position when resizing the window
+    const handleResize = () => {
+      const leftMostIndex = visibleIndexes[0];
+      if (leftMostIndex <= -1) {
+        return;
+      }
+
+      slider.scrollTo({ left: slides[leftMostIndex].offsetLeft });
+      handleVisibleIndexes();
+    };
+
+    // Set visible slides after mount on initial load
+    if (initialLoadRef.current) {
+      handleVisibleIndexes();
+      initialLoadRef.current = false;
     }
-  };
 
+    // Only disable mouse events
+    if (!disableDrag) {
+      slider.addEventListener('mousedown', handleStart, { passive: false });
+      slider.addEventListener('mousemove', handleMove, { passive: false });
+      slider.addEventListener('mouseup', handleEnd, { passive: false });
+      slider.addEventListener('mouseleave', handleEnd, { passive: false });
+    }
+    slider.addEventListener('touchstart', handleStart, { passive: false });
+    slider.addEventListener('touchmove', handleMove, { passive: false });
+    slider.addEventListener('touchend', handleEnd, { passive: false });
+    slider.addEventListener('touchcancel', handleEnd, { passive: false });
+    slider.addEventListener('scroll', handleScroll, { passive: false });
+    window.addEventListener('resize', handleResize, { passive: false });
+
+    return () => {
+      slider.removeEventListener('mousedown', handleStart);
+      slider.removeEventListener('touchstart', handleStart);
+      slider.removeEventListener('mousemove', handleMove);
+      slider.removeEventListener('touchmove', handleMove);
+      slider.removeEventListener('mouseup', handleEnd);
+      slider.removeEventListener('mouseleave', handleEnd);
+      slider.removeEventListener('touchend', handleEnd);
+      slider.removeEventListener('touchcancel', handleEnd);
+      slider.removeEventListener('scroll', handleScroll);
+      window.clearTimeout(timeout);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [disableDrag, sliderRef, slidesRef, initialLoadRef, calculationValues, visibleIndexes]);
+
+  // STYLES
+  let slideWidthClassMobile = '';
+  let slideWidthClassTablet = '';
+  let slideWidthClassDesktop = '';
+
+  switch (visibleSlidesCountMobile) {
+    case 1:
+      slideWidthClassMobile = 'zero:max-md:flex-slides1';
+      break;
+    case 2:
+      slideWidthClassMobile = 'zero:max-md:flex-slides2';
+      break;
+    case 3:
+      slideWidthClassMobile = 'zero:max-md:flex-slides3';
+      break;
+  }
+
+  switch (visibleSlidesCountTablet) {
+    case 1:
+      slideWidthClassTablet = 'md:max-lg:flex-slides1';
+      break;
+    case 2:
+      slideWidthClassTablet = 'md:max-lg:flex-slides2';
+      break;
+    case 3:
+      slideWidthClassTablet = 'md:max-lg:flex-slides3';
+      break;
+    case 4:
+      slideWidthClassTablet = 'md:max-lg:flex-slides4';
+      break;
+  }
+
+  switch (visibleSlidesCountDesktop) {
+    case 1:
+      slideWidthClassDesktop = 'lg:flex-slides1';
+      break;
+    case 2:
+      slideWidthClassDesktop = 'lg:flex-slides2';
+      break;
+    case 3:
+      slideWidthClassDesktop = 'lg:flex-slides3';
+      break;
+    case 4:
+      slideWidthClassDesktop = 'lg:flex-slides4';
+      break;
+    case 5:
+      slideWidthClassDesktop = 'lg:flex-[0_0_calc(20%-9.6px)]';
+      break;
+    case 6:
+      slideWidthClassDesktop = 'lg:flex-[0_0_calc(16.666666%-10px)]';
+      break;
+  }
+
+  // Outer wrapper
   return (
-      
-      <div className="flex items-center relative">
-     
-      {!isAtStart && 
-           (products as ImageType[]).length > 1 &&  (
-          <ArrowLeft
-            onClick={() => scrollCarousel("prev")}
-            className="w-8 h-8 left-0 bg-gray-400 absolute cursor-pointer z-[9]"
-          />
-        )}
-        <div
-          ref={carouselRef}
-          className="flex items-center w-auto justify-start mx-auto bg-white sm:py-10 lg:min-h-[700px] overflow-x-hidden hide-scroll-bar relative"
+    <div className="relative">
+      {/* Controls */}
+      {visibleIndexes.length > 0 && !visibleIndexes.includes(0) && (
+        <button
+          className="absolute top-1/2 left-0 -translate-y-1/2 z-[9]"
+       
+        
+          data-direction="PREV"
+          onClick={handleDirectionClick}
         >
-          {products.map((product, index) => (
-            <div className={`min-w-[${itemWidth}px] p-4`} key={index}>
-            <ProductCard product={product as Product}/>
-            </div>
-          ))}
-        </div>
-
-        {!isAtEnd && 
-           (products as ImageType[]).length > 1 &&  (
-              <ArrowLeft
-                onClick={() => scrollCarousel("next")}
-                className="w-8 h-8 right-0 bg-gray-400 absolute cursor-pointer z-[9] rotate-180"
-              />
-            )}
+          <ArrowLeft className='h-8 w-8' />
+        </button>
+      )}
+      {visibleIndexes.length > 0 && !visibleIndexes.includes(slidesRef.current.length - 1) && (
+        <button
+          className="absolute top-1/2 right-0 -translate-y-1/2 z-[9] rotate-180"
+          
+       
+          data-direction="NEXT"
+          onClick={handleDirectionClick}
+        >
+         <ArrowLeft  className='h-8 w-8'/>
+        </button>
+      )}
+      {/* Inner wrapper (Slider) */}
+      <div ref={sliderRef} className="flex overflow-x-hidden">
+        {/* Slides */}
+        {slides.map((slide, index) => (
+          <div
+            draggable={false}
+            key={`slide-${index}`}
+            ref={(ref) => ref && !slidesRef.current.includes(ref) && slidesRef.current.push(ref)}
+            className={`flex flex-col [&:not(:last-child)]:mr-[12px] ${slideWidthClassMobile} ${slideWidthClassTablet} ${slideWidthClassDesktop}`}
+          >
+            {slide}
+          </div>
+        ))}
       </div>
-  
+    </div>
   );
 };
 

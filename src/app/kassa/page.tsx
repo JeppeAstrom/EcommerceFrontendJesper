@@ -25,7 +25,7 @@ const Checkout = () => {
   }, 0);
 
   return (
-    <div className="flex flex-col justify-center items-center h-auto">
+    <div className="flex flex-col justify-center items-center h-auto mb-10">
       <button
         className="flex items-center mx-auto justify-center w-full"
         onClick={handleToggleBag}
@@ -65,7 +65,7 @@ const Checkout = () => {
             toggleBag ? "lg:w-1/3" : "lg:w-full"
           }`}
         >
-          <div className="border border-black flex flex-col w-full px-8 gap-4 py-6">
+          <div className="border border-black flex flex-col w-full px-4 gap-4 py-6">
             <span className="mx-auto text-2xl font-light font-serif">
               Din order
             </span>
