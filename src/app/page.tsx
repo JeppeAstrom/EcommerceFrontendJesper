@@ -12,12 +12,12 @@ const promotion: Promotion[] = [
   {
     promotionTitle: "Rabatt",
     promotionImage:
-      "https://i.ebayimg.com/images/g/FAMAAOSwuhZecolk/s-l1200.webp",
+      "https://hips.hearstapps.com/hmg-prod/images/adam-sandler-is-seen-at-jimmy-kimmel-live-on-june-01-2022-news-photo-1656425616.jpg",
   },
   {
     promotionTitle: "Rabatt",
     promotionImage:
-      "https://www.instyle.com/thmb/vWiJPNtFK2zgR6ToH-AepzH_a-U=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-1241159533-2000-79a39b393d4e4d25a903f6b0ed11a9a1.jpg",
+      "https://media.gq.com/photos/59230af034edbe5f3532edd0/master/w_1600%2Cc_limit/adam-sandler.jpg",
   },
   {
     promotionTitle: "Rabatt",
@@ -37,9 +37,9 @@ const Home = async () => {
   return (
     <>
       <Campaign image="https://images6.alphacoders.com/653/653764.jpg" />
-      <div className="mb-10">
+      <div className="mb-10 pt-10">
         <Carousel
-          visibleSlidesCountDesktop={3}
+          visibleSlidesCountDesktop={2}
           visibleSlidesCountTablet={2}
           visibleSlidesCountMobile={1}
         >
@@ -49,7 +49,7 @@ const Home = async () => {
               key={index}
             >
               <Image
-                className="min-w-full object-center h-full object-contain"
+                className="min-w-full object-center h-full object-fill"
                 width={900}
                 height={1300}
                 alt={promo.promotionTitle}
