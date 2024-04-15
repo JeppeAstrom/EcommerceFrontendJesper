@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
-import GlobalState from "./context";
-import Authentication from "./context/authProvider";
+import AuthContext from "./context/authContext";
+import CartContext from "./context/cartContext";
+
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +22,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <GlobalState>
-        <Authentication>
+        <CartContext>
+        <AuthContext>
         <Header/>
       
         <div className="main-container">
         {children}
         </div>
-        </Authentication>
-        </GlobalState>
+        </AuthContext>
+        </CartContext>
         </body>
     </html>
   );

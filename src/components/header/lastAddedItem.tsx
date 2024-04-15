@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Context } from "@/app/context";
+import { Context } from "@/app/context/cartContext";
 import CloseIcon from "@/app/icons/closeIcon";
 import { Product } from "@/types/product";
 import { NextPage } from "next";

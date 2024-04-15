@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useContext, useEffect, useState } from "react";
-import { Context } from "@/app/context";
+import { Context } from "@/app/context/cartContext";
 import { GetProduct } from "@/utils/productService";
 import { Product } from "@/types/product";
 import { usePathname, useSearchParams } from "next/navigation"; // Import from next/navigation instead of next/router

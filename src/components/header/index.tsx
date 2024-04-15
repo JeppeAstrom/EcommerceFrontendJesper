@@ -5,7 +5,7 @@ import { ContextType, useContext, useEffect, useRef, useState } from "react";
 import CartModal from "./cartmodal";
 import CartIcon from "@/app/icons/cartIcon";
 import HeartIcon from "@/app/icons/hearticon";
-import { Context } from "@/app/context";
+import { Context } from "@/app/context/cartContext";
 import Hamburger from "@/app/icons/hamburger";
 import Modal from "../modal";
 import ArrowLeft from "@/app/icons/arrowleft";

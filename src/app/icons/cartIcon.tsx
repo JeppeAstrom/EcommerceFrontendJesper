@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useContext, useEffect, useState } from "react";
-import { Context } from "../context";
+import { Context } from "../context/cartContext";
 
 interface Props {
     className?:string;

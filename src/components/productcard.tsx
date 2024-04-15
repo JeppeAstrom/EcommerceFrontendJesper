@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Context } from "@/app/context";
+import { Context } from "@/app/context/cartContext";
 import BuyIcon from "@/app/icons/buyicon";
 import HeartIcon from "@/app/icons/hearticon";
 import { Product } from "@/types/product";

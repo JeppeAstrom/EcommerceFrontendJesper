@@ -21,7 +21,7 @@ interface ContextType {
 
 export const Context = createContext<ContextType | null>(null)
 
-function GlobalState({ children }: { children: ReactNode }) {
+function CartContext({ children }: { children: ReactNode }) {
     
     const [cartItems, setCartItems] = useState<Product[] | undefined>();
     const [lastAddedItem, setLastAddedItem] = useState<Product | null>(null);
@@ -156,4 +156,4 @@ function GlobalState({ children }: { children: ReactNode }) {
     return <Context.Provider value={{lastAddedItem, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts, categories, getFavouritesFromLocalStorage, addProductToFavouritesLocalStorage, removeProductFromLocalStorage }}>{children}</Context.Provider>
 }
 
-export default GlobalState;
+export default CartContext;

@@ -1,6 +1,6 @@
 'use client'
 import { useContext, useEffect, useState } from "react";
-import { Context } from "../context";
+import { Context } from "../context/cartContext";
 import { Product } from "@/types/product";
 import ProductRain from "@/components/productrain";
 
@@ -12,6 +12,7 @@ const Favourites = () => {
     useEffect(() => {
         const favs = getFavouritesFromLocalStorage();
         setFavourites(favs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return(<>
     <ProductRain products={favourites}/>

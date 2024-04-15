@@ -1,6 +1,6 @@
 "use client";
 import { useContext, useState } from "react";
-import { Context } from "../context";
+import { Context } from "../context/cartContext";
 import { Product } from "@/types/product";
 import HorizontalCard from "@/components/horizontalCard";
 import ProductCard from "@/components/productcard";

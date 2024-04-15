@@ -1,4 +1,4 @@
-import { Context } from "@/app/context";
+import { Context } from "@/app/context/cartContext";
 import { NextPage } from "next";
 import { useContext, useEffect, useRef } from "react";
 import CloseIcon from "@/app/icons/closeIcon";
