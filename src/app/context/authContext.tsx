@@ -20,17 +20,17 @@ export const AuthContext = createContext<AuthContextType | null>(null);
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(user)
       });
-
+      console.log(result.text);
       return result.status === 201 ? true : 'Registration failed';
     } catch (error) {
       return `Registration error: ${error}`;
     }
   };
 
-  const handleLogin = async (email: string, password: string, rememberMe: boolean): Promise<boolean | string> => {
+  const handleLogin = async (email: string, password: string): Promise<boolean | string> => {
     try {
-      const user = { email, password, rememberMe };
-      const loginUrl = 'https://localhost:7279/api/Auth/Login';
+      const user = { email, password };
+      const loginUrl = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Auth/Login';
       const result = await fetch(loginUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -49,24 +49,28 @@ export const AuthContext = createContext<AuthContextType | null>(null);
     }
   };
 
+   const CheckJWTToken = async () => {
+
+    const accessToken = localStorage.getItem('accessToken');
+    let result = await fetch('https://wa-okx-jesper-aa.azurewebsites.net/api/Auth/validatetoken', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    }).then((response) => {
+      return response.ok;
+    });
+    return result;
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
   };
 
-  const isAuthenticated = async (): Promise<boolean> => {
-    try {
-      const accessToken = localStorage.getItem('accessToken');
-      const authUrl = 'https://your-domain.com/auth';
-      const result = await fetch(authUrl, {
-        method: 'GET',
-        headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
-      });
-      return result.ok;
-    } catch (error) {
-      console.error('Error checking token validity:', error);
-      return false;
-    }
-  };
+  const isAuthenticated = async () => {
+    return await CheckJWTToken();
+  }
 
   return (
     <AuthContext.Provider value={{ handleRegister, handleLogin, handleLogout, isAuthenticated }}>

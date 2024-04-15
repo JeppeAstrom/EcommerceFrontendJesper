@@ -35,7 +35,7 @@ const Home = async () => {
   const Products = await GetAllProducts();
 
   return (
-    <>
+    <div>
       <Campaign image="https://images6.alphacoders.com/653/653764.jpg" />
       <div className="mb-10 pt-10">
         <Carousel
@@ -84,7 +84,7 @@ const Home = async () => {
       <div>
         <ProductRain products={Products} />
       </div>
-    </>
+    </div>
   );
 };
 

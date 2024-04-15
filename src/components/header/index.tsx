@@ -17,9 +17,11 @@ import SearchBar from "./searchbar";
 
 import { Category } from "@/types/category";
 import Login from "../forms/login";
+import { AuthContext } from "@/app/context/authContext";
 
 
 const Header = () => {
+  const {isAuthenticated}:any = useContext(AuthContext);
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [toggleCategoryModal, setToggleCategoryModal] =
     useState<boolean>(false);
@@ -84,6 +86,8 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+ const isLoggedin = isAuthenticated();
+
   return (
     <div className="sticky top-0 z-10">
     <div
@@ -102,10 +106,19 @@ const Header = () => {
                   <HeartIcon className="w-8 h-8 cursor-pointer" />
                   <span className="hidden lg:flex font-light">Favoriter</span>
                 </Link>
-                <button onClick={handleOpenLoginModal} className="items-center gap-2 lg:hidden">
-                  <Person className="h-8 w-8" />
-                  <span className="hidden lg:flex font-light">Logga in</span>
-                </button>
+                
+       
+                  {isLoggedin ? (
+                 <Link href='/mina-sidor' className="lg:hidden font-light flex">
+                  <Person className="h-8 w-8 lg:hidden" />
+                  </Link>
+                  ) : (
+                    <button onClick={handleOpenLoginModal} className="items-center gap-2 lg:hidden">
+                    <Person className="h-8 w-8 lg:hidden" />
+                    </button>
+                  )}
+               
+              
                 <div className="lg:flex items-center gap-2 hidden">
                   <AboutUs className="h-8 w-8" />
                   <span className="font-light">Om oss</span>
@@ -136,11 +149,18 @@ const Header = () => {
                 </div>
 
                 <div className="gap-4 justify-end flex">
-                  <button onClick={handleOpenLoginModal} className="items-center gap-2 hidden lg:flex">
+                  {isAuthenticated ? (
+                       <Link href='/mina-sidor' className="items-center gap-2 hidden lg:flex">
+                       <Person className="h-8 w-8" />
+                       <span className="hidden lg:flex font-light">Mina sidor</span>
+                     </Link>
+                  ) : (
+                    <button onClick={handleOpenLoginModal} className="items-center gap-2 hidden lg:flex">
                     <Person className="h-8 w-8" />
                     <span className="hidden lg:flex font-light">Logga in</span>
                   </button>
-
+                  )}
+               
                   <button
                     onClick={handlerToggleCart}
                     className="gap-2 items-center hidden lg:flex"
