@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "@/app/context/cartContext";
 import { GetProduct } from "@/utils/productService";
 import { Product } from "@/types/product";
@@ -31,7 +31,26 @@ const ProductPage = () => {
     };
     fetchData();
   }, [id]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedSize, setSelectedSize] = useState('');
+  const wrapperRef = useRef(null);
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+    setIsOpen(false);
+  };
+  useEffect(() => {
+    // Close dropdown when clicking outside
+    function handleClickOutside(event) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [wrapperRef]);
   if (!product) {
     return (
       <div className="flex items-center justify-center h-full w-full">
@@ -39,7 +58,14 @@ const ProductPage = () => {
       </div>
     );
   }
-
+  const sizes = [
+    { label: 'XS', extra: 'Påminn mig' },
+    { label: 'S', extra: 'Långdistansvara 49,00 kr.' },
+    { label: 'M', extra: 'Påminn mig' },
+    { label: 'L', extra: 'Påminn mig' },
+    { label: 'XL', extra: 'Långdistansvara 49,00 kr.' },
+    { label: 'XXL', extra: 'Påminn mig' },
+  ];
   return (
     <div className="flex w-3/4 justify-center items-center mx-auto mb-10">
       <div className="lg:flex w-full">
@@ -65,24 +91,37 @@ const ProductPage = () => {
             ))}
           </Carousel>
         </div>
-        <div className="lg:p-8 relative">
-          <span className="line-clamp-1 border-b border-black text-lg">
+        <div className="lg:p-4 lg:px-6 relative">
+          <span className="line-clamp-1 text-lg">
             {product.name}
           </span>
-          <div className="mt-2">
-            <span className="mt-4 text-sm line-clamp-8">
+          <div className="mt-1">
+            <span className="mt-4 text-lg font-semibold line-clamp-8 ">
               {product.description}
             </span>
-            <div className="flex justify-between pt-4">
-              <Link
-                href="/kassa"
-                onClick={() => handleAddToCart(product, "YES")}
-                className="right-0 w-[150px] h-[50px] rounded-xl bg-amber-400 items-center justify-center flex"
-              >
-                Köp
-              </Link>
-              <span className="">{product.price}kr</span>
-            </div>
+          </div>
+         <div className="pt-2">
+          <span className="text-lg font-normal">{product.price} kr</span>
+          </div>
+          <div className="pt-4">
+          <div ref={wrapperRef} className="relative" >
+        <button className="border w-full text-start pl-4 p-2" onClick={toggleDropdown}>
+        {selectedSize || 'Välj storlek'}
+      </button>
+      {isOpen && (
+        <ul className="absolute border-l border-r w-full bg-white z-[2]">
+          {sizes.map((size, index) => (
+            <li key={index} className="p-3 border-b"
+              onClick={() => handleSizeSelect(size.label)}>
+              {size.label} — {size.extra}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+    <div className="pt-4 flex justify-center items-center">
+      <button className="border w-full p-3 bg-black text-white font-semibold">Handla</button>
+    </div>
           </div>
         </div>
       </div>
