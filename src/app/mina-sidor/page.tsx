@@ -1,10 +1,20 @@
 'use client'
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
 
 const MyPages = () => {
 const {isAuthenticated}: any = useContext(AuthContext);
-const isLoggedin = isAuthenticated();
+const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
+
+useEffect(() => {
+    const checkAuthentication = async () => {
+      const isLoggedin = await isAuthenticated();
+      setIsLoggedIn(isLoggedin);
+    };
+    
+    checkAuthentication();
+  }, [isAuthenticated]); 
+
 if(!isLoggedin)
     return;
 

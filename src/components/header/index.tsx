@@ -20,6 +20,7 @@ import Login from "../forms/login";
 import { AuthContext } from "@/app/context/authContext";
 
 
+
 const Header = () => {
   const {isAuthenticated}:any = useContext(AuthContext);
   const [toggleCart, setToggleCart] = useState<boolean>(false);
@@ -40,7 +41,7 @@ const Header = () => {
   const { cartItems }: any = context;
   const [cartCount, setCartCount] = useState<number>();
   const [loginModal, setLoginModal] = useState<boolean>();
-
+  const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
   const handleOpenLoginModal = () => setLoginModal(prev => !prev);
 
   useEffect(() => {
@@ -86,7 +87,14 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
- const isLoggedin = isAuthenticated();
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const isLoggedin = await isAuthenticated();
+      setIsLoggedIn(isLoggedin);
+    };
+    
+    checkAuthentication();
+  }, [isAuthenticated, loginModal ]); 
 
   return (
     <div className="sticky top-0 z-10">
@@ -149,7 +157,7 @@ const Header = () => {
                 </div>
 
                 <div className="gap-4 justify-end flex">
-                  {isAuthenticated ? (
+                  {isLoggedin ? (
                        <Link href='/mina-sidor' className="items-center gap-2 hidden lg:flex">
                        <Person className="h-8 w-8" />
                        <span className="hidden lg:flex font-light">Mina sidor</span>
