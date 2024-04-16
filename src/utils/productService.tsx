@@ -1,4 +1,4 @@
-import { Product } from "@/types/product";
+import { Product, ProductGroup } from "@/types/product";
 
 
 const GetAllProducts = async () => {
@@ -18,6 +18,14 @@ const GetProduct = async (id:string) => {
     return Product;
 }
 
+const GetProductGroup = async(id:string) => {
+    let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Products/productGroup/' + id;
+
+    const ProductGroup:ProductGroup= await fetch(apiRoute).then(res => res.json());
+
+    return ProductGroup;
+}
+
 const getProductsFromCategory = async (category:string) => {
     let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Products/' + category;
 
@@ -34,4 +42,4 @@ const getMainCategories = async() => {
     return categories;
 }
 
-export { GetAllProducts, GetProduct, getProductsFromCategory, getMainCategories };
+export { GetAllProducts, GetProduct, getProductsFromCategory, getMainCategories, GetProductGroup };
