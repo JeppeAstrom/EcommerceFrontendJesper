@@ -3,6 +3,7 @@
 
 import { Context } from "@/app/context/cartContext";
 import BuyIcon from "@/app/icons/buyicon";
+import CartIcon from "@/app/icons/cartIcon";
 import HeartIcon from "@/app/icons/hearticon";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
@@ -30,27 +31,23 @@ const ProductCard: NextPage<Props> = ({ product }) => {
 
   return (
     <>
-      <div className="flex flex-col rounded-xl shadow-lg max-w-sm items-center justify-center">
-        <div className="p-4 rounded-xl items-center justify-center flex flex-col w-full">
-          <div className="flex justify-between relative w-full">
-            <button onClick={() => toggleFavourite()}>
-              <HeartIcon className={`h-6 w-6 absolute right-0 ${favourite ? "fill-red-400" : 'hover:fill-red-400'}`} />
-            </button>
-
-            <button onClick={() => handleAddToCart(product)}>
-              <BuyIcon className="absolute left-0 w-6 h-6" />
-            </button>
-          </div>
-          <Link className="min-w-full min-h-full" href={"/produkter/" + product.id}>
-            <figure className="p-5 aspect-[9/13] min-h-full w-full bg-white flex justify-center items-center">
+      <div className="flex flex-col max-w-sm items-center justify-center">
+        <div className="p-4 items-center justify-center flex flex-col w-full relative">
+       
+         
+         
+              <HeartIcon  onClick={() => toggleFavourite()}  className={`h-8 w-8 cursor-pointer absolute right-6 top-4 z-[5] bg-white  ${favourite ? "fill-red-300" : 'hover:fill-red-300'}`} />
+          
+            <Link className="min-w-full flex min-h-full aspect-9/13 items-center justify-center relative" href={"/produkter/" + product.id}>
               <Image
+              
               width={900}
               height={1300}
                 alt=""
                 src={product.images[0] ? product.images[0].imageUrl : ""}
-                className="object-contain transition-all min-h-full max-h-full min-w-full"
+                className="object-contain transition-all min-h-full  min-w-full object-center items-center justify-center"
               />
-            </figure>
+         
           </Link>
 
           <span className="line-clamp-1 text-start w-full text-md font-light">
@@ -62,13 +59,13 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               <span className="text-sm font-sans font-light">{product.price}SEK</span>
             </div>
             <div>
-              <Link
-                href="/kassa"
-                onClick={() => handleAddToCart(product, "NO")}
-                className=" bg-white border border-black rounded-xl hover:w-[120px] transition-all w-[100px] items-center justify-center flex md:text-lg text-sm p-1"
+              <button
+                onClick={() => handleAddToCart(product)}
+                className=" bg-white border border-black rounded-xl transition-all w-[50px] items-center justify-center flex md:text-lg text-sm p-1"
               >
-                Köp nu
-              </Link>
+                <CartIcon className="w-5 h-5"/>
+              
+              </button>
             </div>
           </div>
         </div>

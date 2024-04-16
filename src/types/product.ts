@@ -3,12 +3,16 @@ export interface Product {
   name: string;
   price: number;
   description: string;
-  category: string;
+  categories: Categories[];
   images: ImageType[];
   sizes: SizeType[];
   color: string;
 }
 
+export interface Categories {
+  id: number;
+  name: string;
+}
 export interface ImageType {
   id: number;
   imageUrl: string;

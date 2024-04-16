@@ -19,10 +19,8 @@ import { Category } from "@/types/category";
 import Login from "../forms/login";
 import { AuthContext } from "@/app/context/authContext";
 
-
-
 const Header = () => {
-  const {isAuthenticated}:any = useContext(AuthContext);
+  const { isAuthenticated }: any = useContext(AuthContext);
   const [toggleCart, setToggleCart] = useState<boolean>(false);
   const [toggleCategoryModal, setToggleCategoryModal] =
     useState<boolean>(false);
@@ -42,7 +40,12 @@ const Header = () => {
   const [cartCount, setCartCount] = useState<number>();
   const [loginModal, setLoginModal] = useState<boolean>();
   const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
-  const handleOpenLoginModal = () => setLoginModal(prev => !prev);
+  const handleOpenLoginModal = () => setLoginModal((prev) => !prev);
+
+  const handleOpenCart = () => {
+    setToggleCart(true);
+    clearLastAddedItem();
+  };
 
   useEffect(() => {
     setCartCount(cartItems ? cartItems.length : 0);
@@ -92,165 +95,183 @@ const Header = () => {
       const isLoggedin = await isAuthenticated();
       setIsLoggedIn(isLoggedin);
     };
-    
-    checkAuthentication();
-  }, [isAuthenticated, loginModal ]); 
+
+    checkAuthentication();  
+  }, [isAuthenticated, loginModal]);
+
+  useEffect(() => {
+    if(toggleCart){
+      document.body.style.overflow = 'hidden';
+    }
+    else{
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    }
+  },[toggleCart])
 
   return (
     <div className="sticky top-0 z-10">
-    <div
-      className={` bg-white  transition-opacity duration-300 ease-in-out ${headerShadow}  ${
-        visible 
-          ? "opacity-100"
-          : "opacity-0 pointer-events-none"
-      }`}
-    >
-      <div className="flex justify-center p-5">
-        <div className="w-[1400px] mx-auto">
-          <div className="flex flex-col py-2">
-            <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
-              <div className="flex items-center justify-start w-1/3 gap-x-3">
-                <Link href="/favoriter" className="flex items-center gap-2">
-                  <HeartIcon className="w-8 h-8 cursor-pointer" />
-                  <span className="hidden lg:flex font-light">Favoriter</span>
-                </Link>
-                
-       
-                  {isLoggedin ? (
-                 <Link href='/mina-sidor' className="lg:hidden font-light flex">
-                  <Person className="h-8 w-8 lg:hidden" />
+      <div
+        className={` bg-white  transition-opacity duration-300 ease-in-out ${headerShadow}  ${
+          visible ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        <div className="flex justify-center p-5">
+          <div className="w-[1400px] mx-auto">
+            <div className="flex flex-col py-2">
+              <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
+                <div className="flex items-center justify-start w-1/3 gap-x-3">
+                  <Link href="/favoriter" className="flex items-center gap-2">
+                    <HeartIcon className="w-8 h-8 cursor-pointer" />
+                    <span className="hidden lg:flex font-light">Favoriter</span>
                   </Link>
+
+                  {isLoggedin ? (
+                    <Link
+                      href="/mina-sidor"
+                      className="lg:hidden font-light flex"
+                    >
+                      <Person className="h-8 w-8 lg:hidden" />
+                    </Link>
                   ) : (
-                    <button onClick={handleOpenLoginModal} className="items-center gap-2 lg:hidden">
-                    <Person className="h-8 w-8 lg:hidden" />
+                    <button
+                      onClick={handleOpenLoginModal}
+                      className="items-center gap-2 lg:hidden"
+                    >
+                      <Person className="h-8 w-8 lg:hidden" />
                     </button>
                   )}
-               
-              
-                <div className="lg:flex items-center gap-2 hidden">
-                  <AboutUs className="h-8 w-8" />
-                  <span className="font-light">Om oss</span>
-                </div>
-              </div>
 
-              <div className="w-full items-center justify-center">
-                <Link
-                  href="/"
-                  className="flex items-center justify-center p-2 font-semibold text-lg"
-                >
-                  SandlerShop
-                </Link>
-              </div>
-
-              <div className="flex gap-x-3 w-1/3">
-                <div className="gap-4 justify-end flex w-full lg:hidden">
-                  <button onClick={handlerToggleCart} className="flex gap-2">
-                    <CartIcon
-                      showCount={true}
-                      cartCount={cartCount ? cartCount : 0}
-                      className="w-8 h-8 cursor-pointer"
-                    />
-                    <span className="pt-1 pl-2 hidden lg:flex font-light">
-                      Varukorg
-                    </span>
-                  </button>
-                </div>
-
-                <div className="gap-4 justify-end flex">
-                  {isLoggedin ? (
-                       <Link href='/mina-sidor' className="items-center gap-2 hidden lg:flex">
-                       <Person className="h-8 w-8" />
-                       <span className="hidden lg:flex font-light">Mina sidor</span>
-                     </Link>
-                  ) : (
-                    <button onClick={handleOpenLoginModal} className="items-center gap-2 hidden lg:flex">
-                    <Person className="h-8 w-8" />
-                    <span className="hidden lg:flex font-light">Logga in</span>
-                  </button>
-                  )}
-               
-                  <button
-                    onClick={handlerToggleCart}
-                    className="gap-2 items-center hidden lg:flex"
-                  >
-                    <CartIcon
-                      showCount={true}
-                      cartCount={cartCount ? cartCount : 0}
-                      className="w-8 h-8 cursor-pointer"
-                    />
-                    <span className="pt-1 pl-2 hidden lg:flex font-light">
-                      Varukorg
-                    </span>
-                  </button>
-                  <div>
-                    <Hamburger
-                      onClick={handlerToggleCategoryModal}
-                      className="w-8 h-8 cursor-pointer lg:hidden"
-                    />
+                  <div className="lg:flex items-center gap-2 hidden">
+                    <AboutUs className="h-8 w-8" />
+                    <span className="font-light">Om oss</span>
                   </div>
                 </div>
-              </div>
 
-              {toggleCart && (
-                <CartModal
-                  isOpen={toggleCart}
-                  handleToggleCart={handlerToggleCart}
-                />
-              )}
-              {toggleCategoryModal && (
-                <Modal
-                  title={"Kategorier"}
-                  toggleModal={handlerToggleCategoryModal}
-                >
-                  {(categories as Category[]).map((category, index) => (
-                    <Link
-                      key={index}
-                      className="justify-between flex border-b border-black w-full p-2"
-                      onClick={handlerToggleCategoryModal}
-                      href={"/produkter/kategori/" + category.name}
+                <div className="w-full items-center justify-center">
+                  <Link
+                    href="/"
+                    className="flex items-center justify-center p-2 font-semibold text-lg"
+                  >
+                    SandlerShop
+                  </Link>
+                </div>
+
+                <div className="flex gap-x-3 w-1/3">
+                  <div className="gap-4 justify-end flex w-full lg:hidden">
+                    <button onClick={handlerToggleCart} className="flex gap-2">
+                      <CartIcon
+                        showCount={true}
+                        cartCount={cartCount ? cartCount : 0}
+                        className="w-8 h-8 cursor-pointer"
+                      />
+                      <span className="pt-1 pl-2 hidden lg:flex font-light">
+                        Varukorg
+                      </span>
+                    </button>
+                  </div>
+
+                  <div className="gap-4 justify-end flex">
+                    {isLoggedin ? (
+                      <Link
+                        href="/mina-sidor"
+                        className="items-center gap-2 hidden lg:flex"
+                      >
+                        <Person className="h-8 w-8" />
+                        <span className="hidden lg:flex font-light">
+                          Mina sidor
+                        </span>
+                      </Link>
+                    ) : (
+                      <button
+                        onClick={handleOpenLoginModal}
+                        className="items-center gap-2 hidden lg:flex"
+                      >
+                        <Person className="h-8 w-8" />
+                        <span className="hidden lg:flex font-light">
+                          Logga in
+                        </span>
+                      </button>
+                    )}
+
+                    <button
+                      onClick={handlerToggleCart}
+                      className="gap-2 items-center hidden lg:flex"
                     >
-                      <span>{category.name}</span>
-                      <ArrowLeft className="rotate-180 h-5 w-5 items-center flex justify-center mr-2" />
-                    </Link>
-                  ))}
-                </Modal>
-              )}
+                      <CartIcon
+                        showCount={true}
+                        cartCount={cartCount ? cartCount : 0}
+                        className="w-8 h-8 cursor-pointer"
+                      />
+                      <span className="pt-1 pl-2 hidden lg:flex font-light">
+                        Varukorg
+                      </span>
+                    </button>
+                    <div>
+                      <Hamburger
+                        onClick={handlerToggleCategoryModal}
+                        className="w-8 h-8 cursor-pointer lg:hidden"
+                      />
+                    </div>
+                  </div>
+                </div>
 
-              {toggleSearchModal && (
-                <SearchModal toggleModal={handlerToggleSearchModal}>
-                  <div></div>
-                </SearchModal>
-              )}
-            
+                {toggleCategoryModal && (
+                  <Modal
+                    title={"Kategorier"}
+                    toggleModal={handlerToggleCategoryModal}
+                  >
+                    {(categories as Category[]).map((category, index) => (
+                      <Link
+                        key={index}
+                        className="justify-between flex border-b border-black w-full p-2"
+                        onClick={handlerToggleCategoryModal}
+                        href={"/produkter/kategori/" + category.name}
+                      >
+                        <span>{category.name}</span>
+                        <ArrowLeft className="rotate-180 h-5 w-5 items-center flex justify-center mr-2" />
+                      </Link>
+                    ))}
+                  </Modal>
+                )}
+
+                {toggleSearchModal && (
+                  <SearchModal toggleModal={handlerToggleSearchModal}>
+                    <div></div>
+                  </SearchModal>
+                )}
+              </div>
             </div>
-          </div>
-          <div className="sm:w-full lg:w-2/4 mx-auto relative">
-            <div className="hidden lg:flex items-center gap-x-6 justify-center">
-              {(categories as Category[]).map((category, index) => (
-                <Link
-                  key={index}
-                  className="flex pb-1"
-                  href={"/produkter/kategori/" + category.name}
-                >
-                  {category.name}
-                </Link>
-              ))}
+            <div className="sm:w-full lg:w-2/4 mx-auto relative">
+              <div className="hidden lg:flex items-center gap-x-6 justify-center">
+                {(categories as Category[]).map((category, index) => (
+                  <Link
+                    key={index}
+                    className="flex pb-1"
+                    href={"/produkter/kategori/" + category.name}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </div>
+              <SearchBar products={allProducts} />
             </div>
-            <SearchBar products={allProducts} />
           </div>
         </div>
       </div>
-    </div>
+      {toggleCart && (
+        <CartModal isOpen={toggleCart} handleToggleCart={handlerToggleCart} />
+      )}
       <LastAddeditem
-      showNotification={showNotification}
-      showHeader={showNotification}
-      clearLastAddedItem={clearLastAddedItem}
-      lastAddedItem={lastAddedItem}
-    />
-    {loginModal && (
-      <Login openModal={handleOpenLoginModal}/>
-    )}
-
+        showNotification={showNotification}
+        showHeader={showNotification}
+        clearLastAddedItem={clearLastAddedItem}
+        lastAddedItem={lastAddedItem}
+        handleOpenCart={handleOpenCart}
+      />
+      {loginModal && <Login openModal={handleOpenLoginModal} />}
     </div>
   );
 };

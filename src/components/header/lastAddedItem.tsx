@@ -4,28 +4,28 @@ import CloseIcon from "@/app/icons/closeIcon";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useContext, useEffect } from "react";
+
 
 interface Props {
 showHeader: boolean;
 showNotification: boolean;
 lastAddedItem: Product;
 clearLastAddedItem: () => void;
+handleOpenCart: () => void;
 }
 
-const LastAddeditem:NextPage<Props> = ({ showNotification, lastAddedItem, clearLastAddedItem}) => {
-
+const LastAddeditem:NextPage<Props> = ({ showNotification, lastAddedItem, clearLastAddedItem, handleOpenCart}) => {
 
 return(
     <>
 {lastAddedItem && showNotification && (
-<div className="absolute right-0 top-0 shadow-lg w-[400px] z-[30] bg-white">
-<div className="flex justify-between pt-4 px-4 items-center">
-<span className="text-lg">Produkt tillagd</span>
+<div className="absolute right-0 lg:right-10 top-0 shadow-lg w-[400px] z-[30] bg-white gap-4">
+<div className="flex justify-between pt-2 px-4 items-center">
+<span className="text-lg font-semibold">Produkt tillagd</span>
 <CloseIcon onClick={clearLastAddedItem} className="w-8 h-8"/>
 </div>
-<div className="flex flex-row p-2 shadow-lg rounded-md py-5">
-    <div className="w-1/4 p-4">
+<div className="flex flex-row py-3 px-4">
+    <div className="w-1/4">
     <figure className="min-w-full min-h-full aspect-[9/13]">
     <Image width={1300} height={900} alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full object-contain"/>
     </figure>
@@ -41,8 +41,13 @@ return(
         </div>
    
     </div>
+    
     </div>
-
+    <div className="px-5 pb-2 bg-white">
+    <button onClick={() => handleOpenCart()} className="w-full bg-black flex items center justify-center font-semibold text-white p-3">
+    Varukorg
+    </button>
+    </div>
 </div> 
  )}
 </>

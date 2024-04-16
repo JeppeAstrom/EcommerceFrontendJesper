@@ -20,7 +20,7 @@ export const AuthContext = createContext<AuthContextType | null>(null);
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(user)
       });
-      console.log(result.text);
+    
       return result.status === 201 ? true : 'Registration failed';
     } catch (error) {
       return `Registration error: ${error}`;

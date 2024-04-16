@@ -7,6 +7,7 @@ import PromotionalCarousel from "@/components/promotionalCarousel";
 import { Promotion } from "@/types/promotion";
 import { GetAllProducts } from "@/utils/productService";
 import Image from "next/image";
+import Link from "next/link";
 
 const promotion: Promotion[] = [
   {
@@ -36,16 +37,18 @@ const Home = async () => {
 
   return (
     <div>
-      <Campaign image="https://images6.alphacoders.com/653/653764.jpg" />
-      <div className="mb-10 pt-10">
+      
+      <div className="mb-10 pt-10 px-4">
+      <span className="text-semibold text-xl pl-1">Sandler kollektionen</span>
         <Carousel
           visibleSlidesCountDesktop={2}
           visibleSlidesCountTablet={2}
           visibleSlidesCountMobile={1}
+          useProgressBar={true}
         >
           {promotion.map((promo, index) => (
             <figure
-              className="aspect-[9/13] bg-white min-h-full min-w-full"
+              className="aspect-[9/13] bg-white min-h-full min-w-full pt-3"
               key={index}
             >
               <Image
@@ -59,15 +62,18 @@ const Home = async () => {
           ))}
         </Carousel>
       </div>
-      <div className="mb-10">
+      <div className="mb-10 px-3">
+        <span className="text-semibold text-xl pl-1">Rekommenderade produkter</span>
         <Carousel
           visibleSlidesCountDesktop={5}
           visibleSlidesCountTablet={2}
           visibleSlidesCountMobile={1}
+          useProgressBar={true}
         >
           {Products.map((product, index) => (
-            <figure
-              className="aspect-[9/13] bg-white min-h-full min-w-full"
+            <Link
+              href={`/produkter/${product.id}`}
+              className="aspect-[9/13] bg-white min-h-full min-w-full pt-4"
               key={index}
             >
               <Image
@@ -77,7 +83,7 @@ const Home = async () => {
                 alt={product.name}
                 src={product.images[0].imageUrl}
               />
-            </figure>
+            </Link>
           ))}
         </Carousel>
       </div>

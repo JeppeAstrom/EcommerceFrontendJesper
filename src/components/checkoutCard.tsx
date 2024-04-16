@@ -20,7 +20,7 @@ const CheckoutCard:NextPage<Props> = ({product, quantity}) => {
     const { removeFromCart, handleAddToCart}: any= context;
 
    return(<>
-    <div className="flex flex-row p-4 w-full items-center justify-center">
+    <div className="flex flex-row px-3 w-full items-center justify-center">
         
     <div className="lg:w-1/5 w-1/3 items-center flex justify-center p-4">
  

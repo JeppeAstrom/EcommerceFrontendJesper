@@ -12,10 +12,6 @@ const Checkout = () => {
 
   const { cartItems }: any = context;
 
-  const [toggleBag, setToggleBag] = useState<boolean>(true);
-
-  const handleToggleBag = () => setToggleBag((prev) => !prev);
-
   if (!cartItems || cartItems.length === 0) {
     return <div className="flex justify-center">Tom varukorg</div>;
   }
@@ -26,18 +22,10 @@ const Checkout = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-auto mb-10">
-      <button
-        className="flex items-center mx-auto justify-center w-full"
-        onClick={handleToggleBag}
-      >
-        <Dropdown className={`w-10 h-10 ${toggleBag ? "rotate-180" : ""}`} />
-        <span>{`Shopping bag ${
-          cartItems.length !== undefined && cartItems.length
-        }`}</span>
-      </button>
+
 
       <div className="flex-col lg:flex-row flex">
-        {toggleBag && (
+       
           <div className="relative overflow-y-auto items-center justify-center lg:w-3/4 md:max-h-[600px]">
             {cartItems &&
               [...new Set((cartItems as Product[]).map((item) => item.id))].map(
@@ -58,14 +46,12 @@ const Checkout = () => {
                 }
               )}
           </div>
-        )}
+    
 
         <div
-          className={`flex px-4 h-fit pt-4 ${
-            toggleBag ? "lg:w-1/3" : "lg:w-full"
-          }`}
+          className='flex px-4 h-fit pt-4'
         >
-          <div className="border border-black flex flex-col w-full px-4 gap-4 py-6">
+          <div className="border border-black flex flex-col px-2 gap-2  w-[300px] py-6">
             <span className="mx-auto text-2xl font-light font-serif">
               Din order
             </span>
@@ -85,8 +71,8 @@ const Checkout = () => {
           </div>
         </div>
       </div>
-      <div className="w-full justify-center flex pt-10">
-        <button className="w-[300px] md:rounded-xl bg-white border border-black p-3 font-serif">
+      <div className="w-full justify-center flex pt-10 px-4">
+        <button className="lg:w-[500px] w-full px-4 md:rounded-xl bg-black border text-white font-semibold p-3 ">
           Köp nu
         </button>
       </div>

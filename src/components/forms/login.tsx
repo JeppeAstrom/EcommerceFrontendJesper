@@ -23,7 +23,6 @@ const Login: NextPage<Props> = ({ openModal }) => {
   const handleSubmit = async () => {
     if (register) {
       var result = await handleRegister(firstName, lastName, email, password);
-      console.log(result);
     } else if (!register) {
       var result = await handleLogin(email,password);
       if(result){

@@ -2,7 +2,11 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "@/app/context/cartContext";
-import { GetProduct, GetProductGroup } from "@/utils/productService";
+import {
+  GetProduct,
+  GetProductGroup,
+  getProductsFromCategory,
+} from "@/utils/productService";
 import { Product, ProductGroup } from "@/types/product";
 import { usePathname, useSearchParams } from "next/navigation"; // Import from next/navigation instead of next/router
 import Link from "next/link";
@@ -10,6 +14,7 @@ import Carousel from "@/components/carousel";
 import { useRouter } from "next/router";
 import CarouselPDP from "@/components/carouselPDP";
 import Image from "next/image";
+import ProductRain from "@/components/productrain";
 
 const ProductPage = () => {
   const { handleAddToCart }: any = useContext(Context);
@@ -18,15 +23,20 @@ const ProductPage = () => {
 
   const [fetchedProduct, setProduct] = useState<Product | null>(null);
   const [productGroup, setProductGroup] = useState<ProductGroup | null>(null);
-
+  const [recommendedProducts, setRecommendedProducts] = useState<Product[]>();
+  console.log(fetchedProduct?.categories)
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
         try {
           const fetchedProduct: Product = await GetProduct(id);
-          const ProductGroup: ProductGroup= await GetProductGroup(id);
+          const ProductGroup: ProductGroup = await GetProductGroup(id);
+          const recommendedProducts: Product[] = await getProductsFromCategory(
+            fetchedProduct.categories[0].name
+          );
           setProduct(fetchedProduct);
           setProductGroup(ProductGroup);
+          setRecommendedProducts(recommendedProducts);
         } catch (error) {
           console.error("Error fetching product:", error);
         }
@@ -64,8 +74,9 @@ const ProductPage = () => {
       </div>
     );
   }
-  console.log(productGroup?.products)
+
   return (
+    <div className="mx-auto">
     <div className="flex w-3/4 justify-center items-center mx-auto mb-10">
       <div className="lg:flex w-full">
         <div className="aspect-[9/13] bg-white h-full w-full relative">
@@ -73,6 +84,7 @@ const ProductPage = () => {
             visibleSlidesCountDesktop={1}
             visibleSlidesCountMobile={1}
             visibleSlidesCountTablet={1}
+            useProgressBar={true}
           >
             {fetchedProduct.images.map((image, index) => (
               <figure
@@ -98,12 +110,18 @@ const ProductPage = () => {
             </span>
           </div>
           <div className="pt-2">
-            <span className="text-lg font-normal">{fetchedProduct.price} kr</span>
+            <span className="text-lg font-normal">
+              {fetchedProduct.price} kr
+            </span>
           </div>
           {productGroup?.products && productGroup.products.length > 0 && (
             <div className="pt-4 grid grid-cols-4 gap-4 w-[400px]">
               {productGroup.products.map((product, index) => (
-                <Link href={`/produkter/${product.id}`} className="aspect-[9/13]" key={index}>
+                <Link
+                  href={`/produkter/${product.id}`}
+                  className="aspect-[9/13]"
+                  key={index}
+                >
                   <Image
                     className="w-full h-full object-contain object-center"
                     width={900}
@@ -111,7 +129,13 @@ const ProductPage = () => {
                     alt={product.name}
                     src={product.images[0].imageUrl}
                   />
-                  <div className={`inline-block w-full  h-1 ${product.id === fetchedProduct.id ? 'bg-black' : 'bg-gray-300' }`}></div>
+                  <div
+                    className={`inline-block w-full  h-1 ${
+                      product.id === fetchedProduct.id
+                        ? "bg-black"
+                        : "bg-gray-300"
+                    }`}
+                  ></div>
                 </Link>
               ))}
             </div>
@@ -142,14 +166,43 @@ const ProductPage = () => {
             )}
 
             <div className="pt-4 flex justify-center items-center">
-              <button className="border w-full p-3 bg-black text-white font-semibold">
+              <button onClick={() => handleAddToCart(fetchedProduct)} className="border w-full p-3 bg-black text-white font-semibold">
                 Handla
               </button>
             </div>
           </div>
         </div>
       </div>
+  
     </div>
+        {recommendedProducts && (
+          <div className="mb-10 px-8 py-4">
+            <span className="font-semibold text-lg">Rekommenderade produkter</span>
+            <Carousel
+              visibleSlidesCountDesktop={5}
+              visibleSlidesCountTablet={2}
+              visibleSlidesCountMobile={1}
+              useProgressBar={true}
+            >
+              {recommendedProducts.map((product, index) => (
+                <Link
+                href={`/produkter/${product.id}`}
+                  className="aspect-[9/13] bg-white min-h-full min-w-full pt-4"
+                  key={index}
+                >
+                  <Image
+                    className="min-w-full object-center h-full object-contain"
+                    width={900}
+                    height={1300}
+                    alt={product.name}
+                    src={product.images[0].imageUrl}
+                  />
+                </Link>
+              ))}
+            </Carousel>
+          </div>
+        )}
+        </div>
   );
 };
 

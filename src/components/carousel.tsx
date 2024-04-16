@@ -24,6 +24,7 @@ interface Props {
   visibleSlidesCountTablet: 1 | 2 | 3 | 4;
   visibleSlidesCountDesktop: 1 | 2 | 3 | 4 | 5 | 6;
   disableDrag?: boolean;
+  useProgressBar?: boolean;
 }
 
 const Carousel: React.FC<Props> = ({
@@ -32,12 +33,13 @@ const Carousel: React.FC<Props> = ({
   visibleSlidesCountTablet,
   visibleSlidesCountDesktop,
   disableDrag = false,
+  useProgressBar = false
 }) => {
   // STATE
   const [calculationValues, setCalculationValues] =
     useState<CalculationValues>(defaultCalculationValues);
   const [visibleIndexes, setVisibleIndexes] = useState<number[]>([]);
-
+  const [progressBar, setProgressbar] = useState<number>(0);
   // REFS
   const sliderRef = createRef<HTMLDivElement>();
   const slidesRef = useRef<HTMLDivElement[]>([]);
@@ -73,6 +75,13 @@ const Carousel: React.FC<Props> = ({
   );
 
   const initialLoadRef = useRef<boolean>(true);
+
+  useEffect(() => {
+    const sliderPercentage =
+      ((visibleIndexes[visibleIndexes.length - 1] + 1) / slides.length) * 100;
+    setProgressbar(sliderPercentage);
+  }, [visibleIndexes, slides.length]);
+
 
   useEffect(() => {
     const { current: slider } = sliderRef;
@@ -329,7 +338,7 @@ const Carousel: React.FC<Props> = ({
           data-direction="PREV"
           onClick={handleDirectionClick}
         >
-          <ArrowLeft className='h-8 w-8' />
+          <ArrowLeft className='h-8 w-8 bg-black' />
         </button>
       )}
       {visibleIndexes.length > 0 && !visibleIndexes.includes(slidesRef.current.length - 1) && (
@@ -340,7 +349,7 @@ const Carousel: React.FC<Props> = ({
           data-direction="NEXT"
           onClick={handleDirectionClick}
         >
-         <ArrowLeft  className='h-8 w-8'/>
+         <ArrowLeft  className='h-8 w-8 bg-black'/>
         </button>
       )}
       {/* Inner wrapper (Slider) */}
@@ -357,6 +366,17 @@ const Carousel: React.FC<Props> = ({
           </div>
         ))}
       </div>
+      {useProgressBar && (
+        <div
+          className={`inline-block w-full bg-border ${
+            slides.length === visibleSlidesCountDesktop && 'lg:hidden'
+          } ${slides.length === visibleSlidesCountTablet && 'md:max-lg:hidden'} ${
+            slides.length === visibleSlidesCountMobile && 'zero:max-md:hidden'
+          }`}
+        >
+          <div style={{ width: `${progressBar}%` }} className="h-1 bg-black"></div>
+        </div>
+      )}
     </div>
   );
 };

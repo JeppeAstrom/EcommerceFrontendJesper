@@ -20,7 +20,7 @@ const HorizontalCard:NextPage<Props> = ({product, quantity}) => {
     const { removeFromCart, handleAddToCart}: any= context;
 
    return(<>
-    <div className="flex flex-row p-2 lg:p-8 w-full">
+    <div className="flex flex-row p-2 lg:p-2 lg:py-8 w-full">
         
     <div className="w-1/4 items-center flex justify-center p-4">
  
