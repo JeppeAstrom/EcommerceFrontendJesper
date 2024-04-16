@@ -24,7 +24,7 @@ const ProductPage = () => {
   const [fetchedProduct, setProduct] = useState<Product | null>(null);
   const [productGroup, setProductGroup] = useState<ProductGroup | null>(null);
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>();
-  console.log(fetchedProduct?.categories)
+
   useEffect(() => {
     const fetchData = async () => {
       if (id) {

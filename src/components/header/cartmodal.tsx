@@ -55,7 +55,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             className="w-8 h-8 cursor-pointer justify-center"
           />
         </div>
-        <div className="flex flex-col">
+        <div className="flex flex-col pt-2">
           {cartItems &&
             [...new Set((cartItems as Product[]).map((item) => item.id))].map(
               (productId) => {
@@ -76,7 +76,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             )}
         </div>
 
-        <div className="px-5 pb-2 bg-white sticky  bottom-0">
+        <div className="px-5 pb-2 bg-white sticky bottom-0 pt-4">
           <Link
             onClick={handleToggleCart}
             href="/kassa"

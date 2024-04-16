@@ -36,9 +36,9 @@ const Home = async () => {
   const Products = await GetAllProducts();
 
   return (
-    <div>
+    <div className="px-4">
       
-      <div className="mb-10 pt-10 px-4">
+      <div className="mb-10 pt-10">
       <span className="text-semibold text-xl pl-1">Sandler kollektionen</span>
         <Carousel
           visibleSlidesCountDesktop={2}
@@ -62,7 +62,7 @@ const Home = async () => {
           ))}
         </Carousel>
       </div>
-      <div className="mb-10 px-3">
+      <div className="mb-10">
         <span className="text-semibold text-xl pl-1">Rekommenderade produkter</span>
         <Carousel
           visibleSlidesCountDesktop={5}

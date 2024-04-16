@@ -124,7 +124,7 @@ const Header = () => {
               <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
                 <div className="flex items-center justify-start w-1/3 gap-x-3">
                   <Link href="/favoriter" className="flex items-center gap-2">
-                    <HeartIcon className="w-8 h-8 cursor-pointer" />
+                    <HeartIcon className="w-8 h-8 cursor-pointer fill-black" />
                     <span className="hidden lg:flex font-light">Favoriter</span>
                   </Link>
 
