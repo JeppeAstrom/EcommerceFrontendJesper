@@ -102,7 +102,7 @@ const ProductPage = () => {
             ))}
           </Carousel>
         </div>
-        <div className="lg:p-4 lg:px-6 relative pt-2">
+        <div className="lg:p-4 lg:px-6 relative md:pt-2 pt-5">
           <span className="line-clamp-1 text-lg">{fetchedProduct.name}</span>
           <div className="mt-1">
             <span className="mt-4 text-lg font-semibold line-clamp-8 ">
