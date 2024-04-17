@@ -25,7 +25,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
   const [favourite, setFavourite] = useState<boolean>(false);
   const toggleFavourite = () => {
     addProductToFavouritesLocalStorage(product);
-    setFavourite(!favourite); // Toggle the state
+    setFavourite(!favourite);
   };
   useEffect(() => {
     const favouriteProducts: Product[] = getFavouritesFromLocalStorage();

@@ -15,9 +15,14 @@ import Carousel from "@/components/carousel";
 import Image from "next/image";
 import GetReviewFromProductId, { ReviewDto } from "@/utils/reviewService";
 import Star from "@/app/icons/star";
+import HeartIcon from "@/app/icons/hearticon";
 
 const ProductPage = () => {
-  const { handleAddToCart }: any = useContext(Context);
+  const {
+    handleAddToCart,
+    addProductToFavouritesLocalStorage,
+    getFavouritesFromLocalStorage,
+  }: any = useContext(Context);
   const pageUrl = usePathname();
   const id = pageUrl.split("/").pop(); // Extract the id from the URL path
 
@@ -49,10 +54,10 @@ const ProductPage = () => {
   }, [id]);
   const [swatchAmount, setSwatchAmount] = useState<number>();
   useEffect(() => {
-    if(window.innerWidth){
+    if (window.innerWidth) {
       setSwatchAmount(window.innerWidth > 0 && window.innerWidth < 768 ? 3 : 4);
     }
-  },[])
+  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
@@ -79,16 +84,27 @@ const ProductPage = () => {
     );
   };
   const [isExpanded, setIsExpanded] = useState(false);
-  const visibleProducts = isExpanded
-    ? productGroup?.products
-    : productGroup?.products.slice(0, swatchAmount ? swatchAmount : 3);
+  const [isReviewsExpanded, setReviewsExpanded] = useState(false);
+
+  const visibleProducts =
+    productGroup && productGroup.products
+      ? isExpanded
+        ? productGroup.products
+        : productGroup.products.slice(0, swatchAmount || 3)
+      : [];
+
+  const visibleReviews =
+    reviews && reviews
+      ? isReviewsExpanded
+        ? reviews
+        : reviews.slice(0, 2)
+      : [];
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
     setIsOpen(false);
   };
   useEffect(() => {
-    // Close dropdown when clicking outside
     function handleClickOutside(event: MouseEvent) {
       if (
         wrapperRef.current &&
@@ -101,6 +117,17 @@ const ProductPage = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [wrapperRef]);
+
+  const [favourite, setFavourite] = useState<boolean>(false);
+  const toggleFavourite = () => {
+    addProductToFavouritesLocalStorage(fetchedProduct);
+    setFavourite(!favourite);
+  };
+  useEffect(() => {
+    const favouriteProducts: Product[] = getFavouritesFromLocalStorage();
+    setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct?.id));
+  }, [getFavouritesFromLocalStorage, fetchedProduct?.id]);
+
   if (!fetchedProduct) {
     return (
       <div className="flex items-center justify-center h-full w-full">
@@ -124,6 +151,11 @@ const ProductPage = () => {
                 key={index}
                 className="lg:aspect-13/9 aspect-9/13 bg-neutral-100 min-h-full w-full"
               >
+                <HeartIcon
+                  favourite={favourite}
+                  onClick={toggleFavourite}
+                  className="h-12 w-12 absolute top-0 right-2"
+                />
                 <Image
                   className="min-w-full object-center max-h-full object-contain"
                   width={900}
@@ -181,8 +213,10 @@ const ProductPage = () => {
                   </div>
                 )}
               {productGroup &&
+                Array.isArray(productGroup.products) &&
                 productGroup?.products.length > 3 &&
-                !isExpanded && visibleProducts?.length !== productGroup.products.length && (
+                !isExpanded &&
+                visibleProducts?.length !== productGroup.products.length && (
                   <button
                     className="text-center py-2 border-b border-black font-semibold px-1 text-sm"
                     onClick={() => setIsExpanded(true)}
@@ -190,8 +224,9 @@ const ProductPage = () => {
                     Visa mer
                   </button>
                 )}
-                 {productGroup &&
-                productGroup?.products.length > 3 && 
+              {productGroup &&
+                Array.isArray(productGroup.products) &&
+                productGroup?.products.length > 3 &&
                 isExpanded && (
                   <button
                     className="text-center py-2 border-b border-black font-semibold px-1 text-sm"
@@ -238,9 +273,9 @@ const ProductPage = () => {
           </div>
         </div>
       </div>
-      {reviews.length > 0 && (
+      {visibleReviews && visibleReviews.length > 0 && (
         <div className="flex flex-col gap-6 w-full md:w-[500px] px-4 mb-10">
-          {reviews.map((review, index) => (
+          {visibleReviews.map((review, index) => (
             <div key={index}>
               <div className="flex flex-col w-full">
                 <span className="pb-2 font-semibold">
@@ -252,10 +287,26 @@ const ProductPage = () => {
               <p className="pt-2">{review.comment}</p>
             </div>
           ))}
+          {visibleReviews && !isReviewsExpanded && reviews.length > 2 && (
+            <button
+              className="text-center py-2 border-b border-black font-semibold px-1 text-sm w-[70px]"
+              onClick={() => setReviewsExpanded(true)}
+            >
+              Visa mer
+            </button>
+          )}
+          {visibleReviews && isReviewsExpanded && reviews.length > 2 && (
+            <button
+              className="text-center py-2 border-b border-black font-semibold px-1 text-sm w-[90px]"
+              onClick={() => setReviewsExpanded(false)}
+            >
+              Visa mindre
+            </button>
+          )}
         </div>
       )}
       {recommendedProducts && (
-        <div className="mb-10 px-8 py-4">
+        <div className="mb-10 py-4">
           <span className="font-semibold text-lg">
             Rekommenderade produkter
           </span>

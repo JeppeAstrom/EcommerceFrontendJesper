@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Context } from "@/app/context/cartContext";
 import CloseIcon from "@/app/icons/closeIcon";
+import HeartIcon from "@/app/icons/hearticon";
 import Minus from "@/app/icons/minus";
 import Plus from "@/app/icons/plus";
 import TrashCan from "@/app/icons/trashcan";
@@ -22,8 +23,8 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
   return (
     <>
       <div className="flex flex-row p-2 lg:p-2 py-2 pr-6 w-full">
-        <div className="w-1/4 items-center flex justify-center">
-          <figure className="aspect-[13/9] bg-white items-center justify-center  flex min-w-full h-full">
+        <div className="w-1/4 items-center flex justify-center pl-3">
+          <figure className="aspect-[13/9] bg-white items-center justify-center flex min-w-full h-full">
             <Image
               width={1300}
               height={900}
