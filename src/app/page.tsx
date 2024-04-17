@@ -1,9 +1,6 @@
-import Campaign from "@/components/campaign";
-import Carousel from "@/components/carousel";
-import ProductCard from "@/components/productcard";
-import ProductRain from "@/components/productrain";
 
-import PromotionalCarousel from "@/components/promotionalCarousel";
+import Carousel from "@/components/carousel";
+import ProductRain from "@/components/productrain";
 import { Promotion } from "@/types/promotion";
 import { GetAllProducts } from "@/utils/productService";
 import Image from "next/image";

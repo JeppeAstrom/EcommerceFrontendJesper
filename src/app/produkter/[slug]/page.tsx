@@ -8,7 +8,7 @@ import {
   getProductsFromCategory,
 } from "@/utils/productService";
 import { Product, ProductGroup } from "@/types/product";
-import { usePathname, useSearchParams } from "next/navigation"; // Import from next/navigation instead of next/router
+import { usePathname } from "next/navigation"; // Import from next/navigation instead of next/router
 import Link from "next/link";
 import Carousel from "@/components/carousel";
 
