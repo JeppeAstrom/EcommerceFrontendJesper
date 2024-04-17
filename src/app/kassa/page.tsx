@@ -13,9 +13,10 @@ const Checkout = () => {
 
   const { cartItems }: any = context;
 
-  const totalPrice = (cartItems as Product[]).reduce((total, item) => {
-    return total + item.price;
-  }, 0);
+  const totalPrice = Array.isArray(cartItems) && cartItems.length > 0
+  ? cartItems.reduce((total, item) => total + item.price, 0)
+  : 0;
+
 
   return (
     <div className="flex flex-col justify-center items-center h-auto">
