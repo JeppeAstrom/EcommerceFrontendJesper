@@ -76,8 +76,8 @@ const ProductPage = () => {
   }
 
   return (
-    <div className="mx-auto">
-    <div className="flex w-3/4 justify-center items-center mx-auto mb-10">
+    <div className="mx-auto px-4">
+    <div className="flex w-full lg:w-3/4 justify-center items-center mx-auto mb-10">
       <div className="lg:flex w-full">
         <div className="aspect-[9/13] bg-white h-full w-full relative">
           <Carousel
@@ -115,7 +115,7 @@ const ProductPage = () => {
             </span>
           </div>
           {productGroup?.products && productGroup.products.length > 0 && (
-            <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4 w-[400px]">
+            <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4 lg:w-[320px]  justify-evenly items-center">
               {productGroup.products.map((product, index) => (
                 <Link
                   href={`/produkter/${product.id}`}
