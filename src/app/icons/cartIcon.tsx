@@ -1,6 +1,5 @@
 import { NextPage } from "next";
-import { useContext, useEffect, useState } from "react";
-import { Context } from "../context/cartContext";
+
 
 interface Props {
     className?:string;
@@ -15,24 +14,18 @@ const CartIcon:NextPage<Props> = ({className, openCart, cartCount, showCount}) =
 
     return (
         <>
-        <div onClick={openCart} className="flex relative cursor-pointer">
-        <svg className={className}  xmlns="http://www.w3.org/2000/svg" width="800px" height="800px" viewBox="0 0 24 24" fill="none"> 
-        
-        
-
-
-        <path d="M7.2998 5H22L20 12H8.37675M21 16H9L7 3H4M4 8H2M5 11H2M6 14H2M10 20C10 20.5523 9.55228 21 9 21C8.44772 21 8 20.5523 8 20C8 19.4477 8.44772 19 9 19C9.55228 19 10 19.4477 10 20ZM21 20C21 20.5523 20.5523 21 20 21C19.4477 21 19 20.5523 19 20C19 19.4477 19.4477 19 20 19C20.5523 19 21 19.4477 21 20Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+   
+    <div onClick={openCart} className={`${className} relative bottom-3`}>
         {showCount && (
-        <svg className="absolute top-0 -mt-3 ml-5" xmlns="http://www.w3.org/2000/svg" width="25px" height="25px" viewBox="0 0 24 24" fill="none">
-    <path d="M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#000000" font-size="10" transform="translate(0, 1)">
-        {cartCount ? cartCount : ""}
-    </text>
-    </svg>
-    )}
+  <div className="t-0 absolute left-3">
+    <p className="flex h-2 w-2 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">{cartCount}</p>
+  </div>
+     )}
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="file: mt-4 h-6 w-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+  </svg>
+</div>
 
-        </div>
 
 
         </>

@@ -12,9 +12,9 @@ import { usePathname } from "next/navigation"; // Import from next/navigation in
 import Link from "next/link";
 import Carousel from "@/components/carousel";
 
-
 import Image from "next/image";
-
+import GetReviewFromProductId, { ReviewDto } from "@/utils/reviewService";
+import Star from "@/app/icons/star";
 
 const ProductPage = () => {
   const { handleAddToCart }: any = useContext(Context);
@@ -24,6 +24,7 @@ const ProductPage = () => {
   const [fetchedProduct, setProduct] = useState<Product | null>(null);
   const [productGroup, setProductGroup] = useState<ProductGroup | null>(null);
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>();
+  const [reviews, setReviews] = useState<ReviewDto[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,11 +32,13 @@ const ProductPage = () => {
         try {
           const fetchedProduct: Product = await GetProduct(id);
           const ProductGroup: ProductGroup = await GetProductGroup(id);
+          const reviews: ReviewDto[] = await GetReviewFromProductId(id);
           const recommendedProducts: Product[] = await getProductsFromCategory(
             fetchedProduct.categories[0].name
           );
           setProduct(fetchedProduct);
           setProductGroup(ProductGroup);
+          setReviews(reviews);
           setRecommendedProducts(recommendedProducts);
         } catch (error) {
           console.error("Error fetching product:", error);
@@ -44,10 +47,41 @@ const ProductPage = () => {
     };
     fetchData();
   }, [id]);
+  const [swatchAmount, setSwatchAmount] = useState<number>();
+  useEffect(() => {
+    if(window.innerWidth){
+      setSwatchAmount(window.innerWidth > 0 && window.innerWidth < 768 ? 3 : 4);
+    }
+  },[])
+
   const [isOpen, setIsOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState("");
   const wrapperRef = useRef<HTMLDivElement>(null);
   const toggleDropdown = () => setIsOpen(!isOpen);
+
+  const totalScore = reviews.reduce((sum, review) => sum + review.rating, 0);
+  const averageScore = totalScore / reviews.length;
+
+  const stars = (score: number, showNumber = true) => {
+    const totalStars = 5;
+    const stars = [];
+
+    for (let i = 1; i <= totalStars; i++) {
+      stars.push(<Star key={i} filled={i <= score} />);
+    }
+    return (
+      <div className="flex flex-col">
+        {showNumber && (
+          <span className="text-right font-light text-slate-700">{`${score} av 5`}</span>
+        )}
+        <span className="flex">{stars}</span>
+      </div>
+    );
+  };
+  const [isExpanded, setIsExpanded] = useState(false);
+  const visibleProducts = isExpanded
+    ? productGroup?.products
+    : productGroup?.products.slice(0, swatchAmount ? swatchAmount : 3);
 
   const handleSizeSelect = (size: string) => {
     setSelectedSize(size);
@@ -77,9 +111,8 @@ const ProductPage = () => {
 
   return (
     <div className="mx-auto px-4">
-    <div className="flex w-full lg:w-3/4 justify-center items-center mx-auto mb-10">
-      <div className="lg:flex w-full">
-        <div className="aspect-[9/13] bg-white h-full w-full relative">
+      <div className="flex w-full justify-center items-center mx-auto mb-10">
+        <div className="lg:flex w-full">
           <Carousel
             visibleSlidesCountDesktop={1}
             visibleSlidesCountMobile={1}
@@ -89,10 +122,10 @@ const ProductPage = () => {
             {fetchedProduct.images.map((image, index) => (
               <figure
                 key={index}
-                className="aspect-[9/13] bg-white min-h-full min-w-full"
+                className="lg:aspect-13/9 aspect-9/13 bg-neutral-100 min-h-full w-full"
               >
                 <Image
-                  className="min-w-full object-center h-full object-contain"
+                  className="min-w-full object-center max-h-full object-contain"
                   width={900}
                   height={1300}
                   alt={fetchedProduct.name}
@@ -101,108 +134,155 @@ const ProductPage = () => {
               </figure>
             ))}
           </Carousel>
-        </div>
-        <div className="lg:p-4 lg:px-6 relative md:pt-2 pt-7">
-          <span className="line-clamp-1 text-lg">{fetchedProduct.name}</span>
-          <div className="mt-1">
-            <span className="mt-4 text-lg font-semibold line-clamp-8 ">
-              {fetchedProduct.description}
-            </span>
-          </div>
-          <div className="pt-2">
-            <span className="text-lg font-normal">
-              {fetchedProduct.price} kr
-            </span>
-          </div>
-          {productGroup?.products && productGroup.products.length > 0 && (
-            <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4 lg:w-[320px]  justify-evenly items-center">
-              {productGroup.products.map((product, index) => (
-                <Link
-                  href={`/produkter/${product.id}`}
-                  className="aspect-[9/13]"
-                  key={index}
-                >
-                  <Image
-                    className="w-full h-full object-contain object-center"
-                    width={900}
-                    height={1300}
-                    alt={product.name}
-                    src={product.images[0].imageUrl}
-                  />
-                  <div
-                    className={`inline-block w-full  h-1 ${
-                      product.id === fetchedProduct.id
-                        ? "bg-black"
-                        : "bg-gray-300"
-                    }`}
-                  ></div>
-                </Link>
-              ))}
-            </div>
-          )}
-          <div className="pt-4">
-            {fetchedProduct.sizes.length > 0 && (
-              <div ref={wrapperRef} className="relative">
-                <button
-                  className="border w-full text-start pl-4 p-2"
-                  onClick={toggleDropdown}
-                >
-                  {selectedSize || "Välj storlek"}
-                </button>
-                {isOpen && (
-                  <ul className="absolute border-l border-r w-full bg-white z-[2] cursor-pointer">
-                    {fetchedProduct.sizes.map((size, index) => (
-                      <li
-                        key={index}
-                        className="p-3 border-b"
-                        onClick={() => handleSizeSelect(size.size)}
-                      >
-                        {size.size}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            )}
 
-            <div className="pt-4 flex justify-center items-center">
-              <button onClick={() => handleAddToCart(fetchedProduct)} className="border w-full p-3 bg-black text-white font-semibold">
-                Handla
-              </button>
+          <div className="lg:p-4 w-full lg:px-6 relative md:pt-2 pt-7">
+            <span className="line-clamp-1 text-lg font-light">
+              {fetchedProduct.name}
+            </span>
+            <div className="mt-1">
+              <span className="mt-4 text-xl font-semibold line-clamp-8 ">
+                {fetchedProduct.description}
+              </span>
+            </div>
+            <div className="pt-2 flex justify-between">
+              <span className="text-lg font-semibold">
+                {fetchedProduct.price} kr
+              </span>
+              {reviews && reviews.length > 0 && stars(averageScore)}
+            </div>
+
+            <>
+              {productGroup?.products &&
+                productGroup.products.length > 0 &&
+                visibleProducts && (
+                  <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4 lg:w-[320px] justify-evenly items-center">
+                    {visibleProducts.map((product, index) => (
+                      <Link
+                        href={`/produkter/${product.id}`}
+                        className="aspect-[9/13]"
+                        key={index}
+                      >
+                        <Image
+                          className="w-full h-full object-contain object-center"
+                          width={900}
+                          height={1300}
+                          alt={product.name}
+                          src={product.images[0].imageUrl}
+                        />
+                        <div
+                          className={`inline-block w-full h-1 ${
+                            product.id === fetchedProduct.id
+                              ? "bg-black"
+                              : "bg-gray-300"
+                          }`}
+                        ></div>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              {productGroup &&
+                productGroup?.products.length > 3 &&
+                !isExpanded && visibleProducts?.length !== productGroup.products.length && (
+                  <button
+                    className="text-center py-2 border-b border-black font-semibold px-1 text-sm"
+                    onClick={() => setIsExpanded(true)}
+                  >
+                    Visa mer
+                  </button>
+                )}
+                 {productGroup &&
+                productGroup?.products.length > 3 && 
+                isExpanded && (
+                  <button
+                    className="text-center py-2 border-b border-black font-semibold px-1 text-sm"
+                    onClick={() => setIsExpanded(false)}
+                  >
+                    Visa mindre
+                  </button>
+                )}
+            </>
+            <div className="pt-4">
+              {fetchedProduct.sizes.length > 0 && (
+                <div ref={wrapperRef} className="relative">
+                  <button
+                    className="border w-full text-start pl-4 p-2"
+                    onClick={toggleDropdown}
+                  >
+                    {selectedSize || "Välj storlek"}
+                  </button>
+                  {isOpen && (
+                    <ul className="absolute border-l border-r w-full bg-white z-[2] cursor-pointer">
+                      {fetchedProduct.sizes.map((size, index) => (
+                        <li
+                          key={index}
+                          className="p-3 border-b"
+                          onClick={() => handleSizeSelect(size.size)}
+                        >
+                          {size.size}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+
+              <div className="pt-4 flex justify-center items-center">
+                <button
+                  onClick={() => handleAddToCart(fetchedProduct)}
+                  className="border w-full p-3 bg-black text-white font-semibold"
+                >
+                  Handla
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
-  
-    </div>
-        {recommendedProducts && (
-          <div className="mb-10 px-8 py-4">
-            <span className="font-semibold text-lg">Rekommenderade produkter</span>
-            <Carousel
-              visibleSlidesCountDesktop={5}
-              visibleSlidesCountTablet={2}
-              visibleSlidesCountMobile={1}
-              useProgressBar={true}
-            >
-              {recommendedProducts.map((product, index) => (
-                <Link
-                href={`/produkter/${product.id}`}
-                  className="aspect-[9/13] bg-white min-h-full min-w-full pt-4"
-                  key={index}
-                >
-                  <Image
-                    className="min-w-full object-center h-full object-contain"
-                    width={900}
-                    height={1300}
-                    alt={product.name}
-                    src={product.images[0].imageUrl}
-                  />
-                </Link>
-              ))}
-            </Carousel>
-          </div>
-        )}
+      {reviews.length > 0 && (
+        <div className="flex flex-col gap-6 w-full md:w-[500px] px-4 mb-10">
+          {reviews.map((review, index) => (
+            <div key={index}>
+              <div className="flex flex-col w-full">
+                <span className="pb-2 font-semibold">
+                  {review.appUser.firstName}
+                </span>
+                {stars(review.rating, false)}
+              </div>
+              <p className="pt-4 font-light text-sm">{fetchedProduct.name}</p>
+              <p className="pt-2">{review.comment}</p>
+            </div>
+          ))}
         </div>
+      )}
+      {recommendedProducts && (
+        <div className="mb-10 px-8 py-4">
+          <span className="font-semibold text-lg">
+            Rekommenderade produkter
+          </span>
+          <Carousel
+            visibleSlidesCountDesktop={5}
+            visibleSlidesCountTablet={2}
+            visibleSlidesCountMobile={1}
+          >
+            {recommendedProducts.map((product, index) => (
+              <Link
+                href={`/produkter/${product.id}`}
+                className="aspect-[9/13] bg-white min-h-full min-w-full pt-4"
+                key={index}
+              >
+                <Image
+                  className="min-w-full object-center h-full object-contain"
+                  width={900}
+                  height={1300}
+                  alt={product.name}
+                  src={product.images[0].imageUrl}
+                />
+              </Link>
+            ))}
+          </Carousel>
+        </div>
+      )}
+    </div>
   );
 };
 

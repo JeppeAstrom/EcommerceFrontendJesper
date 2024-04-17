@@ -41,7 +41,6 @@ const Home = async () => {
           visibleSlidesCountDesktop={2}
           visibleSlidesCountTablet={2}
           visibleSlidesCountMobile={1}
-          useProgressBar={true}
         >
           {promotion.map((promo, index) => (
             <figure

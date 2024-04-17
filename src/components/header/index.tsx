@@ -198,7 +198,7 @@ const Header = () => {
 
                     <button
                       onClick={handlerToggleCart}
-                      className="gap-2 items-center hidden lg:flex"
+                      className="items-center hidden lg:flex"
                     >
                       <CartIcon
                         showCount={true}
@@ -226,12 +226,12 @@ const Header = () => {
                     {(categories as Category[]).map((category, index) => (
                       <Link
                         key={index}
-                        className="justify-between flex border-b border-black w-full p-2"
+                        className="justify-between items-center flex border-b border-black w-full p-2 h-[32x]"
                         onClick={handlerToggleCategoryModal}
                         href={"/produkter/kategori/" + category.name}
                       >
-                        <span>{category.name}</span>
-                        <ArrowLeft className="rotate-180 h-5 w-5 items-center flex justify-center mr-2" />
+                        <span className="font-semibold">{category.name}</span>
+                        <ArrowLeft blackArrow={true} className="rotate-180 h-8 w-8 items-center flex justify-center mr-2" />
                       </Link>
                     ))}
                   </Modal>
@@ -249,7 +249,7 @@ const Header = () => {
                 {(categories as Category[]).map((category, index) => (
                   <Link
                     key={index}
-                    className="flex pb-1"
+                    className="flex pb-1 font-semibold text-md"
                     href={"/produkter/kategori/" + category.name}
                   >
                     {category.name}
