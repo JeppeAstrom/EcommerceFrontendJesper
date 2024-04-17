@@ -11,10 +11,10 @@ import { Product, ProductGroup } from "@/types/product";
 import { usePathname, useSearchParams } from "next/navigation"; // Import from next/navigation instead of next/router
 import Link from "next/link";
 import Carousel from "@/components/carousel";
-import { useRouter } from "next/router";
-import CarouselPDP from "@/components/carouselPDP";
+
+
 import Image from "next/image";
-import ProductRain from "@/components/productrain";
+
 
 const ProductPage = () => {
   const { handleAddToCart }: any = useContext(Context);
