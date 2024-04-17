@@ -115,7 +115,7 @@ const ProductPage = () => {
             </span>
           </div>
           {productGroup?.products && productGroup.products.length > 0 && (
-            <div className="pt-4 grid grid-cols-4 gap-4 w-[400px]">
+            <div className="pt-4 grid grid-cols-4 md:grid-cols-8 lg:grid-cols-5 gap-4 md:w-[600px] w-[320px] lg:w-[400px]">
               {productGroup.products.map((product, index) => (
                 <Link
                   href={`/produkter/${product.id}`}

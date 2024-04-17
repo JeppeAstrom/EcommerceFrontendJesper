@@ -3,6 +3,7 @@ import { Context } from "@/app/context/cartContext";
 import CloseIcon from "@/app/icons/closeIcon";
 import Minus from "@/app/icons/minus";
 import Plus from "@/app/icons/plus";
+import TrashCan from "@/app/icons/trashcan";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
 import Image from "next/image";
@@ -20,30 +21,33 @@ const HorizontalCard:NextPage<Props> = ({product, quantity}) => {
     const { removeFromCart, handleAddToCart}: any= context;
 
    return(<>
-    <div className="flex flex-row p-2 lg:p-2 lg:py-8 w-full">
+    <div className="flex flex-row p-2 lg:p-2 py-2 pr-6 w-full">
         
-    <div className="w-1/4 items-center flex justify-center p-4">
+    <div className="w-1/4 items-center flex justify-center">
  
-    <figure className="aspect-[13/9] bg-white items-center justify-center flex min-w-full min-h-full">
+    <figure className="aspect-[13/9] bg-white items-center justify-center  flex min-w-full h-full">
         
     <Image width={1300} height={900} alt="" src={product.images[0].imageUrl} className="object-contain object-center min-h-full min-w-full"/>
     
     </figure>
     
   </div>
-    <div className="flex flex-col pl-2 w-3/4">
+    <div className="flex flex-col pl-2 w-3/4 relative">
     <div className="flex justify-between">
-    <span className="text-serif font-semibold line-clamp-2">{product.name}</span>
-
+        
+    <span className="text-serif font-semibold line-clamp-2 max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">{product.name}</span>
+    <button onClick={() => removeFromCart(product)}>
+    <TrashCan className="h-5 w-8"/>
+    </button>
     </div>
-    
-    <span className="text-sm line-clamp-3 font-light">{product.description} </span>
+   
+        <span className="text-sm line-clamp-3 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">{product.description} </span>
     
         <div className="justify-between flex pt-1">
-        <span className="text-sm font-semibold">{product.price}SEK</span>
+        <span className="text-sm font-semibold absolute bottom-0 left-2">{product.price}SEK</span>
         <div className="gap-2 flex justify-end w-full items-center">
         {quantity && (
-        <div className="flex border border-black w-[80px] text-sm py-1">
+        <div className="flex border border-black w-[80px] text-sm py-1 absolute right-2 bottom-0">
        <p className="text-sm justify-start ml-2">{quantity} </p>
        <div className="flex justify-end w-full gap-1">
     <button onClick={() => removeFromCart(product)}>
@@ -58,7 +62,7 @@ const HorizontalCard:NextPage<Props> = ({product, quantity}) => {
    
         </div>
         </div>
-   
+        
     </div>
     </div>
     </>)

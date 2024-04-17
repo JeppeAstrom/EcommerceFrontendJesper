@@ -21,12 +21,12 @@ const Checkout = () => {
   }, 0);
 
   return (
-    <div className="flex flex-col justify-center items-center h-auto mb-10">
+    <div className="flex flex-col justify-center items-center h-auto">
 
 
       <div className="flex-col lg:flex-row flex">
        
-          <div className="relative overflow-y-auto items-center justify-center lg:w-3/4 md:max-h-[600px]">
+          <div className="relative overflow-y-auto items-center justify-center lg:min-w-3/4 sm:max-h-full md:max-h-[600px]">
             {cartItems &&
               [...new Set((cartItems as Product[]).map((item) => item.id))].map(
                 (productId) => {
@@ -37,7 +37,7 @@ const Checkout = () => {
                     (item) => item.id === productId
                   ).length;
                   return (
-                    <CheckoutCard
+                    <HorizontalCard
                       key={productId}
                       product={product!}
                       quantity={quantity}
@@ -49,9 +49,9 @@ const Checkout = () => {
     
 
         <div
-          className='flex px-4 h-fit pt-4'
+          className='flex px-4 flex-col bg-white w-full items-center pt-4 mx-auto sticky bottom-0'
         >
-          <div className="border border-black flex flex-col px-2 gap-2  w-[300px] py-6">
+          <div className="border border-black flex flex-col px-2 gap-2 w-[300px] lg:w-1/2 py-6">
             <span className="mx-auto text-2xl font-light font-serif">
               Din order
             </span>
@@ -69,12 +69,14 @@ const Checkout = () => {
               </span>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="w-full justify-center flex pt-10 px-4">
-        <button className="lg:w-[500px] w-full px-4 md:rounded-xl bg-black border text-white font-semibold p-3 ">
+      
+  
+      <div className="w-full lg:w-[400px] justify-center flex pt-5 px-4 pb-4">
+        <button className="w-full bg-black border text-white font-semibold p-3">
           Köp nu
         </button>
+      </div>
+      </div>
       </div>
     </div>
   );

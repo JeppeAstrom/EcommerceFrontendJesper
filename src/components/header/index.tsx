@@ -67,7 +67,7 @@ const Header = () => {
     const handleScroll = () => {
       const currentScrollPos = document.documentElement.scrollTop;
 
-      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 200);
+      setVisible(prevScrollPos > currentScrollPos || currentScrollPos < 50);
 
       setPrevScrollPos(currentScrollPos);
     };

@@ -7,6 +7,7 @@ export interface Product {
   images: ImageType[];
   sizes: SizeType[];
   color: string;
+  quantity: number;
 }
 
 export interface Categories {
