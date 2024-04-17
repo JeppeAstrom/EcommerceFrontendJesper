@@ -44,7 +44,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
             </button>
           </div>
 
-          <span className="text-sm line-clamp-3 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+          <span className="text-sm line-clamp2 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
             {product.description}
           </span>
 
