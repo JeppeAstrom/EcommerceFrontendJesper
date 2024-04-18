@@ -22,9 +22,9 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
 
   return (
     <>
-      <div className="flex flex-row p-2 lg:p-2 py-8 md:py-6 lg:py-2 pr-6 w-full">
-        <div className="w-1/4 items-center flex justify-center pl-3">
-          <figure className="aspect-[13/9] bg-white items-center justify-center flex min-w-full h-full">
+      <div className="flex flex-row p-2 lg:p-2 py-3 pr-6 w-full">
+        <div className="w-2/4 items-center flex justify-center pl-3">
+          <figure className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full">
             <Image
               width={1300}
               height={900}
