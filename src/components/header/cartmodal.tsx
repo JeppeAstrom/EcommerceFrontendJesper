@@ -85,7 +85,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
           )}
         </div>
 
-        <div className="px-5 pb-2 bg-white sticky bottom-0 pt-4">
+        <div className="px-5 pb-2 bg-white sticky bottom-0">
           {cartItems && cartItems.length > 0 ? (
             <Link
               onClick={handleToggleCart}
