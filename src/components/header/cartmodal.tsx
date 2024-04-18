@@ -34,8 +34,6 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
     };
   }, [handleToggleCart, isOpen]);
 
-  useEffect(() => {});
-
   const context = useContext(Context);
 
   const { cartItems }: any = context;

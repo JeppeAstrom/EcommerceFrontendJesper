@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 
 import RegistrationModal from "./registrationModal";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/app/context/authContext";
 
 interface Props {
@@ -30,6 +30,16 @@ const Login: NextPage<Props> = ({ openModal }) => {
       }
     }
   };
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [showPasswordError, setShowPasswordError] = useState<boolean>(false);
+  useEffect(() => {
+    if(verifyPassword && !isFocused ){
+      setShowPasswordError(true);
+    }
+    else{
+      setShowPasswordError(false);
+    }
+  },[isFocused,verifyPassword])
 
   return (
     <>
@@ -43,12 +53,13 @@ const Login: NextPage<Props> = ({ openModal }) => {
             e.preventDefault();
             void handleSubmit();
           }}
-          className="flex flex-col w-full justify-center items-center px-4 h-auto gap-y-2"
+          className="flex flex-col w-full justify-center items-center px-4 h-auto gap-y-3"
         >
           <input
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
-            className="w-full rounded-xl border p-3"
+            type="email"
+            className="w-full border p-3 font-light"
           />
 
           {register && (
@@ -56,39 +67,53 @@ const Login: NextPage<Props> = ({ openModal }) => {
               <input
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Förnamn"
-                className="w-full rounded-xl border p-3"
+                type="text"
+                className="w-full border p-3 font-light"
               />
               <input
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Efternamn"
-                className="w-full rounded-xl border p-3"
+                type="text"
+                className="w-full  border p-3 font-light"
               />
             </>
           )}
           <input
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Lösenord"
-            className="w-full rounded-xl border p-3"
+            type="password"
+            className="w-full border p-3 font-light"
           />
           {register && (
+        
             <input
               onChange={(e) => setVerifyPassword(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
               placeholder="Verifiera lösenord"
-              className="w-full rounded-xl border p-3"
+              type="password"
+              className="w-full border p-3 font-light"
             />
+           
+         
           )}
+          <div className="flex justify-between w-full px-1">
+          {showPasswordError && (
+              <span className="text-sm font-normal">Lösenord matchar ej</span>
+            )}
           <button
             type="button"
             onClick={handleLoginOrRegister}
-            className="border-b border-black"
+            className="border-b border-black text-sm font-semibold ml-auto"
           >{`${
             register ? "Redan registrerad? Logga in" : "Inget konto? Registrera"
           }`}</button>
+          </div>
           <button
             type="submit"
-            className="bg-red-300 p-2 w-full absolute bottom-0"
+            className="border w-full p-3 bg-black text-white font-semibold"
           >
-            Nästa
+            {register ? 'Registrera' : 'Logga in'}
           </button>
         </form>
       </RegistrationModal>

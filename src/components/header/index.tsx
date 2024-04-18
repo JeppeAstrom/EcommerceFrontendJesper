@@ -100,7 +100,7 @@ const Header = () => {
   }, [isAuthenticated, loginModal]);
 
   useEffect(() => {
-    if(toggleCart){
+    if(toggleCart || loginModal){
       document.body.style.overflow = 'hidden';
     }
     else{
@@ -109,7 +109,7 @@ const Header = () => {
     return () => {
       document.body.style.overflow = 'unset';
     }
-  },[toggleCart])
+  },[toggleCart,loginModal])
 
   return (
     <div className="sticky top-0 z-10">
