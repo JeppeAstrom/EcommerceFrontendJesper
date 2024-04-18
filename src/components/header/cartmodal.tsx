@@ -56,7 +56,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             className="w-8 h-8 cursor-pointer justify-center"
           />
         </div>
-        <div className="flex flex-col pt-2">
+        <div className="flex flex-col py-5 pt-2">
           {cartItems && cartItems.length > 0 ? (
             [...new Set((cartItems as Product[]).map((item) => item.id))].map(
               (productId) => {
