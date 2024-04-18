@@ -3,9 +3,6 @@ import { useContext, useState } from "react";
 import { Context } from "../context/cartContext";
 import { Product } from "@/types/product";
 import HorizontalCard from "@/components/horizontalCard";
-import ProductCard from "@/components/productcard";
-import Dropdown from "../icons/dropdown";
-import CheckoutCard from "@/components/checkoutCard";
 import Image from "next/image";
 
 const Checkout = () => {
