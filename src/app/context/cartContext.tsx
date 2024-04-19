@@ -17,6 +17,7 @@ interface ContextType {
     getFavouritesFromLocalStorage: () => Product[] | undefined;
     addProductToFavouritesLocalStorage: (product:Product) => void;
     removeProductFromLocalStorage: (product:Product) => void;
+    resetCart: () => void;
 }
 
 export const Context = createContext<ContextType | null>(null)
@@ -92,6 +93,10 @@ function CartContext({ children }: { children: ReactNode }) {
         }
     }
 
+    function resetCart() {
+      setCartItems([]);
+    }
+
     const getFavouritesFromLocalStorage = (): Product[] => {
         const favouritesStorageJSON: string | null = localStorage.getItem('favouriteProducts');
         if (favouritesStorageJSON) {
@@ -153,7 +158,7 @@ function CartContext({ children }: { children: ReactNode }) {
     }
          
 
-    return <Context.Provider value={{lastAddedItem, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts, categories, getFavouritesFromLocalStorage, addProductToFavouritesLocalStorage, removeProductFromLocalStorage }}>{children}</Context.Provider>
+    return <Context.Provider value={{lastAddedItem, resetCart, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts, categories, getFavouritesFromLocalStorage, addProductToFavouritesLocalStorage, removeProductFromLocalStorage }}>{children}</Context.Provider>
 }
 
 export default CartContext;

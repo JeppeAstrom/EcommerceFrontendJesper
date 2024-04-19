@@ -50,7 +50,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
 
           <div className="justify-between flex pt-1">
             <span className="text-sm font-semibold absolute bottom-0 left-2">
-              {product.price}SEK
+              {product.price} kr
             </span>
             <div className="gap-2 flex justify-end w-full items-center">
               {quantity && (
