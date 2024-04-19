@@ -43,4 +43,4 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
     // }
 
 
-    export { PostOrder};
+    export default PostOrder;
