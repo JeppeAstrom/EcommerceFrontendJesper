@@ -7,11 +7,13 @@ import CheckoutCard from "@/components/checkoutCard";
 import AddressForm from "./addressForm";
 import PostPayment from "@/utils/paymentService";
 import PostOrder from "@/utils/orderService";
+import Dropdown from "../icons/dropdown";
 
 const Checkout = () => {
   const context = useContext(Context);
   const [readyToPurchase, setReadyToPurchase] = useState<boolean>(false);
   const [address, setAddress] = useState<number>();
+  const [showCart, setShowCart] = useState<boolean>(false);
   const { cartItems, resetCart }: any = context;
 
   const [cardName, setCardname] = useState<string>();
@@ -21,10 +23,12 @@ const Checkout = () => {
 
   const [orderComplete, setOrderComplete] = useState<boolean>(false);
 
+  const toggleCart = () => setShowCart(prev => !prev);
+
   const handleAddressId = (addressId: number) => {
     setAddress(addressId);
   };
-  console.log(address, cardName, cardNumber, cvv, expirationDate);
+
   useEffect(() => {
     if (address && cardName && cardNumber && cvv && expirationDate) {
       setReadyToPurchase(true);
@@ -98,8 +102,15 @@ const Checkout = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-auto">
-      <div className="flex-col lg:flex-row-reverse flex">
+      <div className="flex-col lg:flex-row-reverse flex w-full">
         <div className="relative overflow-y-auto items-center justify-center lg:w-3/4 sm:max-h-full md:max-h-[750px] pb-8">
+          
+          <button className="p-2 w-full flex mx-auto items-center justify-center gap-4  font-light" onClick={toggleCart}>
+           <span>{`Varukorg (${cartItems && cartItems.length})st `}</span> 
+               <Dropdown className={`h-7 w-7 mt-1 ${showCart ? 'rotate-180 transition-all' : 'transition-all'}`}/>
+           </button>
+          {showCart && (
+          <div className="max-h-[25vh] overflow-y-auto w-full">
           {cartItems &&
             [...new Set((cartItems as Product[]).map((item) => item.id))].map(
               (productId) => {
@@ -118,7 +129,8 @@ const Checkout = () => {
                 );
               }
             )}
-
+        </div>
+          )}
           <div className="justify-between flex border-t pt-3 mt-4 px-3">
             <span className="font-semibold text-md">Frakt</span>
             <span>0 kr</span>
@@ -134,7 +146,7 @@ const Checkout = () => {
           </div>
         </div>
 
-        <div className="flex flex-col w-full md:w-3/5 gap-3 px-3">
+        <div className="flex flex-col w-full md:w-3/5 px-3">
           {!address ? (
             <AddressForm handleAddressId={handleAddressId} />
           ) : (
@@ -143,21 +155,21 @@ const Checkout = () => {
                 value={cardName}
                 onChange={(e) => setCardname(e.target.value)}
                 placeholder="Kortnamn"
-                className=" border-black border p-3"
+                className=" border-black border p-2 font-light text-sm"
               />
 
               <input
                 value={cardNumber}
                 onChange={(e) => setCardNumber(e.target.value)}
                 placeholder="Kortnummer"
-                className=" border-black border p-3"
+                className=" border-black border p-2 font-light text-sm"
               />
 
               <input
                 value={cvv}
                 onChange={(e) => setCvv(e.target.value)}
                 placeholder="CVV"
-                className=" border-black border p-3"
+                className=" border-black border p-2 font-light text-sm"
               />
 
               <div className="flex w-full gap-3">
@@ -165,7 +177,7 @@ const Checkout = () => {
                   value={expirationDate}
                   onChange={(e) => setExpirationDate(e.target.value)}
                   placeholder="Utgångsdatum"
-                  className=" border-black border p-3"
+                  className=" border-black border p-2 font-light text-sm"
                 />
 
                 <button
@@ -183,9 +195,9 @@ const Checkout = () => {
               e.preventDefault();
               handleBuy();
             }}
-            className="flex px-4 flex-col bg-white w-full items-center mx-auto sticky bottom-0 py-2 md:pt-5"
+            className="flex  flex-col bg-white w-full items-center mx-auto pt-4 pb-2 md:pt-2"
           >
-            <div className="w-full lg:w-[400px] justify-center flex px-4">
+            <div className="w-full justify-center flex">
               <button
                 type="submit"
                 disabled={!readyToPurchase}

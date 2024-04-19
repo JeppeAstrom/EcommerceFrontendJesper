@@ -28,4 +28,19 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
         console.error('Error posting address:', error);
     }
     }
-    export default PostOrder;
+
+    // interface Orders = {
+
+    // }
+    // const GetOrders = async () => {
+    // const token = localStorage.getItem('accessToken');
+
+    // const url = "https://wa-okx-jesper-aa.azurewebsites.net/api/Order/getOrderHistory";
+
+    // const Orders: Product[] = await fetch(url).then(res => res.json())
+ 
+    // return Orders;
+    // }
+
+
+    export { PostOrder};

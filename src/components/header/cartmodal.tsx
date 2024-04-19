@@ -9,6 +9,7 @@ import Link from "next/link";
 import router, { useRouter } from "next/router";
 import CartIcon from "@/app/icons/cartIcon";
 import Image from "next/image";
+import { TransitionEvent } from "react";
 
 interface Props {
   handleToggleCart: () => void;
@@ -40,6 +41,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-10 h-full p-4">
+      
       <div
         ref={modalRef}
         className="fixed top-0 right-0 lg:w-[600px] w-full h-full z-20 bg-white overflow-y-auto"

@@ -5,7 +5,7 @@ import Dropdown from "../icons/dropdown";
 import Link from "next/link";
 import SideNavigation from "@/components/side-navigation";
 
-const MyPages = () => {
+const MyPurchases = () => {
   const { isAuthenticated, handleLogout }: any = useContext(AuthContext);
   const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -50,11 +50,17 @@ title: 'ändra address'}]
           />
         </button>
         {isOpen && (
-         <SideNavigation  sideMenuItems={sideMenuItems} />
+         <SideNavigation activeRoute={'/mina-kop'} sideMenuItems={sideMenuItems} />
         )}
         <button className="text-start font-normal pt-5 font-sans" onClick={() => handleReroute()}>Logga ut</button>
+      </div>
+      <div>
+        
+
+
+
       </div>
     </div>
   );
 };
-export default MyPages;
+export default MyPurchases;
