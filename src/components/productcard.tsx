@@ -65,14 +65,6 @@ const ProductCard: NextPage<Props> = ({ product }) => {
                 {product.price}SEK
               </span>
             </div>
-            <div>
-              {/* <button
-                onClick={() => handleAddToCart(product)}
-                className=" bg-white border border-black rounded-xl transition-all w-[50px] items-center justify-center flex md:text-lg text-sm p-1"
-              >
-                <CartIcon className="w-4 h-4 bottom-5" />
-              </button> */}
-            </div>
           </div>
         </div>
       </div>

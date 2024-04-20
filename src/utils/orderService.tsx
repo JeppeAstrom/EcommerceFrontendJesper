@@ -1,5 +1,6 @@
+import { Product } from "@/types/product";
 
-const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:number) => {
+const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:number, orderProducts:any) => {
     const token = localStorage.getItem('accessToken');
 
     const url = "https://wa-okx-jesper-aa.azurewebsites.net/api/Order";
@@ -7,6 +8,7 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
         paymentDetailId,
         addressId,
         totalPrice,
+        orderProducts
     }
     try{
     const response = await fetch(url, {
@@ -29,18 +31,43 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
     }
     }
 
-    // interface Orders = {
+   export interface OrderProduct {
+        id: string; 
+        product: Product;
+        size?: string; 
+      }
+      
+    export  interface Order {
+        id: string;
+        orderProducts: OrderProduct[];
+      }
+      
+      export type OrderHistory = Order[];
+    const GetOrders = async () => {
+        const token = localStorage.getItem('accessToken');
+    
+        const url = "https://wa-okx-jesper-aa.azurewebsites.net/api/Order/getOrderHistory";
+    
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' 
+            }
+        };
+        try {
+            const response = await fetch(url, requestOptions);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const Orders:OrderHistory[]  = await response.json();
+            return Orders;
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+            throw error;
+        }
+    }
+    
 
-    // }
-    // const GetOrders = async () => {
-    // const token = localStorage.getItem('accessToken');
 
-    // const url = "https://wa-okx-jesper-aa.azurewebsites.net/api/Order/getOrderHistory";
-
-    // const Orders: Product[] = await fetch(url).then(res => res.json())
- 
-    // return Orders;
-    // }
-
-
-    export default PostOrder;
+    export  {PostOrder, GetOrders};

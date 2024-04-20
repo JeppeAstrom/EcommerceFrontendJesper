@@ -6,8 +6,8 @@ import Image from "next/image";
 import CheckoutCard from "@/components/checkoutCard";
 import AddressForm from "./addressForm";
 import PostPayment from "@/utils/paymentService";
-import PostOrder from "@/utils/orderService";
 import Dropdown from "../icons/dropdown";
+import { PostOrder } from "@/utils/orderService";
 
 const Checkout = () => {
   const context = useContext(Context);
@@ -36,6 +36,11 @@ const Checkout = () => {
   }, [address, cardName, cardNumber, cvv, expirationDate]);
 
   const handleBuy = async () => {
+    const orderProducts = (cartItems as Product[]).map(item => ({
+      productId: item.id,
+      size: item.chosenSize
+    }));
+    
     if (cardName && cardNumber && cvv && expirationDate) {
       const paymentResponse = await PostPayment(
         cardName,
@@ -48,7 +53,8 @@ const Checkout = () => {
         const orderReponse = await PostOrder(
           paymentResponse,
           address,
-          totalPrice
+          totalPrice,
+          orderProducts
         );
         if (orderReponse) {
           setOrderComplete(orderReponse);

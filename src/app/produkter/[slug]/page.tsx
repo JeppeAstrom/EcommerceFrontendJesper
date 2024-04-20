@@ -27,7 +27,7 @@ const ProductPage = () => {
   const pageUrl = usePathname();
   const id = pageUrl.split("/").pop(); // Extract the id from the URL path
 
-  const [fetchedProduct, setProduct] = useState<Product | null>(null);
+  const [fetchedProduct, setProduct] = useState<Product | undefined>();
   const [productGroup, setProductGroup] = useState<ProductGroup | null>(null);
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>();
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
@@ -53,15 +53,16 @@ const ProductPage = () => {
     };
     fetchData();
   }, [id]);
+  const [selectedSize, setSelectedSize] = useState<string | undefined>(fetchedProduct ? fetchedProduct.sizes[0].size : undefined);
   const [swatchAmount, setSwatchAmount] = useState<number>();
   useEffect(() => {
     if (window.innerWidth) {
       setSwatchAmount(window.innerWidth > 0 && window.innerWidth < 768 ? 3 : 4);
     }
   }, []);
-
+  
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedSize, setSelectedSize] = useState("");
+
   const wrapperRef = useRef<HTMLDivElement>(null);
   const toggleDropdown = () => setIsOpen(!isOpen);
 
@@ -129,6 +130,15 @@ const ProductPage = () => {
     setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct?.id));
   }, [getFavouritesFromLocalStorage, fetchedProduct?.id]);
 
+  const addToCart = (product:Product, chosenSize:string) => {
+    const productWithSize = {
+      ...product,
+      chosenSize: chosenSize
+    };
+    handleAddToCart(productWithSize);
+  }
+
+ 
   if (!fetchedProduct) {
     return (
  <LoadingSpinner/>
@@ -242,7 +252,7 @@ const ProductPage = () => {
                     className="border w-full text-start pl-4 p-2"
                     onClick={toggleDropdown}
                   >
-                    {selectedSize || "Välj storlek"}
+                    {selectedSize || fetchedProduct.sizes[0].size}
                   </button>
                   {isOpen && (
                     <ul className="absolute border-l border-r w-full bg-white z-[2] cursor-pointer">
@@ -262,7 +272,7 @@ const ProductPage = () => {
 
               <div className="pt-4 flex justify-center items-center">
                 <button
-                  onClick={() => handleAddToCart(fetchedProduct)}
+                  onClick={() => addToCart(fetchedProduct, selectedSize ? selectedSize : fetchedProduct.sizes[0].size)}
                   className="border w-full p-3 bg-black text-white font-semibold"
                 >
                   Handla

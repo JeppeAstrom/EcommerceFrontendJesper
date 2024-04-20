@@ -41,7 +41,7 @@ const AddressForm:NextPage<Props> = ({handleAddressId}) => {
 
           <input value={street} onChange={(e) => setStreet(e.target.value)} placeholder="Gata" className=" border-black border p-2 text-sm font-light"/>
 
-            <div className="flex w-full">
+            <div className="flex w-full gap-3">
 
             <input value={postal} onChange={(e) => setPostal(e.target.value)} placeholder="Postnummer" className=" border-black border p-2 w-3/4 font-light text-sm"/>
 

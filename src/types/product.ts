@@ -8,6 +8,7 @@ export interface Product {
   sizes: SizeType[];
   color: string;
   quantity: number;
+  chosenSize?:string;
 }
 
 export interface Categories {
@@ -25,4 +26,8 @@ export interface SizeType {
 export interface ProductGroup {
   id: number;
   products: Product[];
+}
+export interface OrderProduct {
+  productId: number;
+  size:string;
 }

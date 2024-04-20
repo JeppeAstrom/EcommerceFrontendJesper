@@ -110,7 +110,7 @@ const Header = () => {
       document.body.style.overflow = 'unset';
     }
   },[toggleCart,loginModal])
-
+  console.log(cartItems)
   return (
     <div className="sticky top-0 z-10">
       <div
@@ -130,7 +130,7 @@ const Header = () => {
 
                   {isLoggedin ? (
                     <Link
-                      href="/mina-sidor"
+                      href="/mina-kop"
                       className="lg:hidden font-light flex"
                     >
                       <Person className="h-8 w-8 lg:hidden" />
@@ -176,7 +176,7 @@ const Header = () => {
                   <div className="gap-4 justify-end flex">
                     {isLoggedin ? (
                       <Link
-                        href="/mina-sidor"
+                        href="/mina-kop"
                         className="items-center gap-2 hidden lg:flex"
                       >
                         <Person className="h-8 w-8" />
