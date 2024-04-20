@@ -13,7 +13,7 @@ const Checkout = () => {
   const context = useContext(Context);
   const [readyToPurchase, setReadyToPurchase] = useState<boolean>(false);
   const [address, setAddress] = useState<number>();
-  const [showCart, setShowCart] = useState<boolean>(false);
+  const [showCart, setShowCart] = useState<boolean>(true);
   const { cartItems, resetCart }: any = context;
 
   const [cardName, setCardname] = useState<string>();

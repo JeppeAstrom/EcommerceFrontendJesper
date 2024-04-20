@@ -53,7 +53,7 @@ const ProductPage = () => {
     };
     fetchData();
   }, [id]);
-  const [selectedSize, setSelectedSize] = useState<string | undefined>(fetchedProduct ? fetchedProduct.sizes[0].size : undefined);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [swatchAmount, setSwatchAmount] = useState<number>();
   useEffect(() => {
     if (window.innerWidth) {
@@ -197,29 +197,36 @@ const ProductPage = () => {
                 productGroup.products.length > 0 &&
                 visibleProducts && (
                   <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4 lg:w-[320px] justify-evenly items-center">
-                    {visibleProducts.map((product, index) => (
-                      <Link
-                        href={`/produkter/${product.id}`}
-                        className="aspect-[9/13]"
-                        key={index}
-                      >
-                        <Image
-                          className="w-full h-full object-contain object-center"
-                          width={900}
-                          height={1300}
-                          alt={product.name}
-                          src={product.images[0].imageUrl}
-                        />
-                        <div
-                          className={`inline-block w-full h-1 ${
-                            product.id === fetchedProduct.id
-                              ? "bg-black"
-                              : "bg-gray-300"
-                          }`}
-                        ></div>
-                      </Link>
-                    ))}
-                  </div>
+                  {
+                    [...visibleProducts]
+                      .sort((a, b) => {
+                        if (a.id === fetchedProduct.id) return -1;
+                        if (b.id === fetchedProduct.id) return 1;
+                        return 0;
+                      })
+                      .map((product) => (
+                        <Link
+                          href={`/produkter/${product.id}`}
+                          className="aspect-[9/13]"
+                          key={product.id}
+                        >
+                          <Image
+                            className="w-full h-full object-contain object-center"
+                            width={900}
+                            height={1300}
+                            alt={product.name}
+                            src={product.images[0].imageUrl}
+                          />
+                          <div
+                            className={`inline-block w-full h-1 ${
+                              product.id === fetchedProduct.id ? "bg-black" : "bg-gray-300"
+                            }`}
+                          ></div>
+                        </Link>
+                      ))
+                  }
+                </div>
+                
                 )}
               {productGroup &&
                 Array.isArray(productGroup.products) &&

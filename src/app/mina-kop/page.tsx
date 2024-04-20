@@ -50,8 +50,8 @@ const MyPurchases = () => {
   ];
   console.log(orderHistory);
   return (
-    <div className="w-full md:flex px-4">
-      <div className="w-1/4 pt-8 sm:max-lg:w-full sm:relative">
+    <div className="w-full md:flex px-4 mb-10">
+      <div className="lg:min-w-[300px] pt-8 sm:max-lg:w-full sm:relative">
       <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">Mina sidor</span>
         <button
           onClick={toggleMenu}
@@ -84,10 +84,10 @@ const MyPurchases = () => {
               <div key={order.id} className="text-sm mt-4 mx-auto">
                 <div className="flex flex-col gap-1 ">
                 <span className="">Order ID: {order.id}</span>
-                <span className="font-semibold">{order.totalPrice} kr</span>
+                <span className="font-semibold">Total pris: {order.totalPrice} kr</span>
                 </div>
                 <div className="py-4 border-b border-gray-400 overflow-x-auto w-full">
-                  <Carousel visibleSlidesCountDesktop={1} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} useProgressBar={true}>
+                  <Carousel visibleSlidesCountDesktop={order.orderProducts.length > 1 ? 2 : 1} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} useProgressBar={true}>
                   {order.orderProducts.map((orderProduct: any) => (
                     <OrderHistoryCard
                       size={orderProduct.size}
