@@ -142,6 +142,8 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
               <div className="flex-col w-3/5">
                 <div className="flex py-2 w-full">{stars}</div>
                 <textarea
+                maxLength={148}
+                  style={{resize: 'none'}}
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
                   placeholder="Kommentar"
