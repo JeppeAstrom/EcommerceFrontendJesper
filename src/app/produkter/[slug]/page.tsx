@@ -130,7 +130,7 @@ const ProductPage = () => {
     setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct?.id));
   }, [getFavouritesFromLocalStorage, fetchedProduct?.id]);
 
-  const addToCart = (product:Product, chosenSize:string) => {
+  const addToCart = (product:Product, chosenSize:string |null) => {
     const productWithSize = {
       ...product,
       chosenSize: chosenSize
@@ -279,7 +279,7 @@ const ProductPage = () => {
 
               <div className="pt-4 flex justify-center items-center">
                 <button
-                  onClick={() => addToCart(fetchedProduct, selectedSize ? selectedSize : fetchedProduct.sizes[0].size)}
+                  onClick={() => addToCart(fetchedProduct, selectedSize ? selectedSize : fetchedProduct.sizes.length > 0 ? fetchedProduct.sizes[0].size : null)}
                   className="border w-full p-3 bg-black text-white font-semibold"
                 >
                   Handla

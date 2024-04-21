@@ -110,7 +110,7 @@ const Header = () => {
       document.body.style.overflow = 'unset';
     }
   },[toggleCart,loginModal])
-  console.log(cartItems)
+
   return (
     <div className="sticky top-0 z-10">
       <div

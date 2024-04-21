@@ -44,10 +44,12 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
             </button>
           </div>
 
-          <span className="text-sm line-clamp-4 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+          <span className="text-sm line-clamp-3 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
             {product.description}
           </span>
-
+          {product.chosenSize && (
+          <span className="text-normal font-semibold pt-2">Storlek: {product.chosenSize}</span>
+        )}
           <div className="justify-between flex pt-1">
             <span className="text-sm font-semibold absolute bottom-0 left-2">
               {product.price} kr

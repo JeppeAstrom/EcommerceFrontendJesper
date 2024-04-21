@@ -2,13 +2,10 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/authContext";
 import Dropdown from "../icons/dropdown";
-import Link from "next/link";
 import SideNavigation from "@/components/side-navigation";
 import { GetOrders, Order, OrderHistory } from "@/utils/orderService";
-import HorizontalCard from "@/components/horizontalCard";
-import { OrderProduct, Product } from "@/types/product";
 import OrderHistoryCard from "./orderHistoryCard";
-import { AnyARecord } from "dns";
+
 import Carousel from "@/components/carousel";
 
 const MyPurchases = () => {
@@ -23,12 +20,16 @@ const MyPurchases = () => {
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
-      const order: any = await GetOrders();
-      setOrderHistory(order);
+      const order: any[] | undefined = await GetOrders();
+      console.log(order)
+      if(order && order?.length > 0){
+      const sortedOrder = order.toReversed();
+      setOrderHistory(sortedOrder);
+    }
     };
     fetchOrderHistory();
   }, []);
-
+  
   const toggleMenu = () => setIsOpen((prev) => !prev);
   useEffect(() => {
     const checkAuthentication = async () => {
@@ -48,7 +49,7 @@ const MyPurchases = () => {
     },
     { href: "/andra-address", title: "ändra address" },
   ];
-  console.log(orderHistory);
+ 
   return (
     <div className="w-full md:flex px-4 mb-10">
       <div className="lg:min-w-[300px] pt-8 sm:max-lg:w-full sm:relative">
@@ -83,10 +84,11 @@ const MyPurchases = () => {
             orderHistory.map((order:any) => (
               <div key={order.id} className="text-sm mt-4 mx-auto">
                 <div className="flex flex-col gap-1 ">
+                  <span className="font-extralight text-2xl mb-2 ">Beställd {order.created}</span>
                 <span className="">Order ID: {order.id}</span>
                 <span className="font-semibold">Total pris: {order.totalPrice} kr</span>
                 </div>
-                <div className="py-4 border-b border-gray-400 overflow-x-auto w-full">
+                <div className="pt-2 pb-4 border-b border-gray-400 overflow-x-auto w-full">
                   <Carousel visibleSlidesCountDesktop={order.orderProducts.length > 1 ? 2 : 1} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} useProgressBar={true}>
                   {order.orderProducts.map((orderProduct: any) => (
                     <OrderHistoryCard

@@ -8,6 +8,7 @@ import AddressForm from "./addressForm";
 import PostPayment from "@/utils/paymentService";
 import Dropdown from "../icons/dropdown";
 import { PostOrder } from "@/utils/orderService";
+import Link from "next/link";
 
 const Checkout = () => {
   const context = useContext(Context);
@@ -28,7 +29,7 @@ const Checkout = () => {
   const handleAddressId = (addressId: number) => {
     setAddress(addressId);
   };
-
+  
   useEffect(() => {
     if (address && cardName && cardNumber && cvv && expirationDate) {
       setReadyToPurchase(true);
@@ -91,15 +92,16 @@ const Checkout = () => {
     return (
       <div className="w-full lg:w-[400px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
         <div className="flex-col px-4 flex gap-4">
+          <span className="font-sans text-3xl pb-4 mx-auto">Order lagd!</span>
           <Image
             width="900"
             height="1300"
             alt="empty"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0SU3IjiqDWLIOT1fJBziWr59ELtS4i5ZpCq5T3XaZGYRBKltw"
           />
-            <button className="w-full bg-black border text-white font-semibold p-3">
-            Order lagd!
-          </button>
+            <Link href='/mina-kop' className="w-full bg-black border text-white font-semibold p-3 items-center flex justify-center">
+          Till orderstatus
+          </Link>
         </div>
         
       </div>

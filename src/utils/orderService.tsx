@@ -20,7 +20,7 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
         body: JSON.stringify(OrderSchema)
     });
     if (!response.ok) {
-        throw new Error('Failed to post address');
+        throw new Error('Failed to post order');
     }
     const responseData = await response.json();
     const orderId = responseData;
@@ -57,14 +57,11 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
         };
         try {
             const response = await fetch(url, requestOptions);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
             const Orders:OrderHistory[]  = await response.json();
             return Orders;
         } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
-            throw error;
+            
         }
     }
     
