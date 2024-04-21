@@ -10,6 +10,7 @@ import Dropdown from "../icons/dropdown";
 import { PostOrder } from "@/utils/orderService";
 import { Address, GetAddress } from "@/utils/addressService";
 import { AuthContext } from "../context/authContext";
+import LoadingSpinner from "@/components/spinners/loadingSpinner";
 
 const Checkout = () => {  
   const [savedAddress, setSavedAddress] = useState<Address | null>(null);
@@ -33,7 +34,7 @@ const Checkout = () => {
   const [expirationDate, setExpirationDate] = useState<string>();
   const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
   const [orderComplete, setOrderComplete] = useState<boolean>(false);
-
+  const [authLoading, setAuthLoading] = useState<boolean>(false);
   const toggleCart = () => setShowCart(prev => !prev);
 
   const handleAddressId = (addressId: number) => {
@@ -42,8 +43,10 @@ const Checkout = () => {
 
   useEffect(() => {
     const checkAuthentication = async () => {
+      setAuthLoading(true);
       const isLoggedin = await isAuthenticated();
       setIsLoggedIn(isLoggedin);
+      setAuthLoading(false);
     };
 
     checkAuthentication();
@@ -97,8 +100,14 @@ const Checkout = () => {
     Array.isArray(cartItems) && cartItems.length > 0
       ? cartItems.reduce((total, item) => total + item.price, 0)
       : 0;
+      
+  if (authLoading) {
+    return (
+ <LoadingSpinner/>
+    );
+  }
 
-      if (!isLoggedin) {
+      if (!isLoggedin ) {
         return (
           <div className="w-full lg:w-[500px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
         <div className="flex-col flex items-center">

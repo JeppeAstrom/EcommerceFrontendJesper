@@ -18,6 +18,7 @@ interface ContextType {
     addProductToFavouritesLocalStorage: (product:Product) => void;
     removeProductFromLocalStorage: (product:Product) => void;
     resetCart: () => void;
+    removeAllOfSameItem: (productId:number) => void;
 }
 
 export const Context = createContext<ContextType | null>(null)
@@ -83,6 +84,13 @@ function CartContext({ children }: { children: ReactNode }) {
     function getCart(){
 
         return cartItems;                                                               
+    }
+
+    function removeAllOfSameItem(productId:number){
+        if(cartItems){
+            const sortedCart = cartItems.filter(p => p.id !== productId);
+            setCartItems(sortedCart);
+        }
     }
 
     function removeFromCart(product: Product) {
@@ -158,7 +166,7 @@ function CartContext({ children }: { children: ReactNode }) {
     }
          
 
-    return <Context.Provider value={{lastAddedItem, resetCart, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts, categories, getFavouritesFromLocalStorage, addProductToFavouritesLocalStorage, removeProductFromLocalStorage }}>{children}</Context.Provider>
+    return <Context.Provider value={{lastAddedItem,removeAllOfSameItem, resetCart, cartItems, handleAddToCart, getCart, removeFromCart, clearLastAddedItem, allProducts, categories, getFavouritesFromLocalStorage, addProductToFavouritesLocalStorage, removeProductFromLocalStorage }}>{children}</Context.Provider>
 }
 
 export default CartContext;

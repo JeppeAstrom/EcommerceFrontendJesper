@@ -50,8 +50,8 @@ const MyPurchases = () => {
   ];
  
   return (
-    <div className="w-full md:flex px-4 mb-10">
-      <div className="lg:min-w-[300px] pt-8 sm:max-lg:w-full sm:relative">
+    <div className="w-full lg:flex px-4 mb-10">
+      <div className="lg:min-w-[150px] pt-8 sm:max-lg:w-full md:relative sm:relative">
       <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">Mina sidor</span>
         <button
           onClick={toggleMenu}
@@ -71,7 +71,7 @@ const MyPurchases = () => {
           />
         )}
         <button
-          className="text-start font-normal pt-5 font-sans sm:top-3 sm:right-5 sm:max-md:absolute"
+          className="text-start text-white bg-black p-3 mt-8 font-semibold  sm:max-lg:top-3 sm:max-lg:right-5 sm:max-lg:absolute"
           onClick={() => handleReroute()}
         >
           Logga ut

@@ -19,24 +19,24 @@ const LastAddeditem:NextPage<Props> = ({ showNotification, lastAddedItem, clearL
 return(
     <>
 {lastAddedItem && showNotification && (
-<div className="absolute right-0 lg:right-10 top-0 shadow-lg w-[400px] z-[30] bg-white gap-4">
-<div className="flex justify-between pt-2 px-4 items-center">
-<span className="text-lg font-semibold">Produkt tillagd</span>
+<div className="absolute right-2 md:right-10 top-0 shadow-lg w-[320px] md:w-[380px] z-[30] bg-white gap-4">
+<div className="flex justify-between gap-4 pt-4 px-4 items-center">
+<span className="text-lg font-semibold">Tillagd</span>
 <CloseIcon onClick={clearLastAddedItem} className="w-8 h-8"/>
 </div>
-<div className="flex flex-row py-3 px-4">
-    <div className="w-1/4">
+<div className="flex w-full flex-row py-3 px-4">
+    <div className="w-2/4">
     <figure className="min-w-full min-h-full aspect-[9/13]">
     <Image width={1300} height={900} alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full object-contain"/>
     </figure>
     </div>
-    <div className="flex flex-col pl-2 w-3/4">
+    <div className="flex flex-col pl-2 w-fit mr-6 justify-center">
     <div className="flex justify-between">
     <span className="text-serif font-semibold line-clamp-2">{lastAddedItem.name}</span>
   
     </div>
-    <span className="text-sm line-clamp-3">{lastAddedItem.description}</span>
-        <div className="justify-between flex pt-1">
+    <span className="text-sm line-clamp-1">{lastAddedItem.description}</span>
+        <div className="justify-between flex pt-1 mt-auto">
         <span className="text-sm">{lastAddedItem.price}SEK</span>
         </div>
    

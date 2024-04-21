@@ -138,9 +138,17 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
           <form onSubmit={(e) => {
             e.preventDefault();
             LeaveReview()}} className="w-full flex items-center justify-center px-4">
-            <div className="w-full flex">
-              <div className="flex-col w-3/5">
-                <div className="flex py-2 w-full">{stars}</div>
+            <div className="w-full flex items-center">
+              <div className="flex-col w-3/5 flex items-center justify-center h-full">
+                <div className="flex justify-between w-full">
+              <span className="text-normal font-semibold">
+                    Storlek: {size}
+                  </span>
+                  <span className="text-md font-semibold border-b border-black">
+                   {product.price} kr
+                  </span>
+                  </div>
+                <div className="flex py-1 w-full">{stars}</div>
                 <textarea
                 maxLength={148}
                   style={{resize: 'none'}}
@@ -150,7 +158,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                   className="w-full lg:h-[100px] h-[80px] border-black border p-2 font-light text-sm"
                 />
 
-                <button type="submit" className="border p-2 md:p-3 bg-black font-semibold text-white w-full text-center">
+                <button type="submit" className="border p-2 md:p-3 bg-black font-semibold text-white w-full text-center mt-4">
                   {isLoading ? (
                     <LoadingSpinner className="w-6 h-6" type="Small"/>
                   ) : (
@@ -167,9 +175,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                     src={product.images[0].imageUrl}
                     className="object-contain object-center min-h-full min-w-full"
                   />
-                  <span className="text-normal font-semibold  mr-auto ">
-                    Storlek: {size}
-                  </span>
+                 
                 </figure>
               </div>
             </div>

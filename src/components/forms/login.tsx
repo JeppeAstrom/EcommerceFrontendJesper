@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import RegistrationModal from "./registrationModal";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/app/context/authContext";
+import LoadingSpinner from "../spinners/loadingSpinner";
 
 interface Props {
   openModal: () => void;
@@ -14,22 +15,43 @@ const Login: NextPage<Props> = ({ openModal }) => {
   const [email, setEmail] = useState<string>();
   const [firstName, setFirstName] = useState<string>();
   const [lastName, setLastName] = useState<string>();
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [password, setPassword] = useState<string>();
   const [verifyPassword, setVerifyPassword] = useState<string>();
-
+  const [error, setError] = useState<boolean>(false);
   const { handleLogin, handleRegister }: any = useContext(AuthContext);
 
   const handleSubmit = async () => {
+    setIsLoading(true);
     if (register) {
       var result = await handleRegister(firstName, lastName, email, password);
-    } else if (!register) {
-      var result = await handleLogin(email,password);
-      if(result){
+      if(result === true){
         openModal();
       }
+      else{
+        setError(true);
+      }
+    } else {
+      var result = await handleLogin(email,password);
+      if(result.status === 200){
+        openModal();
+      }
+      else{
+        setError(true);
+      }
     }
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    if (error) {
+      const timeoutId = setTimeout(() => {
+        setError(false);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  },[error])
+
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [showPasswordError, setShowPasswordError] = useState<boolean>(false);
   useEffect(() => {
@@ -105,15 +127,25 @@ const Login: NextPage<Props> = ({ openModal }) => {
             type="button"
             onClick={handleLoginOrRegister}
             className="border-b border-black text-sm font-semibold ml-auto"
-          >{`${
-            register ? "Redan registrerad? Logga in" : "Inget konto? Registrera"
-          }`}</button>
+          >
+           {register ? "Redan registrerad? Logga in" : "Inget konto? Registrera"}
+          </button>
           </div>
           <button
             type="submit"
             className="border w-full p-3 bg-black text-white font-semibold"
           >
-            {register ? 'Registrera' : 'Logga in'}
+            {error ? (
+              <span>Något gick fel</span>
+            ) : (
+              <>
+            {isLoading ? (
+              <LoadingSpinner type="Small"/>
+            ) : (
+              <span>{register ? 'Registrera' : 'Logga in'}</span>
+            )}
+            </>
+          )}
           </button>
         </form>
       </RegistrationModal>

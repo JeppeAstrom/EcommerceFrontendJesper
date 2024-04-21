@@ -20,7 +20,10 @@ export const AuthContext = createContext<AuthContextType | null>(null);
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(user)
       });
-    
+      if(result.ok){
+        const accessToken = await result.text();
+        localStorage.setItem('accessToken', accessToken);
+      }
       return result.status === 201 ? true : 'Registration failed';
     } catch (error) {
       return `Registration error: ${error}`;
