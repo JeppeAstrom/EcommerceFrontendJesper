@@ -31,4 +31,34 @@ catch(error){
     console.error('Error posting address:', error);
 }
 }
-export default PostAddress;
+
+export interface Address {
+id:number;
+firstName: string;
+lastName:string;
+street:string;
+postalCode:string;
+city:string;
+}
+const GetAddress = async () => {
+
+    const token = localStorage.getItem('accessToken');
+    const apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Address/address';
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json' 
+        }
+    };
+    try {
+        const response = await fetch(apiRoute, requestOptions);
+        const address:Address = await response.json();
+        return address;
+    } catch (error) {
+        console.error('Error fetching address:', error);
+        return null;
+    }
+};
+
+export  {PostAddress, GetAddress};

@@ -8,9 +8,19 @@ import AddressForm from "./addressForm";
 import PostPayment from "@/utils/paymentService";
 import Dropdown from "../icons/dropdown";
 import { PostOrder } from "@/utils/orderService";
-import Link from "next/link";
+import { Address, GetAddress } from "@/utils/addressService";
+import { AuthContext } from "../context/authContext";
 
-const Checkout = () => {
+const Checkout = () => {  
+  const [savedAddress, setSavedAddress] = useState<Address | null>(null);
+  useEffect(()  => {
+  const fetchAddress = async () => {
+    const response = await GetAddress();
+    setSavedAddress(response);
+  }
+  fetchAddress();
+  },[])
+  const { isAuthenticated, handleLogout }: any = useContext(AuthContext);
   const context = useContext(Context);
   const [readyToPurchase, setReadyToPurchase] = useState<boolean>(false);
   const [address, setAddress] = useState<number>();
@@ -21,7 +31,7 @@ const Checkout = () => {
   const [cardNumber, setCardNumber] = useState<string>();
   const [cvv, setCvv] = useState<string>();
   const [expirationDate, setExpirationDate] = useState<string>();
-
+  const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
   const [orderComplete, setOrderComplete] = useState<boolean>(false);
 
   const toggleCart = () => setShowCart(prev => !prev);
@@ -29,6 +39,15 @@ const Checkout = () => {
   const handleAddressId = (addressId: number) => {
     setAddress(addressId);
   };
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const isLoggedin = await isAuthenticated();
+      setIsLoggedIn(isLoggedin);
+    };
+
+    checkAuthentication();
+  }, [isAuthenticated]);
   
   useEffect(() => {
     if (address && cardName && cardNumber && cvv && expirationDate) {
@@ -73,31 +92,45 @@ const Checkout = () => {
       }
     }
   };
-  
+ 
   const totalPrice =
     Array.isArray(cartItems) && cartItems.length > 0
       ? cartItems.reduce((total, item) => total + item.price, 0)
       : 0;
 
-  if (cartItems && cartItems.length <= 0 && !orderComplete) {
-    return (
-      <div className="w-full lg:w-[400px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
-        <div className="flex-col">
+      if (!isLoggedin) {
+        return (
+          <div className="w-full lg:w-[500px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
+        <div className="flex-col flex items-center">
+        <span className="font-normal text-center text-2xl pb-4 mx-auto border-b border-black">Logga in för att göra en order</span>
           <Image
             width="900"
             height="1300"
             alt="empty"
-            src="https://cdn.dribbble.com/users/2058104/screenshots/4198771/media/6a7fbadba54f099e51e634281956fae0.jpg?resize=400x300&vertical=center"
+            src="https://assets-prd.ignimgs.com/2022/06/01/hustle-button-1654092606562.jpg"
           />
-          <button className="w-full bg-black border text-white font-semibold p-3">
-            Tom varukorg
-          </button>
         </div>
       </div>
+        );
+      }
+
+  if (cartItems && cartItems.length <= 0 && !orderComplete) {
+    return (
+      <div className="w-full lg:w-[500px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
+      <div className="flex-col flex items-center">
+      <span className="font-normal text-center text-2xl pb-4 mx-auto border-b border-black">Logga in för att göra en order</span>
+        <Image
+          width="900"
+          height="1300"
+          alt="empty"
+          src="https://filmtopp.b-cdn.net/media/2021/04/adamsandler%20heroedit.jpeg"
+        />
+      </div>
+    </div>
     );
   }
 
-  if (!orderComplete) {
+  if (orderComplete) {
     return (
       <div className="w-full lg:w-[400px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
         <div className="flex-col px-4 flex gap-4">
@@ -163,7 +196,7 @@ const Checkout = () => {
 
         <div className="flex flex-col w-full md:w-3/5 px-3">
           {!address ? (
-            <AddressForm handleAddressId={handleAddressId} />
+            <AddressForm savedAddress={savedAddress} handleAddressId={handleAddressId} />
           ) : (
             <div className="gap-2 flex-col flex">
               <input
