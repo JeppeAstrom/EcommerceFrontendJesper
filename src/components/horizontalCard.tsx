@@ -48,7 +48,9 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
             {product.description}
           </span>
           {product.chosenSize && (
-          <span className="text-normal font-semibold pt-2">Storlek: {product.chosenSize}</span>
+            <span className="md:pt-2 text-sm font-semibold">
+            Storlek: {product.chosenSize}
+           </span>
         )}
           <div className="justify-between flex pt-1">
             <span className="text-sm font-semibold absolute bottom-0 left-2">

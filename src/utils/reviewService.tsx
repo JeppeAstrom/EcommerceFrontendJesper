@@ -33,4 +33,35 @@ const reviews: ReviewDto[] = await fetch(apiRoute).then(res => res.json());
 
 return reviews;
 }
-export default GetReviewFromProductId;
+
+const PostReview = async (rating:number, comment:string, productId:number) => {
+    const token = localStorage.getItem('accessToken');
+
+    const url = "https://wa-okx-jesper-aa.azurewebsites.net/api/Review/postReview";
+    const Review = {
+        rating,
+        comment,
+        productId,
+    }
+    try{
+    const response = await fetch(url, {
+        method: 'POST',
+        headers:{
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(Review)
+    });
+    if (!response.ok) {
+        throw new Error('Failed to post review');
+    }
+    return response
+    }
+    catch(error){
+        console.error('Error posting review:', error);
+    }
+    }
+
+
+
+export  {GetReviewFromProductId, PostReview};

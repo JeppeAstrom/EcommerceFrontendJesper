@@ -36,6 +36,15 @@ const Checkout = () => {
     }
   }, [address, cardName, cardNumber, cvv, expirationDate]);
 
+  useEffect(() => {
+    if (orderComplete) {
+      const timeoutId = setTimeout(() => {
+       window.location.href = '/mina-kop'
+      }, 1500);
+      return () => clearTimeout(timeoutId);
+    }
+  }, [orderComplete]);
+
   const handleBuy = async () => {
     const orderProducts = (cartItems as Product[]).map(item => ({
       productId: item.id,
@@ -64,7 +73,7 @@ const Checkout = () => {
       }
     }
   };
-
+  
   const totalPrice =
     Array.isArray(cartItems) && cartItems.length > 0
       ? cartItems.reduce((total, item) => total + item.price, 0)
@@ -88,20 +97,18 @@ const Checkout = () => {
     );
   }
 
-  if (orderComplete) {
+  if (!orderComplete) {
     return (
       <div className="w-full lg:w-[400px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
         <div className="flex-col px-4 flex gap-4">
-          <span className="font-sans text-3xl pb-4 mx-auto">Order lagd!</span>
+          <span className=" font-normal text-3xl pb-4 mx-auto border-b border-black">Tack för din order!</span>
           <Image
             width="900"
             height="1300"
             alt="empty"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0SU3IjiqDWLIOT1fJBziWr59ELtS4i5ZpCq5T3XaZGYRBKltw"
           />
-            <Link href='/mina-kop' className="w-full bg-black border text-white font-semibold p-3 items-center flex justify-center">
-          Till orderstatus
-          </Link>
+        
         </div>
         
       </div>

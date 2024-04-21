@@ -21,7 +21,6 @@ const MyPurchases = () => {
   useEffect(() => {
     const fetchOrderHistory = async () => {
       const order: any[] | undefined = await GetOrders();
-      console.log(order)
       if(order && order?.length > 0){
       const sortedOrder = order.toReversed();
       setOrderHistory(sortedOrder);
@@ -39,7 +38,7 @@ const MyPurchases = () => {
 
     checkAuthentication();
   }, [isAuthenticated]);
-
+  
   if (!isLoggedin) return;
 
   const sideMenuItems = [

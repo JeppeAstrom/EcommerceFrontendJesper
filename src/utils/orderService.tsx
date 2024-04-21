@@ -27,7 +27,7 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
     return orderId;
     }
     catch(error){
-        console.error('Error posting address:', error);
+        console.error('Error posting order:', error);
     }
     }
 

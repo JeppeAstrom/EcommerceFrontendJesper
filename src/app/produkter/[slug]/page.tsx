@@ -13,7 +13,8 @@ import Link from "next/link";
 import Carousel from "@/components/carousel";
 
 import Image from "next/image";
-import GetReviewFromProductId, { ReviewDto } from "@/utils/reviewService";
+
+import { GetReviewFromProductId, ReviewDto } from "@/utils/reviewService";
 import Star from "@/app/icons/star";
 import HeartIcon from "@/app/icons/hearticon";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
@@ -68,6 +69,7 @@ const ProductPage = () => {
 
   const totalScore = reviews.reduce((sum, review) => sum + review.rating, 0);
   const averageScore = totalScore / reviews.length;
+  
 
   const stars = (score: number, showNumber = true) => {
     const totalStars = 5;
