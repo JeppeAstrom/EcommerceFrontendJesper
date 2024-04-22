@@ -1,16 +1,17 @@
 
 
-import { getProductsFromCategory } from "@/utils/productService";
+import { ChildCategories, getChildCategoriesFromName, getProductsFromCategory } from "@/utils/productService";
 import ProductRain from '@/components/productrain';
 
 
 
 async function GetData(slug:string) {
-
-  
-  
     const res = await getProductsFromCategory(slug)
-  
+
+    return res;
+  }
+  async function GetSubCategories(slug:string) {
+    const res = await getChildCategoriesFromName(slug)
 
     return res;
   }
@@ -20,11 +21,13 @@ async function GetData(slug:string) {
   }: {  
     params: { slug: string }
   }) {
+    
+    const childCategories = await GetSubCategories(slug);
     const data = await GetData(slug)
 
 return(<>
     
-    <ProductRain category={slug} products={data}/>
+    <ProductRain childCategories={childCategories} category={slug} products={data}/>
 </>)
 
 }

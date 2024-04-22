@@ -1,4 +1,4 @@
-import { Product, ProductGroup } from "@/types/product";
+import { Categories, Product, ProductGroup } from "@/types/product";
 
 
 const GetAllProducts = async () => {
@@ -42,4 +42,31 @@ const getMainCategories = async() => {
     return categories;
 }
 
-export { GetAllProducts, GetProduct, getProductsFromCategory, getMainCategories, GetProductGroup };
+export interface ChildCategories {
+    id:number;
+    name:string;
+    parentCategory:null;
+    childCategories: Categories[]
+}
+
+const getChildCategoriesFromName = async (categoryName: string) => {
+    const apiRoute = `https://wa-okx-jesper-aa.azurewebsites.net/api/Categories/childCategoriesFromName?name=${encodeURIComponent(categoryName)}`;
+  
+    try {
+      const response = await fetch(apiRoute);
+      if (!response.ok) {
+        throw new Error(`API call failed with status: ${response.status}`);
+      }
+  
+      const childCategoriesData = await response.json();
+      return childCategoriesData.childCategories || [];
+    } catch (error) {
+
+      console.error('Error fetching child categories:', error);
+
+      return [];
+    }
+  };
+  
+
+export { GetAllProducts, GetProduct, getProductsFromCategory, getMainCategories, GetProductGroup, getChildCategoriesFromName };

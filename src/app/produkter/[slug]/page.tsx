@@ -3,11 +3,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "@/app/context/cartContext";
 import {
+  ChildCategories,
   GetProduct,
   GetProductGroup,
+  getChildCategoriesFromName,
   getProductsFromCategory,
 } from "@/utils/productService";
-import { Product, ProductGroup } from "@/types/product";
+import { Categories, Product, ProductGroup } from "@/types/product";
 import { usePathname } from "next/navigation"; // Import from next/navigation instead of next/router
 import Link from "next/link";
 import Carousel from "@/components/carousel";
@@ -19,6 +21,7 @@ import Star from "@/app/icons/star";
 import HeartIcon from "@/app/icons/hearticon";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import Dropdown from "@/app/icons/dropdown";
+import CartIcon from "@/app/icons/cartIcon";
 
 const ProductPage = () => {
   const {
@@ -35,7 +38,7 @@ const ProductPage = () => {
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
 
   const reviewRef = useRef<HTMLDivElement>(null);
-
+ 
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
@@ -46,6 +49,7 @@ const ProductPage = () => {
           const recommendedProducts: Product[] = await getProductsFromCategory(
             fetchedProduct.categories[0].name
           );
+      
           setProduct(fetchedProduct);
           setProductGroup(ProductGroup);
           setReviews(reviews);
@@ -64,7 +68,7 @@ const ProductPage = () => {
       setSwatchAmount(window.innerWidth > 0 && window.innerWidth < 768 ? 3 : 4);
     }
   }, []);
-  
+
   const [isOpen, setIsOpen] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -129,7 +133,7 @@ const ProductPage = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [wrapperRef]);
-
+ 
   const [favourite, setFavourite] = useState<boolean>(false);
   const toggleFavourite = () => {
     addProductToFavouritesLocalStorage(fetchedProduct);
@@ -204,7 +208,7 @@ const ProductPage = () => {
 
             <>
               {productGroup?.products &&
-                productGroup.products.length > 0 &&
+                productGroup.products.length > 1 &&
                 visibleProducts && (
                   <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4 lg:w-[320px] justify-evenly items-center">
                   {

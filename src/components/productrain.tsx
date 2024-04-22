@@ -8,24 +8,20 @@ import { useEffect, useState } from "react";
 
 import Dropdown from "@/app/icons/dropdown";
 import SideNavigation from "./side-navigation";
+import { ChildCategories } from "@/utils/productService";
+import SideMenuProductRain from "./sideMenuProductRain";
 
 
 interface Props {
 products: Product[];
 category?: string;
+childCategories?: ChildCategories[]
 }
 
 
-const ProductRain:NextPage<Props> =  ({products, category})  => {
+const ProductRain:NextPage<Props> =  ({products, category, childCategories})  => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const toggleMenu = () => setIsOpen((prev) => !prev);
-  const sideMenuItems = [
-    {
-      href: "",
-      title: "",
-    },
-    { href: "", title: "" },
-  ];
  
   return(<>
   <div className="mb-10">
@@ -44,10 +40,10 @@ const ProductRain:NextPage<Props> =  ({products, category})  => {
             }`}
           />
         </button>
-        {isOpen && (
-          <SideNavigation
+        {isOpen && childCategories && childCategories.length > 0 && (
+          <SideMenuProductRain
             activeRoute={`/${category}`} 
-            sideMenuItems={sideMenuItems}
+            childCategories={childCategories}
           />
         )}
       </div>
