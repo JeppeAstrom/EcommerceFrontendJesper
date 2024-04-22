@@ -5,7 +5,8 @@ import { Context } from "@/app/context/cartContext";
 import BuyIcon from "@/app/icons/buyicon";
 import CartIcon from "@/app/icons/cartIcon";
 import HeartIcon from "@/app/icons/hearticon";
-import { Product } from "@/types/product";
+import { Product, ProductGroup } from "@/types/product";
+import { GetProductGroup } from "@/utils/productService";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +22,21 @@ const ProductCard: NextPage<Props> = ({ product }) => {
     getFavouritesFromLocalStorage,
     addProductToFavouritesLocalStorage,
   }: any = useContext(Context);
+
+  const [productGroup, setProductGroup] = useState<ProductGroup | null>(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const ProductGroup: ProductGroup = await GetProductGroup(
+          product.id as any
+        );
+        setProductGroup(ProductGroup);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+    fetchData();
+  }, [product.id]);
 
   const [favourite, setFavourite] = useState<boolean>(false);
   const toggleFavourite = () => {
@@ -39,7 +55,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
           <HeartIcon
             onClick={() => toggleFavourite()}
             favourite={favourite}
-            className='h-8 w-8 cursor-pointer absolute right-6 top-4 z-[5]'
+            className="h-8 w-8 cursor-pointer absolute right-6 top-5 z-[5]"
           />
 
           <Link
@@ -55,16 +71,35 @@ const ProductCard: NextPage<Props> = ({ product }) => {
             />
           </Link>
 
-          <span className="line-clamp-1 text-start w-full text-md font-light pt-2">
+          <span className="line-clamp-1 font-sans text-start w-full text-md font-light pt-2">
             {product.name}
           </span>
 
-          <div className="pt-3 flex relative w-full justify-between">
+          <div className="flex relative w-full justify-between">
             <div>
               <span className="text-sm font-sans font-light">
                 {product.price}SEK
               </span>
             </div>
+          </div>
+          <div className="flex justify-start items-start mr-auto gap-1 pt-1">
+            {productGroup &&
+              productGroup.products &&
+              productGroup.products.length > 0 &&
+              [...productGroup.products]
+                .sort((a, b) => {
+                  if (a.id === product.id) return -1;
+                  if (b.id === product.id) return 1;
+                  return 0;
+                })
+                .map((variant) => (
+                  <Link
+                    href={`/produkter/${variant.id}`}
+                    style={{ background: variant.color }}
+                    className="w-4 h-4 rounded-full border border-gray-700"
+                    key={variant.id}
+                  ></Link>
+                ))}
           </div>
         </div>
       </div>

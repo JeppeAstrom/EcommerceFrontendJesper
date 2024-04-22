@@ -43,6 +43,7 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
 
   return (
     <>
+    <span className="mb-3 w-fit font-semibold text-lg border-b border-black">Address</span>
       {savedAddress && !useNewAddress ? (
         <div className="gap-3 flex-col flex">
           <span className=" border-black border p-2 font-light text-sm opacity-50">

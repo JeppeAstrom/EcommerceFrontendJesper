@@ -33,7 +33,7 @@ const Login: NextPage<Props> = ({ openModal }) => {
       }
     } else {
       var result = await handleLogin(email,password);
-      if(result.status === 200){
+      if(result === true){
         openModal();
       }
       else{

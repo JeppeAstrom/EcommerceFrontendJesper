@@ -18,6 +18,7 @@ import { GetReviewFromProductId, ReviewDto } from "@/utils/reviewService";
 import Star from "@/app/icons/star";
 import HeartIcon from "@/app/icons/hearticon";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
+import Dropdown from "@/app/icons/dropdown";
 
 const ProductPage = () => {
   const {
@@ -32,6 +33,8 @@ const ProductPage = () => {
   const [productGroup, setProductGroup] = useState<ProductGroup | null>(null);
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>();
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
+
+  const reviewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -79,14 +82,19 @@ const ProductPage = () => {
       stars.push(<Star key={i} filled={i <= score} />);
     }
     return (
-      <div className="flex flex-col">
+      <button onClick={scrollToReviews} className="flex flex-col">
         {showNumber && (
-          <span className="text-right font-light text-slate-700">{`${score} av 5`}</span>
+          <span className="ml-auto font-light text-slate-700">{`${score} av 5`}</span>
         )}
         <span className="flex">{stars}</span>
-      </div>
+      </button>
     );
   };
+
+  const scrollToReviews = () => {
+    reviewRef.current?.scrollIntoView({'behavior': 'smooth'});
+  }
+
   const [isExpanded, setIsExpanded] = useState(false);
   const [isReviewsExpanded, setReviewsExpanded] = useState(false);
 
@@ -183,7 +191,7 @@ const ProductPage = () => {
               {fetchedProduct.name}
             </span>
             <div className="mt-1">
-              <span className="mt-4 text-xl font-semibold line-clamp-8 ">
+              <span className="mt-4 text-xl font-semibold line-clamp-8">
                 {fetchedProduct.description}
               </span>
             </div>
@@ -220,7 +228,7 @@ const ProductPage = () => {
                             src={product.images[0].imageUrl}
                           />
                           <div
-                            className={`inline-block w-full h-1 ${
+                            className={`inline-block w-full h-[2px] ${
                               product.id === fetchedProduct.id ? "bg-black" : "bg-gray-300"
                             }`}
                           ></div>
@@ -258,20 +266,23 @@ const ProductPage = () => {
               {fetchedProduct.sizes.length > 0 && (
                 <div ref={wrapperRef} className="relative">
                   <button
-                    className="border w-full text-start pl-4 p-2"
+                    className="border w-full text-start pl-4 p-2 flex justify-between items-center"
                     onClick={toggleDropdown}
                   >
-                    {selectedSize || fetchedProduct.sizes[0].size}
+                    <div className="flex items-center justify-center gap-1">
+                    <span className="text-gray-700 font-sans">Storlek: </span> <span className="text-black font-sans">  {selectedSize || fetchedProduct.sizes[0].size}</span>
+                    </div>
+                    <Dropdown className={`w-8 h-8 ${isOpen ? 'rotate-180 transition-all' : 'transition-all'}`}/>
                   </button>
                   {isOpen && (
                     <ul className="absolute border-l border-r w-full bg-white z-[2] cursor-pointer">
                       {fetchedProduct.sizes.map((size, index) => (
                         <li
                           key={index}
-                          className="p-3 border-b"
+                          className="p-3 border-b gap-1"
                           onClick={() => handleSizeSelect(size.size)}
                         >
-                          {size.size}
+                         <span className="text-gray-700 font-sans">Storlek:</span> <span className="text-black font-sans"> {size.size}</span>
                         </li>
                       ))}
                     </ul>
@@ -292,7 +303,8 @@ const ProductPage = () => {
         </div>
       </div>
       {visibleReviews && visibleReviews.length > 0 && (
-        <div className="flex flex-col gap-6 w-full md:w-[500px] px-4 mb-10">
+        <div ref={reviewRef} className="flex flex-col gap-6 w-full md:w-[500px] px-4 mb-10 pt-4">
+          <span className="font-sans text-2xl border-b border-black pb-2 w-fit font-semibold">Recensioner</span>
           {visibleReviews.map((review, index) => (
             <div key={index}>
               <div className="flex flex-col w-full">

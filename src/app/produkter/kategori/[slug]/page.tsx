@@ -24,7 +24,7 @@ async function GetData(slug:string) {
 
 return(<>
     
-    <ProductRain products={data}/>
+    <ProductRain category={slug} products={data}/>
 </>)
 
 }

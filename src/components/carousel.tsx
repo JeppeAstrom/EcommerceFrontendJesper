@@ -374,7 +374,7 @@ const Carousel: React.FC<Props> = ({
             slides.length === visibleSlidesCountMobile && 'zero:max-md:hidden'
           }`}
         >
-          <div style={{ width: `${progressBar}%` }} className="h-1 bg-black"></div>
+          <div style={{ width: `${progressBar}%` }} className="h-[2px] bg-black"></div>
         </div>
       )}
     </div>

@@ -25,7 +25,7 @@ const Checkout = () => {
   const context = useContext(Context);
   const [readyToPurchase, setReadyToPurchase] = useState<boolean>(false);
   const [address, setAddress] = useState<number>();
-  const [showCart, setShowCart] = useState<boolean>(true);
+  const [showCart, setShowCart] = useState<boolean>(false);
   const { cartItems, resetCart }: any = context;
 
   const [cardName, setCardname] = useState<string>();
@@ -158,7 +158,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-auto">
+    <div className="flex flex-col justify-center items-center h-auto mb-2">
       <div className="flex-col lg:flex-row-reverse flex w-full">
         <div className="relative overflow-y-auto items-center justify-center lg:w-3/4 sm:max-h-full md:max-h-[750px] pb-8">
           
@@ -167,7 +167,7 @@ const Checkout = () => {
                <Dropdown className={`h-7 w-7 mt-1 ${showCart ? 'rotate-180 transition-all' : 'transition-all'}`}/>
            </button>
           {showCart && (
-          <div className="max-h-[25vh] overflow-y-auto w-full">
+          <div className="max-h-[50vh] overflow-y-auto w-full">
           {cartItems &&
             [...new Set((cartItems as Product[]).map((item) => item.id))].map(
               (productId) => {
@@ -197,7 +197,7 @@ const Checkout = () => {
             <span>{totalPrice} kr</span>
           </div>
 
-          <div className="justify-between flex mt-1 border-t pt-3 px-3">
+          <div className="justify-between flex mt-1 border-t pt-3 px-3 border-b pb-3">
             <span className="font-semibold text-lg">Totalsumma</span>
             <span className="font-semibold text-lg">{totalPrice} kr</span>
           </div>
@@ -208,6 +208,7 @@ const Checkout = () => {
             <AddressForm savedAddress={savedAddress} handleAddressId={handleAddressId} />
           ) : (
             <div className="gap-2 flex-col flex">
+               <span className="mb-3 w-fit font-semibold text-lg border-b border-black">Kortuppgifter</span>
               <input
                 value={cardName}
                 onChange={(e) => setCardname(e.target.value)}
