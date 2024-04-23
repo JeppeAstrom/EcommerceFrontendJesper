@@ -40,7 +40,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
             <span className="text-serif font-semibold line-clamp-2 max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
               {product.name}
             </span>
-            <button onClick={() => removeAllOfSameItem(product.id)}>
+            <button className="lg:pr-2" onClick={() => removeAllOfSameItem(product.id)}>
               <TrashCan className="h-5 w-8" />
             </button>
           </div>
