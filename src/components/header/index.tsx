@@ -19,6 +19,7 @@ import { Category } from "@/types/category";
 import Login from "../forms/login";
 import { AuthContext } from "@/app/context/authContext";
 import { getMainCategories } from "@/utils/productService";
+import Service from "@/app/icons/service";
 
 const Header = () => {
   const { isAuthenticated }: any = useContext(AuthContext);
@@ -129,7 +130,10 @@ const Header = () => {
                     <HeartIcon  className="w-8 h-8 cursor-pointer fill-white" />
                     <span className="hidden lg:flex font-light">Favoriter</span>
                   </Link>
-
+                    <Link className="gap-2 items-center hidden lg:flex" href=''>
+                      <Service/>
+                      <span className="font-light">Kundservice</span>
+                    </Link>
                   {isLoggedin ? (
                     <Link
                       href="/mina-kop"

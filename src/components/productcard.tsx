@@ -62,12 +62,6 @@ const ProductCard: NextPage<Props> = ({ product }) => {
   }, [getFavouritesFromLocalStorage, product.id]);
 
   const [hoverSwatch, setHoverSwatch] = useState<string>();
-  const [swatchAmount, setSwatchAmount] = useState<number>();
-  useEffect(() => {
-    if (window.innerWidth) {
-      setSwatchAmount(window.innerWidth > 0 && window.innerWidth < 768 ? 3 : 4);
-    }
-  }, []);
 
   useEffect(() => {
     if (open) {
@@ -84,11 +78,11 @@ const ProductCard: NextPage<Props> = ({ product }) => {
     productGroup && productGroup.products
       ? isExpanded
         ? productGroup.products
-        : productGroup.products.slice(0, swatchAmount || 3)
+        : productGroup.products.slice(0, 4)
       : [];
 
   const [activeVariant, setActiveVariant] = useState<Product>();
-
+ 
   const handleProduct = () => {
     if (
       productGroup &&
@@ -175,7 +169,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               {productGroup?.products &&
                 productGroup.products.length > 1 &&
                 visibleProducts && (
-                  <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4  justify-evenly items-center">
+                  <div className="pt-4 grid grid-cols-4 gap-4 justify-evenly items-center">
                     {[...visibleProducts]
                       .sort((a, b) => {
                         if (a.id === product.id) return -1;
@@ -195,13 +189,13 @@ const ProductCard: NextPage<Props> = ({ product }) => {
                             alt={variant.name}
                             src={variant.images[0].imageUrl}
                           />
-                          <div
-                            className={`inline-block w-full h-[2px] ${
-                              variant.id === product.id
-                                ? "bg-black"
-                                : "bg-gray-300"
-                            }`}
-                          ></div>
+                       <div
+  className={`inline-block w-full h-[2px] ${
+    (activeVariant && activeVariant.id === variant.id) || (!activeVariant && variant.id === product.id)
+      ? "bg-black"
+      : "bg-gray-300"
+  }`}
+></div>
                         </button>
                       ))}
                   </div>
