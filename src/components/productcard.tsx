@@ -27,7 +27,7 @@ interface Props {
 
 const ProductCard: NextPage<Props> = ({ product }) => {
   const {
-      handleAddToCart,
+    handleAddToCart,
     getFavouritesFromLocalStorage,
     addProductToFavouritesLocalStorage,
   }: any = useContext(Context);
@@ -82,12 +82,12 @@ const ProductCard: NextPage<Props> = ({ product }) => {
       : [];
 
   const [activeVariant, setActiveVariant] = useState<Product>();
- 
+
   const handleProduct = () => {
     if (
       productGroup &&
       productGroup.products &&
-      productGroup.products.length > 1
+      productGroup.products.length > 1 || product.sizes.length > 0
     ) {
       toggleMenu();
     } else {
@@ -100,12 +100,11 @@ const ProductCard: NextPage<Props> = ({ product }) => {
       <div className="flex flex-col max-w-sm items-center justify-center">
         <div className="p-4 items-center justify-center flex flex-col w-full relative">
           <div className="flex justify-between absolute top-5 md:px-7 px-5 w-full">
-          
-              <CartProductCard
-                quickshop={handleProduct}
-                className="cursor-pointer z-[5] absolute left-5 top-2"
-              />
-           
+            <CartProductCard
+              quickshop={handleProduct}
+              className="cursor-pointer z-[5] absolute left-5 top-2"
+            />
+
             <HeartIcon
               onClick={() => toggleFavourite()}
               favourite={favourite}
@@ -164,7 +163,10 @@ const ProductCard: NextPage<Props> = ({ product }) => {
       {open && (
         <QuickShopModal toggleModal={toggleMenu}>
           <div className="w-full flex flex-col">
-            <QuickShopCard toggleModal={toggleMenu} product={activeVariant ? activeVariant : product} />
+            <QuickShopCard
+              toggleModal={toggleMenu}
+              product={activeVariant ? activeVariant : product}
+            />
             <div className="px-5">
               {productGroup?.products &&
                 productGroup.products.length > 1 &&
@@ -189,13 +191,15 @@ const ProductCard: NextPage<Props> = ({ product }) => {
                             alt={variant.name}
                             src={variant.images[0].imageUrl}
                           />
-                       <div
-  className={`inline-block w-full h-[2px] ${
-    (activeVariant && activeVariant.id === variant.id) || (!activeVariant && variant.id === product.id)
-      ? "bg-black"
-      : "bg-gray-300"
-  }`}
-></div>
+                          <div
+                            className={`inline-block w-full h-[2px] ${
+                              (activeVariant &&
+                                activeVariant.id === variant.id) ||
+                              (!activeVariant && variant.id === product.id)
+                                ? "bg-black"
+                                : "bg-gray-300"
+                            }`}
+                          ></div>
                         </button>
                       ))}
                   </div>

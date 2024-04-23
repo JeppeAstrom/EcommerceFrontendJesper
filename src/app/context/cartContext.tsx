@@ -68,12 +68,17 @@ function CartContext({ children }: { children: ReactNode }) {
         setCartItems(currentItems => {
             if (currentItems) {
                 if(!skipNotification){
-                setLastAddedItem(getCurrentItem);
+                if(getCurrentItem.chosenSize){
+                    console.log(getCurrentItem.chosenSize)
+                     setLastAddedItem(getCurrentItem);
+                }
                 }
                 return [...currentItems, getCurrentItem];
             } else {
                 if(!skipNotification){
-                    setLastAddedItem(getCurrentItem);
+                    if(getCurrentItem.chosenSize !== null){
+                        setLastAddedItem(getCurrentItem);
+                   }
                     }
                 return [getCurrentItem];
             }

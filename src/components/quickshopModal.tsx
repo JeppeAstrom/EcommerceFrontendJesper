@@ -30,7 +30,7 @@ const QuickShopModal:NextPage<Props> = ({children, toggleModal, title}) => {
       }, [toggleModal]);
    return( <>
     <div className="fixed inset-0 bg-black bg-opacity-50 z-20 flex items-center justify-center">
-        <div ref={modalRef} className="fixed lg:w-[600px] lg:h-[730px] pb-4 sm:w-[400px] md:w-[500px] md:h-auto border z-20 bg-white overflow-y-auto pt-6">
+        <div ref={modalRef} className="fixed lg:w-[600px]  pb-3 sm:w-[400px] md:w-[500px] md:h-auto border z-20 bg-white overflow-y-auto pt-3">
                 <CloseIcon onClick={toggleModal} className="w-8 h-8 cursor-pointer absolute top-3 right-4" />
             {children}
         </div>
