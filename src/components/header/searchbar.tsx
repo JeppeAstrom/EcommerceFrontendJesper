@@ -49,7 +49,7 @@ const SearchBar: NextPage<Props> = ({ products }) => {
   }, []);
   return (
     <>
-      <div className="relative flex items-center border border-black mt-1">
+      <div className="relative flex items-center border border-black mt-0 lg:mt-1">
       <Search className="w-7 h-7 absolute left-1" />
         <input
          style={{boxShadow:'none', border: '0px solid black', outline: 'none'}}
