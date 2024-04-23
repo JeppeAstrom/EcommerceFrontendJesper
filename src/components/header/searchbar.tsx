@@ -49,16 +49,18 @@ const SearchBar: NextPage<Props> = ({ products }) => {
   }, []);
   return (
     <>
-      <div className="relative flex items-center border border-gray-500 rounded-xl">
+      <div className="relative flex items-center border border-black mt-1">
+      <Search className="w-7 h-7 absolute left-1" />
         <input
+         style={{boxShadow:'none', border: '0px solid black', outline: 'none'}}
            ref={inputRef}
            onChange={(e) => setInputText(e.target.value)}
-           className="text-md h-10 w-full px-4 py-2 rounded-xl bg-transparent font-light"
+           className={`text-md h-10 w-full px-4 py-2 md:text-start md:ml-8 ml-6 bg-transparent font-light`}
            placeholder="Sök produkt, kategori eller varumärke"
            value={inputText}
            onFocus={() => setIsSearchFocused(true)}
         />
-        <Search className="w-8 h-8 absolute right-3" />
+      
       </div>
       <div ref={modalRef}>
       {isSearchFocused && searchResult.length > 0 && inputText && (

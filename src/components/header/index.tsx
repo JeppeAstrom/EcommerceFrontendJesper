@@ -35,27 +35,19 @@ const Header = () => {
   const handlerToggleSearchModal = () => setToggleSearchModal((prev) => !prev);
   const [headerShadow, setHeaderShadow] = useState("");
   const context = useContext(Context);
-  const { lastAddedItem, clearLastAddedItem, allProducts }: any =
+  const { lastAddedItem, clearLastAddedItem, allProducts, categories }: any =
     context;
   const { cartItems }: any = context;
   const [cartCount, setCartCount] = useState<number>();
   const [loginModal, setLoginModal] = useState<boolean>();
   const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
-  const [categories, setCategories] = useState<Category[]>([]);
+
   const handleOpenLoginModal = () => setLoginModal((prev) => !prev);
 
   const handleOpenCart = () => {
     setToggleCart(true);
     clearLastAddedItem();
   };
-
-  const fetchCategories = async () => {
-    const categories = await getMainCategories();
-    setCategories(categories);
-  }
-  useEffect(() => {
-    fetchCategories();
-  },[])
 
   useEffect(() => {
     setCartCount(cartItems ? cartItems.length : 0);
@@ -132,7 +124,7 @@ const Header = () => {
           <div className="w-[1400px] mx-auto">
             <div className="flex flex-col py-2">
               <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
-                <div className="flex items-center justify-start w-1/3 gap-x-2">
+                <div className="flex items-center justify-start w-1/3 gap-x-3">
                   <Link href="/favoriter" className="flex items-center gap-2">
                     <HeartIcon  className="w-8 h-8 cursor-pointer fill-white" />
                     <span className="hidden lg:flex font-light">Favoriter</span>
@@ -153,15 +145,7 @@ const Header = () => {
                       <Person className="h-8 w-8 lg:hidden" />
                     </button>
                   )}
-                    <button
-                      className="items-center gap-2 lg:hidden"
-                    >
-                      <AboutUs className="h-8 w-8 lg:hidden" />
-                    </button>
-                  <div className="lg:flex items-center gap-2 hidden">
-                    <AboutUs className="h-8 w-8" />
-                    <span className="font-light">Om oss</span>
-                  </div>
+               
                 </div>
 
                 <div className="min-w-[33%] items-center justify-center">
@@ -173,7 +157,7 @@ const Header = () => {
                   </Link>
                 </div>
 
-                <div className="flex gap-x-2 min-w-[33%] justify-end">
+                <div className="flex gap-x-3 min-w-[33%] justify-end">
                   <div className="gap-4 flex w-full lg:hidden justify-end">
                     <button onClick={handlerToggleCart} className="flex gap-2">
                       <CartIcon
@@ -187,7 +171,7 @@ const Header = () => {
                     </button>
                   </div>
 
-                  <div className="gap-4 justify-end flex">
+                  <div className="gap-7 justify-end flex">
                     {isLoggedin ? (
                       <Link
                         href="/mina-kop"

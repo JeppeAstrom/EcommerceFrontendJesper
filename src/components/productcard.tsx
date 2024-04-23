@@ -19,6 +19,7 @@ import CheckoutCard from "./checkoutCard";
 import OrderHistoryCard from "@/app/mina-kop/orderHistoryCard";
 import QuickShopCard from "./quickShopCard";
 import Carousel from "./carousel";
+import CartProductCard from "@/app/icons/cartproductcard";
 
 interface Props {
   product: Product;
@@ -26,7 +27,7 @@ interface Props {
 
 const ProductCard: NextPage<Props> = ({ product }) => {
   const {
-    handleAddToCart,
+      handleAddToCart,
     getFavouritesFromLocalStorage,
     addProductToFavouritesLocalStorage,
   }: any = useContext(Context);
@@ -105,12 +106,12 @@ const ProductCard: NextPage<Props> = ({ product }) => {
       <div className="flex flex-col max-w-sm items-center justify-center">
         <div className="p-4 items-center justify-center flex flex-col w-full relative">
           <div className="flex justify-between absolute top-5 md:px-7 px-5 w-full">
-            <button className="w-10 h-10 absolute top-2 left-6">
-              <CartIcon
-                openCart={handleProduct}
-                className="h-12 w-12 cursor-pointer z-[5]"
+          
+              <CartProductCard
+                quickshop={handleProduct}
+                className="cursor-pointer z-[5] absolute left-5 top-2"
               />
-            </button>
+           
             <HeartIcon
               onClick={() => toggleFavourite()}
               favourite={favourite}

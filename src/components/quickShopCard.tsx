@@ -62,10 +62,10 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
                       {product.sizes.map((size, index) => (
                         <li
                           key={index}
-                          className="p-3 border gap-1"
+                          className={`p-3 border gap-1 ${selectedSize && selectedSize === size.size && 'bg-gray-100' }`}
                           onClick={() => handleSizeSelect(size.size)}
                         >
-                       <span className={`text-black text-lg font-sans items-center flex justify-center ${selectedSize && selectedSize === size.size && 'font-semibold' }`}> {size.size}</span>
+                       <span className='text-black text-lg font-sans items-center flex justify-center'> {size.size}</span>
                         </li>
                       ))}
                     </ul>
@@ -80,9 +80,11 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
                       ...product,
                       chosenSize: selectedSize
                     };
-                    if(selectedSize)
+                    if(selectedSize){
                     handleAddToCart(productWithSize);
                     toggleModal();
+                    }
+                   
                   }}
                   className="border w-full p-3 bg-black text-white font-semibold"
                 >

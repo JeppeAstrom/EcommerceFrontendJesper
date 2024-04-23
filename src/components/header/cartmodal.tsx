@@ -58,23 +58,15 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
         </div>
         <div className="flex flex-col py-5 pt-2">
           {cartItems && cartItems.length > 0 ? (
-            [...new Set((cartItems as Product[]).map((item) => item.id))].map(
-              (productId) => {
-                const product = (cartItems as Product[]).find(
-                  (item) => item.id === productId
-                );
-                const quantity = (cartItems as Product[]).filter(
-                  (item) => item.id === productId
-                ).length;
+          (cartItems as Product[]).map((product, index) => {
                 return (
                   <HorizontalCard
-                    key={productId}
+                    key={index}
                     product={product!}
-                    quantity={quantity}
                   />
                 );
-              }
-            )
+              
+              })
           ) : (
             <Image
               width="900"

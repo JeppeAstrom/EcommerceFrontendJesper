@@ -150,7 +150,7 @@ const ProductPage = () => {
     };
     handleAddToCart(productWithSize);
   }
-
+  const [hoverSwatch, setHoverSwatch] = useState<string>();
  
   if (!fetchedProduct) {
     return (
@@ -176,14 +176,14 @@ const ProductPage = () => {
                 <HeartIcon
                   favourite={favourite}
                   onClick={toggleFavourite}
-                  className="h-12 w-12 absolute top-0 right-2"
+                  className="h-12 w-12 absolute top-1 right-2"
                 />
                 <Image
                   className="min-w-full object-center max-h-full object-contain"
                   width={900}
                   height={1300}
                   alt={fetchedProduct.name}
-                  src={image.imageUrl}
+                  src={hoverSwatch ? hoverSwatch : image.imageUrl}
                 />
               </figure>
             ))}
@@ -222,6 +222,10 @@ const ProductPage = () => {
                           href={`/produkter/${product.id}`}
                           className="aspect-[9/13]"
                           key={product.id}
+                          onMouseOver={() =>
+                            setHoverSwatch(product.images[0].imageUrl)
+                          }
+                          onMouseLeave={() => setHoverSwatch(undefined)}
                         >
                           <Image
                             className="w-full h-full object-contain object-center"
