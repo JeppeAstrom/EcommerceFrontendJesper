@@ -8,6 +8,7 @@ import TrashCan from "@/app/icons/trashcan";
 import { Product } from "@/types/product";
 import { NextPage } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { useContext } from "react";
 
 interface Props {
@@ -24,7 +25,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
     <>
       <div className="flex flex-row p-2 lg:p-2 py-3 pr-6 w-full">
         <div className="w-2/4 items-center flex justify-center pl-3">
-          <figure className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full">
+          <Link href={`/produkter/${product.id}`} className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full">
             <Image
               width={1300}
               height={900}
@@ -32,7 +33,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
               src={product.images[0].imageUrl}
               className="object-contain object-center min-h-full min-w-full"
             />
-          </figure>
+          </Link>
         </div>
         <div className="flex flex-col pl-2 w-full relative">
           <div className="flex justify-between">
