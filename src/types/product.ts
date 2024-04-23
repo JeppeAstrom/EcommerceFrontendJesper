@@ -8,7 +8,8 @@ export interface Product {
   sizes: SizeType[];
   color: string;
   quantity: number;
-  chosenSize?:string;
+  chosenSize?: string;
+  genderType: number;
 }
 
 export interface Categories {
@@ -29,5 +30,5 @@ export interface ProductGroup {
 }
 export interface OrderProduct {
   productId: number;
-  size:string;
+  size: string;
 }

@@ -38,7 +38,7 @@ const ProductPage = () => {
   const [reviews, setReviews] = useState<ReviewDto[]>([]);
 
   const reviewRef = useRef<HTMLDivElement>(null);
- 
+
   useEffect(() => {
     const fetchData = async () => {
       if (id) {
@@ -47,9 +47,8 @@ const ProductPage = () => {
           const ProductGroup: ProductGroup = await GetProductGroup(id);
           const reviews: ReviewDto[] = await GetReviewFromProductId(id);
           const recommendedProducts: Product[] = await getProductsFromCategory(
-            fetchedProduct.categories[0].name
+            fetchedProduct.categories[0].name, fetchedProduct.genderType
           );
-      
           setProduct(fetchedProduct);
           setProductGroup(ProductGroup);
           setReviews(reviews);

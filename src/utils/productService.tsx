@@ -26,8 +26,8 @@ const GetProductGroup = async(id:string) => {
     return ProductGroup;
 }
 
-const getProductsFromCategory = async (category:string) => {
-    let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Products/' + category;
+const getProductsFromCategory = async (category:string, gender:number) => {
+    let apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Products/' + category + '?genderType=' + gender;
 
     const ProductList: Product[] = await fetch(apiRoute).then(res => res.json())
 
