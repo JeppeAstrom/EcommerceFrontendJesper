@@ -35,7 +35,7 @@ const Home = async () => {
   return (
     <div className="px-4">
       
-      <div className="mb-10 mt-10">
+      <div className="mb-10 mt-6">
       <span className="text-semibold font-sans text-2xl pl-1">Sandler kollektionen</span>
         <Carousel
           visibleSlidesCountDesktop={2}

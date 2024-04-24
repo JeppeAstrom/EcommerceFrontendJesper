@@ -121,9 +121,9 @@ const Header = () => {
           visible ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <div className="flex justify-center p-5">
+        <div className="flex justify-center p-3">
           <div className="w-[1400px] mx-auto">
-            <div className="flex flex-col py-2">
+            <div className="flex flex-col md:py-1">
               <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
                 <div className="flex items-center justify-start w-1/3 gap-x-3">
                   <Link href="/favoriter" className="flex items-center gap-2">
@@ -155,7 +155,7 @@ const Header = () => {
                 <div className="min-w-[33%] items-center justify-center">
                   <Link
                     href="/"
-                    className="flex items-center justify-center p-2 font-semibold text-lg"
+                    className="flex items-center justify-center p-2 font-sans text-xl"
                   >
                     SandlerShop
                   </Link>
@@ -167,7 +167,7 @@ const Header = () => {
                       <CartIcon
                         showCount={true}
                         cartCount={cartCount ? cartCount : 0}
-                        className="w-8 h-8 cursor-pointer"
+                        className="cursor-pointer"
                       />
                       <span className="pt-1 pl-2 hidden lg:flex font-light">
                         Varukorg
@@ -205,7 +205,7 @@ const Header = () => {
                       <CartIcon
                         showCount={true}
                         cartCount={cartCount ? cartCount : 0}
-                        className="w-8 h-8 cursor-pointer"
+                        className="cursor-pointer"
                       />
                       <span className="pt-1 pl-2 hidden lg:flex font-light">
                         Varukorg
@@ -214,7 +214,7 @@ const Header = () => {
                     <div>
                       <Hamburger
                         onClick={handlerToggleCategoryModal}
-                        className="w-8 h-8 cursor-pointer lg:hidden"
+                        className="cursor-pointer lg:hidden"
                       />
                     </div>
                   </div>
@@ -251,7 +251,7 @@ const Header = () => {
                 {(categories as Category[]).map((category, index) => (
                   <Link
                     key={index}
-                    className="flex pb-1 font-semibold text-md"
+                    className="flex pb-1 font-light text-md"
                     href={"/produkter/kategori/" + category.name}
                   >
                     {category.name}

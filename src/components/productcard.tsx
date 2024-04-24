@@ -98,17 +98,17 @@ const ProductCard: NextPage<Props> = ({ product }) => {
   return (
     <>
       <div className="flex flex-col max-w-sm items-center justify-center">
-        <div className="p-4 items-center justify-center flex flex-col w-full relative">
+        <div className="py-4 items-center justify-center flex flex-col w-full relative">
           <div className="flex justify-between absolute top-5 md:px-7 px-5 w-full">
             <CartProductCard
               quickshop={handleProduct}
-              className="cursor-pointer z-[5] absolute left-5 top-2"
+              className="cursor-pointer z-[5] absolute left-1 top-1"
             />
 
             <HeartIcon
               onClick={() => toggleFavourite()}
               favourite={favourite}
-              className="h-8 w-8 cursor-pointer z-[5] absolute top-2 right-5"
+              className="h-8 w-8 cursor-pointer z-[5] absolute top-1 right-1"
             />
           </div>
           <Link

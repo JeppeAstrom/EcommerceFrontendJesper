@@ -69,7 +69,6 @@ function CartContext({ children }: { children: ReactNode }) {
             if (currentItems) {
                 if(!skipNotification){
                 if(getCurrentItem.chosenSize){
-                    console.log(getCurrentItem.chosenSize)
                      setLastAddedItem(getCurrentItem);
                 }
                 }

@@ -37,7 +37,7 @@ const Checkout = () => {
   const [authLoading, setAuthLoading] = useState<boolean>(false);
   const toggleCart = () => setShowCart(prev => !prev);
 
-  const handleAddressId = (addressId: number) => {
+  const handleAddressId = (addressId: number | undefined) => {
     setAddress(addressId);
   };
 
@@ -158,7 +158,7 @@ const Checkout = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-auto mb-2">
+    <div className="flex flex-col justify-center items-center h-auto mb-6">
       <div className="flex-col lg:flex-row-reverse flex w-full">
         <div className="relative overflow-y-auto items-center justify-center lg:w-3/4 sm:max-h-full md:max-h-[750px] pb-8">
           
@@ -204,10 +204,10 @@ const Checkout = () => {
         </div>
 
         <div className="flex flex-col w-full md:w-3/5 px-3">
-          {!address ? (
+         
             <AddressForm savedAddress={savedAddress} handleAddressId={handleAddressId} />
-          ) : (
-            <div className="gap-2 flex-col flex">
+    
+            <div className={`gap-2 flex-col flex mt-10 ${address ? '' : 'opacity-30 pointer-events-none'}`}>
                <span className="mb-3 w-fit font-semibold text-lg border-b border-black">Kortuppgifter</span>
               <input
                 value={cardName}
@@ -222,31 +222,22 @@ const Checkout = () => {
                 placeholder="Kortnummer"
                 className=" border-black border p-2 font-light text-sm"
               />
-
+                <div className="flex gap-2">
               <input
                 value={cvv}
                 onChange={(e) => setCvv(e.target.value)}
                 placeholder="CVV"
-                className=" border-black border p-2 font-light text-sm"
+                className=" border-black border p-2 font-light w-1/2 text-sm"
               />
-
-              <div className="flex w-full gap-3">
                 <input
                   value={expirationDate}
                   onChange={(e) => setExpirationDate(e.target.value)}
                   placeholder="Utgångsdatum"
-                  className=" border-black border p-2 font-light text-sm"
+                  className=" border-black border w-1/2 p-2 font-light text-sm"
                 />
-
-                <button
-                  onClick={() => setAddress(undefined)}
-                  className="w-1/4 bg-black font-semibold text-white"
-                >
-                  Tillbaka
-                </button>
               </div>
             </div>
-          )}
+        
 
           <form
             onSubmit={(e) => {
@@ -259,7 +250,7 @@ const Checkout = () => {
               <button
                 type="submit"
                 disabled={!readyToPurchase}
-                className={`w-full  border text-white font-semibold p-3 ${
+                className={`w-full  border text-white font-semibold p-3 mt-2 ${
                   readyToPurchase ? "bg-black" : "bg-gray-400"
                 }`}
               >

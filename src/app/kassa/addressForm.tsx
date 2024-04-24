@@ -5,7 +5,7 @@ import { NextPage } from "next";
 import { useState } from "react";
 
 interface Props {
-  handleAddressId: (addressId: number) => void;
+  handleAddressId: (addressId: number | undefined) => void;
   savedAddress?: Address | null;
 }
 
@@ -21,6 +21,7 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
   const [useNewAddress, setUseNewAddress] = useState<boolean>(false);
 
   const handleNewAddress = () => {
+    handleAddressId(undefined);
     setUseNewAddress(true);
   }
 
@@ -69,7 +70,7 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
             Fel address?
           </button>
           <button onClick={() => handleAddressId(savedAddress.id)} className="font-semibold text-white bg-black p-3 w-full">
-            Nästa
+           Spara
           </button>
         </div>
       ) : (

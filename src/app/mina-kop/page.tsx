@@ -46,7 +46,6 @@ const MyPurchases = () => {
       href: "/mina-kop",
       title: "mina köp",
     },
-    { href: "/andra-address", title: "ändra address" },
   ];
  
   return (

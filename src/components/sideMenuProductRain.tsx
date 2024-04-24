@@ -19,10 +19,10 @@ if(!childCategories){
 }
   return (
   
-    <div className="flex flex-col gap-3 text-normal font-sans pl-4 pt-3 items-start ">
+    <div className="flex lg:flex-col flex-row item-center gap-3 text-normal font-sans pl-4 lg:pt-3 items-start ">
       {childCategories.map((item, index) => {
         return(
-        <Link className={`${item.name === activeRoute ? 'font-semibold border-b border-black' : ''}`} key={index} href={`${pathname}/${item.name}`}>{item.name}</Link>
+        <Link className={`sm:max-lg:border sm:max-lg:p-3 sm:max-lg:px-5  ${item.name === activeRoute ? 'font-light border-b border-black' : 'font-light'}`} key={index} href={`${pathname}/${item.name}`}>{item.name}</Link>
       )})}
     </div>
   
