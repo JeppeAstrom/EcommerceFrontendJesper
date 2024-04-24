@@ -61,12 +61,6 @@ const ProductPage = () => {
     fetchData();
   }, [id]);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
-  const [swatchAmount, setSwatchAmount] = useState<number>();
-  useEffect(() => {
-    if (window.innerWidth) {
-      setSwatchAmount(window.innerWidth > 0 && window.innerWidth < 768 ? 3 : 4);
-    }
-  }, []);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -105,7 +99,7 @@ const ProductPage = () => {
     productGroup && productGroup.products
       ? isExpanded
         ? productGroup.products
-        : productGroup.products.slice(0, swatchAmount || 3)
+        : productGroup.products.slice(0, 4)
       : [];
 
   const visibleReviews =
@@ -209,7 +203,7 @@ const ProductPage = () => {
               {productGroup?.products &&
                 productGroup.products.length > 1 &&
                 visibleProducts && (
-                  <div className="pt-4 grid grid-cols-3 md:grid-cols-4 gap-4 lg:w-[320px] justify-evenly items-center">
+                  <div className="pt-4 grid grid-cols-4 gap-4 lg:w-[320px] justify-evenly items-center">
                   {
                     [...visibleProducts]
                       .sort((a, b) => {

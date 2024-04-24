@@ -94,7 +94,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
       handleAddToCart(product);
     }
   };
-
+  const [hoverSwatchModal, setHoverSwatchModal] = useState<Product>();
   return (
     <>
       <div className="flex flex-col max-w-sm items-center justify-center">
@@ -165,7 +165,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
           <div className="w-full flex flex-col">
             <QuickShopCard
               toggleModal={toggleMenu}
-              product={activeVariant ? activeVariant : product}
+              product={hoverSwatchModal ? hoverSwatchModal : activeVariant ? activeVariant : product}
             />
             <div className="px-5">
               {productGroup?.products &&
@@ -183,6 +183,10 @@ const ProductCard: NextPage<Props> = ({ product }) => {
                           className="aspect-[9/13]"
                           key={product.id}
                           onClick={() => setActiveVariant(variant)}
+                          onMouseOver={() => setHoverSwatchModal(variant)}
+                          onMouseLeave={() => setHoverSwatchModal(undefined)
+                          
+                          }
                         >
                           <Image
                             className="w-full h-full object-contain object-center"
