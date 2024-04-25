@@ -84,7 +84,7 @@ const MyPurchases = () => {
                 <div className="flex flex-col gap-1 ">
                   <span className="font-extralight text-2xl mb-2 ">Beställd {order.created}</span>
                 <span className="">Order ID: {order.id}</span>
-                <span className="font-semibold">Total pris: {order.totalPrice} kr</span>
+                <span className="font-semibold">Totalpris: {order.totalPrice} kr</span>
                 </div>
                 <div className="pt-2 pb-4 border-b border-gray-400 overflow-x-auto w-full">
                   <Carousel visibleSlidesCountDesktop={order.orderProducts.length > 2 ? 3 : order.orderProducts.length} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} useProgressBar={true}>
