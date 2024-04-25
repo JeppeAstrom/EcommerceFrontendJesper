@@ -11,11 +11,6 @@ import { useEffect, useState } from "react";
 import { Product } from "@/types/product";
 
 const CategoryPage = () => {
-  const searchParams = useSearchParams();
-  const slug = searchParams.get("slug");
-
-  console.log(slug);
-
   const pathname = usePathname();
   const [childCategories, setChildCategories] = useState<ChildCategories[]>();
   const [categoryData, setCategoryData] = useState<Product[]>([]);
