@@ -11,8 +11,10 @@ import { Address, GetAddress } from "@/utils/addressService";
 import { AuthContext } from "../context/authContext";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import { GetPayment, PaymentDetail, PostPayment } from "@/utils/paymentService";
+import { useRouter } from "next/navigation";
 
 const Checkout = () => {  
+  const router = useRouter();
   const [savedAddress, setSavedAddress] = useState<Address | null | undefined>(null);
   const [savedPaymentDetail, setSavedPaymentDetail] = useState<PaymentDetail | null | undefined>(null);
   useEffect(()  => {
@@ -75,7 +77,7 @@ const Checkout = () => {
   useEffect(() => {
     if (orderComplete) {
       const timeoutId = setTimeout(() => {
-       window.location.href = '/mina-kop'
+      router.push('/mina-kop')
       }, 1500);
       return () => clearTimeout(timeoutId);
     }

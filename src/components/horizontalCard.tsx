@@ -55,7 +55,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }
            </span>
         )}
           <div className="justify-between flex pt-1">
-            <span className="text-sm absolute bottom-0 left-2 font-semibold font-serif">
+            <span className="text-sm absolute bottom-0 left-2 font-bold">
               {product.price} kr
             </span>
             <div className="gap-2 flex justify-end w-full items-center">

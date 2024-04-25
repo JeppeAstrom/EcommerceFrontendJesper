@@ -193,7 +193,7 @@ const ProductPage = () => {
               </span>
             </div>
             <div className="pt-2 flex justify-between">
-              <span className="text-lg font-semibold font-serif">
+              <span className="text-lg font-bold">
                 {fetchedProduct.price} kr
               </span>
               {reviews && reviews.length > 0 && stars(averageScore)}

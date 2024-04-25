@@ -62,7 +62,7 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
           <span className="text-sm line-clamp-2 font-light pr-8 pt-1">
             {product.description}
           </span>
-          <span className="text-sm font-semibold font-serif">
+          <span className="text-sm font-bold">
               {product.price} kr
             </span>
             <div className="pt-4 pr-8">

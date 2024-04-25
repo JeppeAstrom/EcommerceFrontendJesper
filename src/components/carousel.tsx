@@ -25,6 +25,7 @@ interface Props {
   visibleSlidesCountDesktop: 1 | 2 | 3 | 4 | 5 | 6;
   disableDrag?: boolean;
   useProgressBar?: boolean;
+  hideArrows?:boolean;
 }
 
 const Carousel: React.FC<Props> = ({
@@ -33,7 +34,8 @@ const Carousel: React.FC<Props> = ({
   visibleSlidesCountTablet,
   visibleSlidesCountDesktop,
   disableDrag = false,
-  useProgressBar = false
+  useProgressBar = false,
+  hideArrows = false
 }) => {
   // STATE
   const [calculationValues, setCalculationValues] =
@@ -330,7 +332,7 @@ const Carousel: React.FC<Props> = ({
   return (
     <div className="relative">
       {/* Controls */}
-      {visibleIndexes.length > 0 && !visibleIndexes.includes(0) && (
+      {visibleIndexes.length > 0 && !visibleIndexes.includes(0) && !hideArrows && (
         <button
           className="absolute w-10 h-10 bg-black top-1/2 left-0 -translate-y-1/2 z-[9]"
        
@@ -341,7 +343,7 @@ const Carousel: React.FC<Props> = ({
           <ArrowLeft className='h-6 w-6 mx-auto' />
         </button>
       )}
-      {visibleIndexes.length > 0 && !visibleIndexes.includes(slidesRef.current.length - 1) && (
+      {visibleIndexes.length > 0 && !visibleIndexes.includes(slidesRef.current.length - 1) && !hideArrows && (
         <button
           className="absolute w-10 h-10 bg-black top-1/2 right-0 -translate-y-1/2 z-[9] rotate-180"
           

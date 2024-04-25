@@ -7,15 +7,17 @@ import { GetOrders, Order, OrderHistory } from "@/utils/orderService";
 import OrderHistoryCard from "./orderHistoryCard";
 
 import Carousel from "@/components/carousel";
+import { useRouter } from "next/navigation";
 
 const MyPurchases = () => {
+  const router = useRouter();
   const { isAuthenticated, handleLogout }: any = useContext(AuthContext);
   const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [orderHistory, setOrderHistory] = useState<any>();
   const handleReroute = () => {
     handleLogout();
-    window.location.href = "/";
+    router.push('/')
   };
 
   useEffect(() => {

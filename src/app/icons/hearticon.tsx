@@ -16,7 +16,7 @@ const HeartIcon: NextPage<Props> = ({ className, onClick, favourite }) => {
         width="800px"
         height="800px"
         viewBox="0 0 24 24"
-        fill={`${favourite ? "#DB7093" : "white"}`}
+        fill={`${favourite ? "#FF0000" : "white"}`}
       >
         <path
           fill-rule="evenodd"

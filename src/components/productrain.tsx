@@ -38,13 +38,13 @@ const ProductRain: NextPage<Props> = ({
       <div className="mb-10">
         <div className="flex justify-center sm:flex-col md:flex-row">
           {category && (
-            <div className="lg:min-w-[150px] flex lg:flex lg:flex-col sm:max-lg:px-4">
+            <div className="lg:min-w-[150px] mt-8 flex lg:flex lg:flex-col sm:max-lg:px-4">
               {parentCategory && (
                 <Link
                   href={`/produkter/kategori/${
                     pathSegments[pathSegments.length - 2]
                   }`}
-                  className="flex gap-2 md:mt-8 items-center sm:max-lg:border sm:max-lg:p-3 sm:max-lg:px-5"
+                  className="flex gap-2 md:mt-8 items-center sm:max-lg:border sm:max-lg:border-gray-500 sm:max-lg:p-3 sm:max-lg:px-5"
                 >
                   <ArrowLeft blackArrow={true} className="w-7 h-7 " />
                   <span className="font-semibold">{category}</span>

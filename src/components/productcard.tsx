@@ -111,7 +111,10 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               className="cursor-pointer z-[5] absolute top-1 right-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
             />
           </div>
+          <Carousel visibleSlidesCountDesktop={1} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} hideArrows={true}>
+            {product.images.map((image, index) => (
           <Link
+            key={index}
             className="aspect-[9/13] items-center  flex min-h-full bg-neutral-100 justify-center relative"
             href={"/produkter/" + product.id}
           >
@@ -119,18 +122,19 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               width={900}
               height={1300}
               alt=""
-              src={hoverSwatch ? hoverSwatch : product.images[0].imageUrl}
+              src={hoverSwatch ? hoverSwatch : image.imageUrl}
               className="object-contain transition-all object-center items-center justify-center"
             />
           </Link>
-
+           ))}
+          </Carousel>
           <span className="line-clamp-1 font-sans text-start w-full text-md font-light pt-2">
             {product.name}
           </span>
 
           <div className="flex relative w-full justify-between">
             <div>
-              <span className="text-sm font-semibold font-serif">
+              <span className="text-sm font-bold">
                 {product.price} kr
               </span>
             </div>

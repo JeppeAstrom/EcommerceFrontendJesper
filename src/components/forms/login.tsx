@@ -4,6 +4,7 @@ import RegistrationModal from "./registrationModal";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "@/app/context/authContext";
 import LoadingSpinner from "../spinners/loadingSpinner";
+import { useRouter } from "next/navigation";
 
 interface Props {
   openModal: () => void;
@@ -21,11 +22,16 @@ const Login: NextPage<Props> = ({ openModal }) => {
   const [error, setError] = useState<boolean>(false);
   const { handleLogin, handleRegister }: any = useContext(AuthContext);
 
+
+  const router = useRouter();
+
+  
   const handleSubmit = async () => {
     setIsLoading(true);
     if (register) {
       var result = await handleRegister(firstName, lastName, email, password);
       if(result === true){
+        router.refresh();
         openModal();
       }
       else{
@@ -34,6 +40,7 @@ const Login: NextPage<Props> = ({ openModal }) => {
     } else {
       var result = await handleLogin(email,password);
       if(result === true){
+        router.refresh();
         openModal();
       }
       else{

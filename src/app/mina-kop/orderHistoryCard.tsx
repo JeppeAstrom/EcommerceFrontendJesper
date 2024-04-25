@@ -114,7 +114,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
           </span>
 
           <div className="flex-col md:gap-1 flex pt-1 pr-4">
-            <span className="text-sm font-semibold font-serif">{product.price} kr</span>
+            <span className="text-sm font-bold">{product.price} kr</span>
             <span className=" text-sm font-semibold">Storlek: {size}</span>
           </div>
           <div className="gap-2 flex mt-auto w-full items-center">
