@@ -102,17 +102,17 @@ const ProductCard: NextPage<Props> = ({ product }) => {
           <div className="flex justify-between absolute top-5 md:px-7 px-5 w-full">
             <CartProductCard
               quickshop={handleProduct}
-              className="cursor-pointer z-[5] absolute left-1 top-1"
+              className="cursor-pointer z-[5] absolute left-1 top-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
             />
 
             <HeartIcon
               onClick={() => toggleFavourite()}
               favourite={favourite}
-              className="h-8 w-8 cursor-pointer z-[5] absolute top-1 right-1"
+              className="cursor-pointer z-[5] absolute top-1 right-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
             />
           </div>
           <Link
-            className="min-w-full flex min-h-full aspect-9/13 items-center justify-center relative"
+            className="aspect-[9/13] items-center  flex min-h-full bg-neutral-100 justify-center relative"
             href={"/produkter/" + product.id}
           >
             <Image
@@ -120,7 +120,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               height={1300}
               alt=""
               src={hoverSwatch ? hoverSwatch : product.images[0].imageUrl}
-              className="object-contain transition-all min-h-full  min-w-full object-center items-center justify-center"
+              className="object-contain transition-all object-center items-center justify-center"
             />
           </Link>
 
@@ -130,8 +130,8 @@ const ProductCard: NextPage<Props> = ({ product }) => {
 
           <div className="flex relative w-full justify-between">
             <div>
-              <span className="text-sm font-sans font-light">
-                {product.price}SEK
+              <span className="text-sm font-semibold font-serif">
+                {product.price} kr
               </span>
             </div>
           </div>
@@ -153,7 +153,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
                     onMouseLeave={() => setHoverSwatch(undefined)}
                     href={`/produkter/${variant.id}`}
                     style={{ background: variant.color }}
-                    className="w-4 h-4 rounded-full border border-gray-700"
+                    className="w-[14px] h-[14px] md:w-[18px] md:h-[18px] rounded-full border border-gray-600"
                     key={variant.id}
                   ></Link>
                 ))}

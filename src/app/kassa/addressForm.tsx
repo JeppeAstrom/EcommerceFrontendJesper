@@ -2,7 +2,7 @@ import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import { Address, PostAddress } from "@/utils/addressService";
 
 import { NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   handleAddressId: (addressId: number | undefined) => void;
@@ -15,15 +15,18 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
   const [city, setCity] = useState<string>();
   const [street, setStreet] = useState<string>();
   const [postal, setPostal] = useState<string>();
-
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const [useNewAddress, setUseNewAddress] = useState<boolean>(false);
 
-  const handleNewAddress = () => {
-    handleAddressId(undefined);
-    setUseNewAddress(true);
-  }
+  useEffect(() => {
+    if(savedAddress){
+      setFirstName(savedAddress.firstName);
+      setLastname(savedAddress.lastName);
+      setCity(savedAddress.city);
+      setStreet(savedAddress.street);
+      setPostal(savedAddress.postalCode);
+    }
+  },[savedAddress])
 
   const submitAddress = async () => {
     setIsLoading(true);
@@ -45,36 +48,9 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
   return (
     <>
     <span className="mb-3 w-fit font-semibold text-lg border-b border-black">Address</span>
-      {savedAddress && !useNewAddress ? (
-        <div className="gap-3 flex-col flex">
-          <span className=" border-black border p-2 font-light text-sm opacity-50">
-            {savedAddress.firstName}
-          </span>
-
-          <span className=" border-black border p-2 font-light text-sm opacity-50">
-            {savedAddress.lastName}
-          </span>
-
-          <span className=" border-black border p-2 font-light text-sm opacity-50">
-            {savedAddress.street}
-          </span>
-          <span className=" border-black border p-2 font-light text-sm opacity-50">
-            {savedAddress.city}
-          </span>
-
-          <span className=" border-black border p-2 font-light text-sm w-full opacity-50">
-            {savedAddress.postalCode}
-          </span>
-
-          <button onClick={() => handleNewAddress()}  className="text-sm text-left border-b border-black w-[84px]">
-            Fel address?
-          </button>
-          <button onClick={() => handleAddressId(savedAddress.id)} className="font-semibold text-white bg-black p-3 w-full">
-           Spara
-          </button>
-        </div>
-      ) : (
-        <form
+  
+        <div className='gap-3 flex-col flex mt-4'>
+          <form
           onSubmit={(e) => {
             e.preventDefault();
             submitAddress();
@@ -96,14 +72,14 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
           />
 
           <input
-            value={city}
+            value={street}
             onChange={(e) => setCity(e.target.value)}
             placeholder="Stad"
             className=" border-black border p-2 text-sm font-light"
           />
 
           <input
-            value={street}
+            value={city}
             onChange={(e) => setStreet(e.target.value)}
             placeholder="Gata"
             className=" border-black border p-2 text-sm font-light"
@@ -125,7 +101,7 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
             </button>
           </div>
         </form>
-      )}
+        </div>
     </>
   );
 };

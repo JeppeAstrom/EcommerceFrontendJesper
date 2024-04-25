@@ -153,7 +153,7 @@ const ProductPage = () => {
   }
 
   return (
-    <div className="mx-auto px-4">
+    <div className="mx-auto px-4 mb-10">
       <div className="flex w-full justify-center items-center mx-auto mb-10">
         <div className="lg:flex w-full">
           <Carousel
@@ -193,7 +193,7 @@ const ProductPage = () => {
               </span>
             </div>
             <div className="pt-2 flex justify-between">
-              <span className="text-lg font-semibold">
+              <span className="text-lg font-semibold font-serif">
                 {fetchedProduct.price} kr
               </span>
               {reviews && reviews.length > 0 && stars(averageScore)}
@@ -336,8 +336,8 @@ const ProductPage = () => {
           )}
         </div>
       )}
-      {recommendedProducts && (
-        <div className="mb-10 py-4">
+      {recommendedProducts && recommendedProducts.length > 3 && (
+        <div className="py-4">
           <span className="font-semibold text-lg">
             Rekommenderade produkter
           </span>

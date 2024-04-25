@@ -61,6 +61,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
           (cartItems as Product[]).map((product, index) => {
                 return (
                   <HorizontalCard
+                   handleToggleCart={handleToggleCart}
                     key={index}
                     product={product!}
                   />
@@ -68,12 +69,15 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
               
               })
           ) : (
+            <div className="bg-white">
             <Image
+            className=" object-contain"
               width="900"
               height="1300"
               alt="empty"
-              src="https://cdn.dribbble.com/users/2058104/screenshots/4198771/media/6a7fbadba54f099e51e634281956fae0.jpg?resize=400x300&vertical=center"
+              src="https://ew.com/thmb/Z2g30rIL2w8b7gHilkA9pY7Tp1I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sandler-samberg_458-f0247cb3789a4ad9bc718cfcd305c04a.jpg"
             />
+            </div>
           )}
         </div>
 

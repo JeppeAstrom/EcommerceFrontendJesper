@@ -44,7 +44,10 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
             const response = await PostReview(score, reviewComment, product.id);
             if (response?.ok) {
                 setLeftReview(true);
-                setTimeout(() => setLeftReview(false), 1500);
+                setTimeout(() => {setLeftReview(false)
+                  toggleReview();
+                }, 1500);
+              
             } else {
                 console.error('Failed to post review:');
             }
@@ -111,13 +114,13 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
           </span>
 
           <div className="flex-col md:gap-1 flex pt-1 pr-4">
-            <span className="text-sm font-semibold">{product.price} kr</span>
+            <span className="text-sm font-semibold font-serif">{product.price} kr</span>
             <span className=" text-sm font-semibold">Storlek: {size}</span>
           </div>
           <div className="gap-2 flex mt-auto w-full items-center">
             <button
               onClick={toggleReview}
-              className="border p-2 md:p-3 bg-black font-semibold text-white  text-center"
+              className="border p-2  bg-black font-semibold text-white text-center"
             >
               Recensera
             </button>
@@ -126,7 +129,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                 product.chosenSize = product.chosenSize = size;
                 handleAddToCart(product);
               }}
-              className="border p-2 md:p-3 bg-black font-semibold text-white md:w-[120px] w-[100px] text-center"
+              className="border p-2 bg-black font-semibold text-white text-center"
             >
               Köp igen
             </button>

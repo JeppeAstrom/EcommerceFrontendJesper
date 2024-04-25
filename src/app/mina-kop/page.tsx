@@ -87,7 +87,7 @@ const MyPurchases = () => {
                 <span className="font-semibold">Total pris: {order.totalPrice} kr</span>
                 </div>
                 <div className="pt-2 pb-4 border-b border-gray-400 overflow-x-auto w-full">
-                  <Carousel visibleSlidesCountDesktop={order.orderProducts.length > 1 ? 2 : 1} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} useProgressBar={true}>
+                  <Carousel visibleSlidesCountDesktop={order.orderProducts.length > 2 ? 3 : order.orderProducts.length} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} useProgressBar={true}>
                   {order.orderProducts.map((orderProduct: any) => (
                     <OrderHistoryCard
                       size={orderProduct.size}

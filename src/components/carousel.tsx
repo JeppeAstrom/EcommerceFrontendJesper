@@ -332,24 +332,24 @@ const Carousel: React.FC<Props> = ({
       {/* Controls */}
       {visibleIndexes.length > 0 && !visibleIndexes.includes(0) && (
         <button
-          className="absolute top-1/2 left-0 -translate-y-1/2 z-[9]"
+          className="absolute w-10 h-10 bg-black top-1/2 left-0 -translate-y-1/2 z-[9]"
        
         
           data-direction="PREV"
           onClick={handleDirectionClick}
         >
-          <ArrowLeft className='h-8 w-8 bg-black' />
+          <ArrowLeft className='h-6 w-6 mx-auto' />
         </button>
       )}
       {visibleIndexes.length > 0 && !visibleIndexes.includes(slidesRef.current.length - 1) && (
         <button
-          className="absolute top-1/2 right-0 -translate-y-1/2 z-[9] rotate-180"
+          className="absolute w-10 h-10 bg-black top-1/2 right-0 -translate-y-1/2 z-[9] rotate-180"
           
        
           data-direction="NEXT"
           onClick={handleDirectionClick}
         >
-         <ArrowLeft  className='h-8 w-8 bg-black'/>
+         <ArrowLeft  className='h-6 w-6 mx-auto'/>
         </button>
       )}
       {/* Inner wrapper (Slider) */}

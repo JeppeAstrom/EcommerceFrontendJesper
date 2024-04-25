@@ -64,11 +64,11 @@ const SearchBar: NextPage<Props> = ({ products }) => {
       </div>
       <div ref={modalRef}>
       {isSearchFocused && searchResult.length > 0 && inputText && (
-        <div  className="absolute w-full bg-white p-4 ">
+        <div  className="absolute w-full bg-white pb-2 px-1">
           <div className="grid md:grid-cols-5  grid-cols-3 justify-evenly p-2">
             {searchResult?.map((product, index) => (
               <SearchResultCard key={index} product={product} />
-            ))}
+            )).slice(0, 6)}
           </div>
           
         </div>

@@ -20,6 +20,16 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
     handleAddToCart,
   }: any = useContext(Context);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (error) {
+      const timeoutId = setTimeout(() => {
+        setError(false);
+      }, 2000);
+      return () => clearTimeout(timeoutId);
+    }
+  },[error])
 
   const handleSizeSelect = (size: string) => {
   
@@ -52,21 +62,27 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
           <span className="text-sm line-clamp-2 font-light pr-8 pt-1">
             {product.description}
           </span>
-          <span className="text-sm font-semibold">
+          <span className="text-sm font-semibold font-serif">
               {product.price} kr
             </span>
             <div className="pt-4 pr-8">
               {product.sizes.length > 0 && (
                 <div className="relative">
-                    <ul className=" w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 bg-white cursor-pointer">
+                    <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2  cursor-pointer">
                       {product.sizes.map((size, index) => (
+                        <div key={index}>
                         <li
-                          key={index}
-                          className={`p-3 border gap-1 ${selectedSize && selectedSize === size.size && 'bg-gray-100' }`}
+                          className='p-3 border border-black w-auto'
                           onClick={() => handleSizeSelect(size.size)}
                         >
                        <span className='text-black text-lg font-sans items-center flex justify-center'> {size.size}</span>
                         </li>
+                        <div
+                            className={`inline-block w-full h-[2px] ${
+                              selectedSize === size.size ? "bg-black" : "bg-gray-300"
+                            }`}
+                          ></div>
+                          </div>
                       ))}
                     </ul>
                  
@@ -84,11 +100,15 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
                     handleAddToCart(productWithSize);
                     toggleModal();
                     }
+                    else{
+                      setError(true);
+                    }
                    
                   }}
-                  className="border w-full p-3 bg-black text-white font-semibold"
+                  className={`border w-full p-3 bg-black text-white font-semibold ${error ? 'transition-all scale-105' : 'transition-all'}`}
+            
                 >
-                  Handla
+                <span> {`${error ? 'Välj storlek' : 'Handla'}`}</span>
                 </button>
               </div>
             

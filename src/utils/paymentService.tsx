@@ -29,4 +29,35 @@ const PostPayment = async (cardName:string, CardNumber:string, Cvv:string, ExpDa
         console.error('Error posting address:', error);
     }
     }
-    export default PostPayment;
+
+    export interface PaymentDetail {
+    id:number;
+    cardName:string;
+    cardNumber: string;
+    cvv:string
+    expDate:string;
+    }
+
+    const GetPayment = async () => {
+
+        const token = localStorage.getItem('accessToken');
+        const apiRoute = 'https://wa-okx-jesper-aa.azurewebsites.net/api/Payment/paymentdetail';
+        const requestOptions = {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json' 
+            }
+        };
+        try {
+            const response = await fetch(apiRoute, requestOptions);
+            const payment:PaymentDetail = await response.json();
+            return payment;
+        } catch (error) {
+            console.error('Error fetching payment:', error);
+            return null;
+        }
+    };
+
+
+    export  {PostPayment, GetPayment};

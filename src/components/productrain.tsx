@@ -46,8 +46,8 @@ const ProductRain: NextPage<Props> = ({
                   }`}
                   className="flex gap-2 md:mt-8 items-center sm:max-lg:border sm:max-lg:p-3 sm:max-lg:px-5"
                 >
-                  <ArrowLeft blackArrow={true} className="w-5 h-5 " />
-                  <span className="">{parentCategory}</span>
+                  <ArrowLeft blackArrow={true} className="w-7 h-7 " />
+                  <span className="font-semibold">{category}</span>
                 </Link>
               )}
               <button
@@ -70,7 +70,7 @@ const ProductRain: NextPage<Props> = ({
             </div>
           )}
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2 md:gap-7 p-2 gap-x-2  md:p-4 items-center justify-between">
-            {products.map((product, index) => (
+            {[...products].reverse().map((product, index) => (
               <div key={index}>
                 <ProductCard product={product} />
               </div>

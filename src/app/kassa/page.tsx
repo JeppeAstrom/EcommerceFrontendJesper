@@ -5,29 +5,34 @@ import { Product } from "@/types/product";
 import Image from "next/image";
 import CheckoutCard from "@/components/checkoutCard";
 import AddressForm from "./addressForm";
-import PostPayment from "@/utils/paymentService";
 import Dropdown from "../icons/dropdown";
 import { PostOrder } from "@/utils/orderService";
 import { Address, GetAddress } from "@/utils/addressService";
 import { AuthContext } from "../context/authContext";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
+import { GetPayment, PaymentDetail, PostPayment } from "@/utils/paymentService";
 
 const Checkout = () => {  
-  const [savedAddress, setSavedAddress] = useState<Address | null>(null);
+  const [savedAddress, setSavedAddress] = useState<Address | null | undefined>(null);
+  const [savedPaymentDetail, setSavedPaymentDetail] = useState<PaymentDetail | null | undefined>(null);
   useEffect(()  => {
-  const fetchAddress = async () => {
-    const response = await GetAddress();
-    setSavedAddress(response);
+  const fetchAddressAndPayment = async () => {
+    const responseAddress = await GetAddress();
+    const responsePayment = await GetPayment();
+    setSavedAddress(responseAddress);
+    setSavedPaymentDetail(responsePayment)
   }
-  fetchAddress();
+  fetchAddressAndPayment();
   },[])
-  const { isAuthenticated, handleLogout }: any = useContext(AuthContext);
+ 
+  const { isAuthenticated }: any = useContext(AuthContext);
   const context = useContext(Context);
   const [readyToPurchase, setReadyToPurchase] = useState<boolean>(false);
-  const [address, setAddress] = useState<number>();
+  const [address, setAddress] = useState<number | undefined>();
+
   const [showCart, setShowCart] = useState<boolean>(false);
   const { cartItems, resetCart }: any = context;
-
+ 
   const [cardName, setCardname] = useState<string>();
   const [cardNumber, setCardNumber] = useState<string>();
   const [cvv, setCvv] = useState<string>();
@@ -41,6 +46,15 @@ const Checkout = () => {
     setAddress(addressId);
   };
 
+  useEffect(() => {
+    if(savedPaymentDetail){
+      setCardNumber(savedPaymentDetail.cardNumber);
+      setCardname(savedPaymentDetail.cardName);
+      setCvv(savedPaymentDetail.cvv);
+      setExpirationDate(savedPaymentDetail.expDate);
+    }
+  },[savedPaymentDetail])
+ 
   useEffect(() => {
     const checkAuthentication = async () => {
       setAuthLoading(true);
@@ -95,39 +109,25 @@ const Checkout = () => {
       }
     }
   };
- 
+
   const totalPrice =
     Array.isArray(cartItems) && cartItems.length > 0
       ? cartItems.reduce((total, item) => total + item.price, 0)
       : 0;
-      
+   
   if (authLoading) {
     return (
  <LoadingSpinner/>
     );
   }
 
-      if (!isLoggedin ) {
-        return (
-          <div className="w-full lg:w-[500px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
-        <div className="flex-col flex items-center">
-        <span className="font-normal text-center text-2xl pb-4 mx-auto border-b border-black">Logga in för att göra en order</span>
-          <Image
-            width="900"
-            height="1300"
-            alt="empty"
-            src="https://assets-prd.ignimgs.com/2022/06/01/hustle-button-1654092606562.jpg"
-          />
-        </div>
-      </div>
-        );
-      }
+ 
 
   if (cartItems && cartItems.length <= 0 && !orderComplete) {
     return (
       <div className="w-full lg:w-[500px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
       <div className="flex-col flex items-center">
-      <span className="font-normal text-center text-2xl pb-4 mx-auto border-b border-black">Logga in för att göra en order</span>
+      <span className="font-normal text-center text-2xl pb-4 mx-auto border-b border-black">Tom varukorg</span>
         <Image
           width="900"
           height="1300"
@@ -154,6 +154,21 @@ const Checkout = () => {
         </div>
         
       </div>
+    );
+  }
+  if (!isLoggedin) {
+    return (
+      <div className="w-full lg:w-[500px] justify-center items-center mx-auto flex pt-5 px-4 pb-4">
+    <div className="flex-col flex items-center">
+    <span className="font-normal text-center text-2xl pb-4 mx-auto border-b border-black">Logga in för att göra en order</span>
+      <Image
+        width="900"
+        height="1300"
+        alt="empty"
+        src="https://assets-prd.ignimgs.com/2022/06/01/hustle-button-1654092606562.jpg"
+      />
+    </div>
+  </div>
     );
   }
 
@@ -204,10 +219,11 @@ const Checkout = () => {
         </div>
 
         <div className="flex flex-col w-full md:w-3/5 px-3">
-         
+            <div className={`${address ? 'opacity-20 pointer-events-none' :''}`}>
             <AddressForm savedAddress={savedAddress} handleAddressId={handleAddressId} />
-    
-            <div className={`gap-2 flex-col flex mt-10 ${address ? '' : 'opacity-30 pointer-events-none'}`}>
+            </div>
+              {address && (
+            <div className='gap-2 flex-col flex mt-10'>
                <span className="mb-3 w-fit font-semibold text-lg border-b border-black">Kortuppgifter</span>
               <input
                 value={cardName}
@@ -236,8 +252,11 @@ const Checkout = () => {
                   className=" border-black border w-1/2 p-2 font-light text-sm"
                 />
               </div>
+              <button onClick={() => setAddress(undefined)} className="text-sm text-left border-b border-black w-fit">
+            Ändra address?
+          </button>
             </div>
-        
+              )}
 
           <form
             onSubmit={(e) => {

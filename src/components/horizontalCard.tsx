@@ -14,9 +14,10 @@ import { useContext } from "react";
 interface Props {
   product: Product;
   quantity?: number;
+  handleToggleCart?: () => void;
 }
 
-const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
+const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }) => {
   const context = useContext(Context);
 
   const { removeFromCart, handleAddToCart, removeAllOfSameItem }: any = context;
@@ -25,7 +26,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
     <>
       <div className="flex flex-row p-2 lg:p-2 py-3 pr-6 w-full">
         <div className="w-2/4 items-center flex justify-center pl-3">
-          <Link href={`/produkter/${product.id}`} className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full">
+          <Link onClick={handleToggleCart} href={`/produkter/${product.id}`} className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full">
             <Image
               width={1300}
               height={900}
@@ -54,7 +55,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity }) => {
            </span>
         )}
           <div className="justify-between flex pt-1">
-            <span className="text-sm font-semibold absolute bottom-0 left-2">
+            <span className="text-sm absolute bottom-0 left-2 font-semibold font-serif">
               {product.price} kr
             </span>
             <div className="gap-2 flex justify-end w-full items-center">
