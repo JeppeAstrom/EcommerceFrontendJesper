@@ -26,6 +26,7 @@ interface Props {
   disableDrag?: boolean;
   useProgressBar?: boolean;
   hideArrows?:boolean;
+  scrollByItself?:boolean;
 }
 
 const Carousel: React.FC<Props> = ({
@@ -35,7 +36,8 @@ const Carousel: React.FC<Props> = ({
   visibleSlidesCountDesktop,
   disableDrag = false,
   useProgressBar = false,
-  hideArrows = false
+  hideArrows = false,
+  scrollByItself = false
 }) => {
   // STATE
   const [calculationValues, setCalculationValues] =
@@ -45,17 +47,20 @@ const Carousel: React.FC<Props> = ({
   // REFS
   const sliderRef = createRef<HTMLDivElement>();
   const slidesRef = useRef<HTMLDivElement[]>([]);
-
+  const [disableAutomatic, setDisableAutomatic] = useState<boolean>(false);
   // HANDLERS
   const handleDirectionClick = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
+    (e?: React.MouseEvent<HTMLButtonElement>, carouselDirection?:'NEXT' | 'PREV') => {
+      if(e){
+        setDisableAutomatic(true);
+      }
       const { current: slider } = sliderRef;
       const { current: slides } = slidesRef;
       if (!slider || slides.length <= 0) {
         return;
       }
 
-      const direction = e.currentTarget.dataset.direction;
+      const direction = e ? e.currentTarget.dataset.direction : carouselDirection;
       const index = slides.findIndex((slide) => {
         if (direction === 'PREV') {
           return (
@@ -77,6 +82,63 @@ const Carousel: React.FC<Props> = ({
   );
 
   const initialLoadRef = useRef<boolean>(true);
+  const [isAtEnd, setIsAtEnd] = useState<boolean>(false);
+
+  if(scrollByItself && initialLoadRef && !disableAutomatic){
+    setTimeout(() => {
+      handleDirectionClick(undefined, 'NEXT')
+    }, 1500);
+
+  }
+
+  useEffect(() => {
+    if(!disableAutomatic){
+
+  
+    let intervalId: any;
+    // Initially set isAtEnd based on the first and last visible index
+    const checkEnds = () => {
+      if (visibleIndexes.length > 0) {
+        if (
+          visibleIndexes[0] === slides.length - 1 ||
+          visibleIndexes[visibleIndexes.length - 1] === slides.length - 1
+        ) {
+          setIsAtEnd(true);
+        } else if (visibleIndexes[0] === 0) {
+          setIsAtEnd(false);
+        }
+      }
+    };
+  
+    // Initialize end checks and set up interval
+    checkEnds();
+    if (scrollByItself) {
+      intervalId = setInterval(() => {
+        if (visibleIndexes.length > 0) {
+          if (
+            !visibleIndexes.includes(0) &&
+            !visibleIndexes.includes(slides.length - 1) &&
+            !isAtEnd
+          ) {
+            handleDirectionClick(undefined, 'NEXT');
+          } else if (
+            (isAtEnd && visibleIndexes[0] !== 0) ||
+            (isAtEnd && visibleIndexes[visibleIndexes.length - 1] !== slides.length - 1)
+          ) {
+            // Ensure you are not at the first or last slide when moving PREV or NEXT
+            handleDirectionClick(undefined, 'PREV');
+          }
+        }
+      }, 1500);
+    }
+    return () => {
+      clearInterval(intervalId);
+    };
+  }
+  }, [scrollByItself, visibleIndexes]);
+
+  
+  
 
   useEffect(() => {
     const sliderPercentage =
@@ -91,7 +153,7 @@ const Carousel: React.FC<Props> = ({
     if (!slider || !slides) {
       return;
     }
-
+ 
     const getCurrentXposition = (
       e:
         | React.MouseEvent<HTMLDivElement>
@@ -149,7 +211,7 @@ const Carousel: React.FC<Props> = ({
       if (!slider) {
         return;
       }
-
+      setDisableAutomatic(true);
       const currentX = getCurrentXposition(e);
       // Determines if we're scrolling vertically, rather than horizontally and if so,
       // return without preventDefault to be able to scroll down
