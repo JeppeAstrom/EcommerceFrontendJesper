@@ -84,11 +84,11 @@ const Carousel: React.FC<Props> = ({
   const initialLoadRef = useRef<boolean>(true);
   const [isAtEnd, setIsAtEnd] = useState<boolean>(false);
 
+
   if(scrollByItself && initialLoadRef && !disableAutomatic){
     setTimeout(() => {
       handleDirectionClick(undefined, 'NEXT')
     }, 1500);
-
   }
 
   useEffect(() => {

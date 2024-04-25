@@ -94,7 +94,10 @@ const ProductCard: NextPage<Props> = ({ product }) => {
       handleAddToCart(product);
     }
   };
+
+
   const [hoverSwatchModal, setHoverSwatchModal] = useState<Product>();
+
   return (
     <>
       <div className="flex flex-col max-w-sm items-center justify-center">
