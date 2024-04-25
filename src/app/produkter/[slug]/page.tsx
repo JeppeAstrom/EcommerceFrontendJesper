@@ -344,7 +344,7 @@ const ProductPage = () => {
           <Carousel
             visibleSlidesCountDesktop={5}
             visibleSlidesCountTablet={2}
-            visibleSlidesCountMobile={1}
+            visibleSlidesCountMobile={2}
           >
             {recommendedProducts.map((product, index) => (
               <Link
