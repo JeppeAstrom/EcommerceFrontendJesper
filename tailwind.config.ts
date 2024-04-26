@@ -19,6 +19,7 @@ const config: Config = {
     },
     flex: {
       2: '2 2 0%',
+      1: '1 1 0%',
       slides1: '0 0 100%',
       slides2: '0 0 calc(50% - 6px)',
       slides3: '0 0 calc(33.333333% - 8px)',

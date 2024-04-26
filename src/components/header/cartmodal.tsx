@@ -44,7 +44,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
       
       <div
         ref={modalRef}
-        className="fixed top-0 right-0 lg:w-[600px] w-full h-full z-20 bg-white overflow-y-auto"
+        className="fixed top-0 right-0 lg:w-[600px] w-full h-full z-20 bg-white"
       >
         <div className="justify-between flex px-4 items-center p-4 border-b">
           <div className="flex items-center gap-4">
@@ -56,7 +56,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             className="w-8 h-8 cursor-pointer justify-center"
           />
         </div>
-        <div className="flex flex-col py-5 pt-2">
+        <div className="flex flex-col py-5 pt-2 h-[80vh] overflow-y-auto">
           {cartItems && cartItems.length > 0 ? (
           (cartItems as Product[]).map((product, index) => {
                 return (
@@ -80,9 +80,14 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             </div>
           )}
         </div>
-
-        <div className="px-5 pb-2 bg-white sticky bottom-0 pt-2">
+        <div className="px-5 pb-2 bg-white absolute w-full bottom-0 pt-2 border border-t-gray-300">
           {cartItems && cartItems.length > 0 ? (
+            <div className="flex flex-col gap-4">
+              <div className="justify-between flex">
+                <span className="font-semibold">Totalt</span>
+                <span className="font-semibold">{cartItems && (cartItems as Product[]).filter(p => p.price)
+  .reduce((total, product) => total + product.price, 0)} kr</span>
+              </div>
             <Link
               onClick={handleToggleCart}
               href="/kassa"
@@ -91,6 +96,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             >
               Till kassan
             </Link>
+            </div>
           ) : (
             <span className="w-full bg-black flex items center justify-center font-semibold text-white p-3">
               Tom varukorg
@@ -98,6 +104,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
           )}
         </div>
       </div>
+      
     </div>
   );
 };

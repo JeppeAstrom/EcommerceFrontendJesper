@@ -14,21 +14,15 @@ import { Product } from "@/types/product";
 
 
 
-const CategoryPage = () => {
-  const pathname = usePathname();
+export default function CategoryPage({params}:any)  {
+
   const [childCategories, setChildCategories] = useState<ChildCategories[]>();
   const [categoryData, setCategoryData] = useState<Product[]>([]);
   const [currentCategory, setCurrentCategory] = useState<string>();
-  const [parentCategory, setParentCategory] = useState<string>();
+  const [parentCategory, setParentCategory] = useState<string>(params.slug.length > 1 ? params.slug[0] : undefined);
+
   useEffect(() => {
-    const pathSegments = pathname.split("/").filter(Boolean); // Split and remove empty strings
-    const currentCategory = pathSegments[pathSegments.length - 1];
-    const parentCategory = pathSegments[pathSegments.length - 2];
-
-    if (parentCategory !== "kategori") {
-      setParentCategory(parentCategory);
-    }
-
+    const currentCategory = params.slug[params.slug.length - 1];
     setCurrentCategory(currentCategory);
     const fetchData = async () => {
       let gender = 0;
@@ -58,17 +52,14 @@ const CategoryPage = () => {
       setChildCategories(childCategoriesData);
     };
     fetchData();
-  }, [pathname]);
+  }, []);
 
   return (
-    <>
       <ProductRain
         parentCategory={parentCategory}
         childCategories={childCategories}
         category={currentCategory}
         products={categoryData}
       />
-    </>
   );
 };
-export default CategoryPage;

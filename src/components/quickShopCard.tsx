@@ -8,6 +8,7 @@ import Image from "next/image";
 
 import Link from "next/link";
 import { useState, useRef, useEffect, useContext } from "react";
+import Carousel from "./carousel";
 
 interface Props {
   product: Product;
@@ -43,13 +44,18 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
       <div className="flex flex-row p-2 lg:p-2 py-3 w-full">
         <div className="w-full items-center flex mb-auto pl-3">
           <Link href={'/produkter/' + product.id} className="aspect-[9/13] mb-auto bg-white items-center justify-center flex min-w-full h-full">
+            <Carousel visibleSlidesCountDesktop={1} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} hideArrows={true}>
+              {product.images.map((image, index) => (
             <Image
+             key={index}
               width={1300}
               height={900}
               alt=""
-              src={product.images[0].imageUrl}
+              src={image.imageUrl}
               className="object-contain object-center min-h-full min-w-full"
             />
+          ))}
+            </Carousel>
           </Link>
         </div>
         <div className="flex flex-col pl-2 w-full relative">

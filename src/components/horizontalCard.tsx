@@ -38,15 +38,15 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }
         </div>
         <div className="flex flex-col pl-2 w-full relative">
           <div className="flex justify-between">
-            <span className="text-serif font-semibold line-clamp-2 max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+            <span className="text-serif font-semibold line-clamp-1 max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
               {product.name}
             </span>
-            <button className="lg:pr-2" onClick={() => removeAllOfSameItem(product.id)}>
+            <button className="lg:pr-2" onClick={() => removeFromCart(product)}>
               <TrashCan className="h-5 w-8" />
             </button>
           </div>
 
-          <span className="text-sm line-clamp-3 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+          <span className="text-sm line-clamp-1 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
             {product.description}
           </span>
           {product.chosenSize && (

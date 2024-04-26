@@ -33,7 +33,6 @@ const ProductRain: NextPage<Props> = ({
   const pathSegments = pathname.split("/").filter(Boolean);
 
   return (
-    <>
       <div className="mb-10">
         <div className="flex justify-center sm:flex-col md:flex-row">
           {category && (
@@ -43,22 +42,24 @@ const ProductRain: NextPage<Props> = ({
                   href={`/produkter/kategori/${
                     pathSegments[pathSegments.length - 2]
                   }`}
-                  className="flex gap-2 md:mt-8 items-center sm:max-lg:border sm:max-lg:border-gray-500 sm:max-lg:p-3 sm:max-lg:px-5"
+                  className="flex gap-2 mt-4 items-center sm:max-lg:border sm:max-lg:border-gray-500 sm:max-lg:p-3 sm:max-lg:px-5"
                 >
-                  <ArrowLeft blackArrow={true} className="w-7 h-7 " />
-                  <span className="font-semibold">{category}</span>
+                  <ArrowLeft blackArrow={true} className="w-5 h-5 lg:hidden" />
+                  <span className="font-light">{parentCategory}</span>
                 </Link>
               )}
               <button
                 onClick={toggleMenu}
-                className="flex gap-2 sm:max-lg:hidden sm:max-lg:pointer-events-none lg:mt-8 sm:max-lg:items-center  text-normal text-black font-sans"
+                className="flex gap-2 sm:max-lg:hidden sm:max-lg:pointer-events-none mt-4 sm:max-lg:items-center text-normal text-black font-sans"
               >
-                <span className="border-b border-black">{category}</span>
+                <span className={`font-light ${parentCategory ? 'pl-4' : ''}`}>{category}</span>
+                 {childCategories && childCategories?.length > 0 && (
                 <Dropdown
                   className={`w-7 h-7 ${
                     isOpen ? "rotate-180 transition-all" : "transition-all"
                   }`}
                 />
+              )}
               </button>
               {isOpen && childCategories && childCategories.length > 0 && (
                 <SideMenuProductRain
@@ -77,7 +78,6 @@ const ProductRain: NextPage<Props> = ({
           </div>
         </div>
       </div>
-    </>
   );
 };
 

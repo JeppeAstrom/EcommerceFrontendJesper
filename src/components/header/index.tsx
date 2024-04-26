@@ -20,6 +20,7 @@ import Login from "../forms/login";
 import { AuthContext } from "@/app/context/authContext";
 import { getMainCategories } from "@/utils/productService";
 import Service from "@/app/icons/service";
+import Image from "next/image";
 
 const Header = () => {
   const { isAuthenticated }: any = useContext(AuthContext);
@@ -155,8 +156,9 @@ const Header = () => {
                 <div className="min-w-[33%] items-center justify-center">
                   <Link
                     href="/"
-                    className="flex items-center justify-center p-2 font-sans text-xl"
+                    className="flex items-center justify-center p-2 font-sans text-xl gap-2"
                   >
+                  <Image alt="SandlerShop" className="w-[32px] h-[28px]" width={900} height={1300} src='https://i.ebayimg.com/images/g/5uUAAOSwI4xa51hh/s-l400.jpg'/>
                     SandlerShop
                   </Link>
                 </div>

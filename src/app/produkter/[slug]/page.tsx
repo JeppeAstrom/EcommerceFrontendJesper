@@ -1,16 +1,12 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "@/app/context/cartContext";
 import {
-  ChildCategories,
   GetProduct,
   GetProductGroup,
-  getChildCategoriesFromName,
   getProductsFromCategory,
 } from "@/utils/productService";
-import { Categories, Product, ProductGroup } from "@/types/product";
-import { usePathname } from "next/navigation"; // Import from next/navigation instead of next/router
+import { Product, ProductGroup } from "@/types/product";
 import Link from "next/link";
 import Carousel from "@/components/carousel";
 
@@ -21,17 +17,14 @@ import Star from "@/app/icons/star";
 import HeartIcon from "@/app/icons/hearticon";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import Dropdown from "@/app/icons/dropdown";
-import CartIcon from "@/app/icons/cartIcon";
 
-const ProductPage = () => {
+
+export default function ProductPage({params}:any)  {
   const {
     handleAddToCart,
     addProductToFavouritesLocalStorage,
     getFavouritesFromLocalStorage,
   }: any = useContext(Context);
-  const pageUrl = usePathname();
-  const id = pageUrl.split("/").pop(); // Extract the id from the URL path
-
   const [fetchedProduct, setProduct] = useState<Product | undefined>();
   const [productGroup, setProductGroup] = useState<ProductGroup | null>(null);
   const [recommendedProducts, setRecommendedProducts] = useState<Product[]>();
@@ -41,11 +34,11 @@ const ProductPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (id) {
+
         try {
-          const fetchedProduct: Product = await GetProduct(id);
-          const ProductGroup: ProductGroup = await GetProductGroup(id);
-          const reviews: ReviewDto[] = await GetReviewFromProductId(id);
+          const fetchedProduct: Product = await GetProduct(params.slug);
+          const ProductGroup: ProductGroup = await GetProductGroup(params.slug);
+          const reviews: ReviewDto[] = await GetReviewFromProductId(params.slug);
           const recommendedProducts: Product[] = await getProductsFromCategory(
             fetchedProduct.categories[0].name, fetchedProduct.genderType
           );
@@ -56,10 +49,10 @@ const ProductPage = () => {
         } catch (error) {
           console.error("Error fetching product:", error);
         }
-      }
+      
     };
     fetchData();
-  }, [id]);
+  }, []);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -368,4 +361,3 @@ const ProductPage = () => {
   );
 };
 
-export default ProductPage;
