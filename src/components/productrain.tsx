@@ -30,7 +30,6 @@ const ProductRain: NextPage<Props> = ({
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const pathname = usePathname();
-
   const pathSegments = pathname.split("/").filter(Boolean);
 
   return (

@@ -5,7 +5,6 @@ import { Promotion } from "@/types/promotion";
 import { GetAllProducts } from "@/utils/productService";
 import Image from "next/image";
 import Link from "next/link";
-
 const promotion: Promotion[] = [
   {
     promotionTitle: "Rabatt",

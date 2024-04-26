@@ -10,6 +10,10 @@ import ProductRain from "@/components/productrain";
 import { useEffect, useState } from "react";
 import { Product } from "@/types/product";
 
+
+
+
+
 const CategoryPage = () => {
   const pathname = usePathname();
   const [childCategories, setChildCategories] = useState<ChildCategories[]>();
