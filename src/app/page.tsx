@@ -70,11 +70,11 @@ const Home = async () => {
           visibleSlidesCountMobile={2}
         >
           {Categories.map((category, index) => (
-            <div className="flex flex-col min-h-full">
+            <div key={index} className="flex flex-col min-h-full">
             <Link
               href={`/produkter/kategori/${category.name}`}
               className="aspect-[9/13] bg-white h-full min-w-full pt-4"
-              key={index}
+              
             >
               <Image
                 className="min-w-full object-center h-full object-fill"
