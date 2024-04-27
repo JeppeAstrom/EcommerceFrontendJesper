@@ -131,7 +131,7 @@ const ProductCard: NextPage<Props> = ({ product }) => {
           </Link>
            ))}
           </Carousel>
-          <span className="line-clamp-1 font-sans text-start w-full text-md font-light pt-2">
+          <span className="line-clamp-1 text-start w-full text-md pt-2">
             {product.name}
           </span>
 

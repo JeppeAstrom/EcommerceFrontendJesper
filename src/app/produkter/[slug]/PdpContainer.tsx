@@ -56,7 +56,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
     return (
       <button onClick={scrollToReviews} className="flex flex-col">
         {showNumber && (
-          <span className="ml-auto font-light text-slate-700">{`${score} av 5`}</span>
+          <span className="ml-auto  text-slate-700">{`${score} av 5`}</span>
         )}
         <span className="flex">{stars}</span>
       </button>
@@ -140,12 +140,12 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
             {fetchedProduct.images.map((image, index) => (
               <figure
                 key={index}
-                className="lg:aspect-13/9 aspect-9/13 bg-neutral-100 min-h-full w-full"
+                className="lg:aspect-13/9 items-center flex aspect-9/13 bg-neutral-100 min-h-full w-full"
               >
                 <HeartIcon
                   favourite={favourite}
                   onClick={toggleFavourite}
-                  className="h-12 w-12 absolute top-1 right-2"
+                  className="h-12 w-12 absolute top-1 right-2 cursor-pointer"
                 />
                 <Image
                   className="min-w-full object-center max-h-full object-contain"
@@ -159,7 +159,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
           </Carousel>
 
           <div className="lg:p-4 w-full lg:px-6 relative md:pt-2 pt-7">
-            <span className="line-clamp-1 text-lg font-light">
+            <span className="line-clamp-1 text-lg">
               {fetchedProduct.name}
             </span>
             <div className="mt-1">
@@ -246,7 +246,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
                     onClick={toggleDropdown}
                   >
                     <div className="flex items-center justify-center gap-1">
-                    <span className="text-gray-700 font-sans">Storlek: </span> <span className="text-black font-sans">  {selectedSize || fetchedProduct.sizes[0].size}</span>
+                    <span className="text-gray-700">Storlek: </span> <span className="text-black">  {selectedSize || fetchedProduct.sizes[0].size}</span>
                     </div>
                     <Dropdown className={`w-8 h-8 ${isOpen ? 'rotate-180 transition-all' : 'transition-all'}`}/>
                   </button>
@@ -258,7 +258,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
                           className="p-3 border-b gap-1"
                           onClick={() => handleSizeSelect(size.size)}
                         >
-                         <span className="text-gray-700 font-sans">Storlek:</span> <span className="text-black font-sans"> {size.size}</span>
+                         <span className="text-gray-700">Storlek:</span> <span className="text-black"> {size.size}</span>
                         </li>
                       ))}
                     </ul>
@@ -280,7 +280,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
       </div>
       {visibleReviews && visibleReviews.length > 0 && (
         <div ref={reviewRef} className="flex flex-col gap-6 w-full md:w-[500px] px-4 mb-10 pt-4">
-          <span className="font-sans text-2xl border-b border-black pb-2 w-fit font-semibold">Recensioner</span>
+          <span className="text-2xl border-b border-black pb-2 w-fit font-semibold">Recensioner</span>
           {visibleReviews.map((review, index) => (
             <div key={index}>
               <div className="flex flex-col w-full">
@@ -289,7 +289,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
                 </span>
                 {stars(review.rating, false)}
               </div>
-              <p className="pt-4 font-light text-sm">{fetchedProduct.name}</p>
+              <p className="pt-4  text-sm">{fetchedProduct.name}</p>
               <p className="pt-2">{review.comment}</p>
             </div>
           ))}

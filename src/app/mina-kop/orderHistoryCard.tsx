@@ -158,7 +158,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                   value={reviewComment}
                   onChange={(e) => setReviewComment(e.target.value)}
                   placeholder="Kommentar"
-                  className="w-full lg:h-[100px] h-[80px] border-black border p-2 font-light text-sm"
+                  className="w-full lg:h-[100px] h-[80px] border-black border p-2 text-sm"
                 />
 
                 <button type="submit" className="border p-2 md:p-3 bg-black font-semibold text-white w-full text-center mt-4">

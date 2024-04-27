@@ -22,7 +22,7 @@ const SearchResultCard:NextPage<Props> = ({product}) => {
     </figure>
     <div className="flex flex-col">
     <span className="text-md line-clamp-1">{product.name}</span>
-    <span className="text-sm line-clamp-1 font-light">{product.description}</span>
+    <span className="text-sm line-clamp-1 ">{product.description}</span>
     <span className="text-sm pt-1 font-bold">{product.price} kr</span>
     </div>
 </Link>

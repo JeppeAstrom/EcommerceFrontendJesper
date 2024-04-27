@@ -129,16 +129,16 @@ const Header = () => {
                 <div className="flex items-center justify-start w-1/3 gap-x-3">
                   <Link href="/favoriter" className="flex items-center gap-2">
                     <HeartIcon  className="w-8 h-8 cursor-pointer fill-white" />
-                    <span className="hidden lg:flex font-light">Favoriter</span>
+                    <span className="hidden lg:flex ">Favoriter</span>
                   </Link>
                     <Link className="gap-2 items-center hidden lg:flex" href=''>
                       <Service/>
-                      <span className="font-light">Kundservice</span>
+                      <span className="">Kundservice</span>
                     </Link>
                   {isLoggedin ? (
                     <Link
                       href="/mina-kop"
-                      className="lg:hidden font-light flex"
+                      className="lg:hidden  flex"
                     >
                       <Person className="h-8 w-8 lg:hidden" />
                     </Link>
@@ -156,7 +156,7 @@ const Header = () => {
                 <div className="min-w-[33%] items-center justify-center">
                   <Link
                     href="/"
-                    className="flex items-center justify-center p-2 font-sans text-xl gap-2"
+                    className="flex items-center justify-center p-2 text-xl gap-2"
                   >
                   <Image alt="SandlerShop" className="w-[32px] h-[28px]" width={900} height={1300} src='https://i.ebayimg.com/images/g/5uUAAOSwI4xa51hh/s-l400.jpg'/>
                     SandlerShop
@@ -171,7 +171,7 @@ const Header = () => {
                         cartCount={cartCount ? cartCount : 0}
                         className="cursor-pointer"
                       />
-                      <span className="pt-1 pl-2 hidden lg:flex font-light">
+                      <span className="pt-1 pl-2 hidden lg:flex ">
                         Varukorg
                       </span>
                     </button>
@@ -184,7 +184,7 @@ const Header = () => {
                         className="items-center gap-2 hidden lg:flex"
                       >
                         <Person className="h-8 w-8" />
-                        <span className="hidden lg:flex font-light">
+                        <span className="hidden lg:flex ">
                           Mina sidor
                         </span>
                       </Link>
@@ -194,7 +194,7 @@ const Header = () => {
                         className="items-center gap-2 hidden lg:flex"
                       >
                         <Person className="h-8 w-8" />
-                        <span className="hidden lg:flex font-light">
+                        <span className="hidden lg:flex ">
                           Logga in
                         </span>
                       </button>
@@ -209,7 +209,7 @@ const Header = () => {
                         cartCount={cartCount ? cartCount : 0}
                         className="cursor-pointer"
                       />
-                      <span className="pt-1 pl-2 hidden lg:flex font-light">
+                      <span className="pt-1 pl-2 hidden lg:flex ">
                         Varukorg
                       </span>
                     </button>
@@ -253,7 +253,7 @@ const Header = () => {
                 {(categories as Category[]).map((category, index) => (
                   <Link
                     key={index}
-                    className="flex pb-1 font-light text-md"
+                    className="flex pb-1  text-md"
                     href={"/produkter/kategori/" + category.name}
                   >
                     {category.name}

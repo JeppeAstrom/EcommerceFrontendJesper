@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import AuthContext from "./context/authContext";
 import CartContext from "./context/cartContext";
 
 
+const quicksand = Quicksand({ subsets: ["latin"] });
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "SandlerShop",
@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={quicksand.className}>
         <CartContext>
         <AuthContext>
         <Header/>

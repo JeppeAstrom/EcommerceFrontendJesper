@@ -37,7 +37,7 @@ const Home = async () => {
     <div className="px-4">
       
       <div className="mb-10 mt-6">
-      <span className="font-light text-2xl pl-1">Sandler kollektionen</span>
+      <span className="text-2xl pl-1">Sandler kollektionen</span>
         <Carousel
           visibleSlidesCountDesktop={2}
           visibleSlidesCountTablet={2}
@@ -85,7 +85,7 @@ const Home = async () => {
               />
          
             </Link>
-        <span className="mt-8 text-normal pl-1  font-semibold border-b w-fit border-black pb-1">{category.name}</span>
+        <Link href={`/produkter/kategori/${category.name}`} className="mt-4 text-normal pl-1  font-semibold border-b w-fit border-black pb-1">{category.name}</Link>
         </div>
           ))}
         </Carousel>
@@ -93,7 +93,7 @@ const Home = async () => {
    
       </div>
       <div className="pt-10">
-      <span className="text-xl md:text-2xl pl-1 font-sans font-light border-b border-black pb-2 md:ml-20 ml-2">Nyheter</span>
+      <span className="text-xl md:text-2xl pl-1 font-light border-b border-black pb-2 md:ml-20 ml-2">Nyheter</span>
         <ProductRain products={Products} />
       </div>
     </div>

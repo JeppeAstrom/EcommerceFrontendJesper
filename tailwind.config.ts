@@ -9,6 +9,10 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {},
+      fontFamily:{
+        montserrat: ["Montserrat", "sans-serif"],
+        quicksand: ["Quicksand", "sans-serif"]
+      }
     },
     screens: {
       zero: '0px',

@@ -56,7 +56,7 @@ const MyPurchases = () => {
       <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">Mina sidor</span>
         <button
           onClick={toggleMenu}
-          className="flex gap-2 md:mt-16 text-normal text-black font-sans"
+          className="flex gap-2 md:mt-16 text-normal text-black"
         >
           <span className="border-b border-black">Mina sidor</span>
           <Dropdown

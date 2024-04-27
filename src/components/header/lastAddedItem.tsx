@@ -37,7 +37,7 @@ return(
     </div>
     <span className="text-sm line-clamp-1">{lastAddedItem.description}</span>
         <div className="justify-between flex pt-1 mt-auto">
-        <span className="text-sm">{lastAddedItem.price}SEK</span>
+        <span className="text-sm font-semibold">{lastAddedItem.price} kr</span>
         </div>
    
     </div>

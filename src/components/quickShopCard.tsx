@@ -71,17 +71,17 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
           <span className="text-sm font-bold">
               {product.price} kr
             </span>
-            <div className="pt-4 pr-8">
+            <div className="pt-4 mr-8">
               {product.sizes.length > 0 && (
                 <div className="relative">
-                    <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2  cursor-pointer">
+                    <ul className="grid grid-cols-2 lg:grid-cols-3 gap-2 min-w-full cursor-pointer">
                       {product.sizes.map((size, index) => (
                         <div key={index}>
                         <li
-                          className='p-3 border border-black w-auto'
+                          className='p-3 border border-black  justify-center flex items-center'
                           onClick={() => handleSizeSelect(size.size)}
                         >
-                       <span className='text-black text-lg font-sans items-center flex justify-center'> {size.size}</span>
+                       <span className='text-black text-normal items-center flex justify-center'> {size.size}</span>
                         </li>
                         <div
                             className={`inline-block w-full h-[2px] ${

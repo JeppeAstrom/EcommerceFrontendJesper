@@ -46,7 +46,7 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }
             </button>
           </div>
 
-          <span className="text-sm line-clamp-1 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+          <span className="text-sm line-clamp-1  max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
             {product.description}
           </span>
           {product.chosenSize && (

@@ -45,14 +45,14 @@ const ProductRain: NextPage<Props> = ({
                   className="flex gap-2 mt-4 items-center sm:max-lg:border sm:max-lg:border-gray-500 sm:max-lg:p-3 sm:max-lg:px-5"
                 >
                   <ArrowLeft blackArrow={true} className="w-5 h-5 lg:hidden" />
-                  <span className="font-light">{parentCategory}</span>
+                  <span className="">{parentCategory}</span>
                 </Link>
               )}
               <button
                 onClick={toggleMenu}
-                className="flex gap-2 sm:max-lg:hidden sm:max-lg:pointer-events-none mt-4 sm:max-lg:items-center text-normal text-black font-sans"
+                className="flex gap-2 sm:max-lg:hidden sm:max-lg:pointer-events-none mt-4 sm:max-lg:items-center text-normal text-black"
               >
-                <span className={`font-light ${parentCategory ? 'pl-4' : ''}`}>{category}</span>
+                <span className={` ${parentCategory ? 'pl-4' : ''}`}>{category}</span>
                  {childCategories && childCategories?.length > 0 && (
                 <Dropdown
                   className={`w-7 h-7 ${

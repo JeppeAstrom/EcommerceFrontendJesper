@@ -150,7 +150,7 @@ const Checkout = () => {
             width="900"
             height="1300"
             alt="empty"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0SU3IjiqDWLIOT1fJBziWr59ELtS4i5ZpCq5T3XaZGYRBKltw"
+            src="https://i.ebayimg.com/images/g/zKsAAOSwXCJjhWDz/s-l1200.jpg"
           />
         
         </div>
@@ -179,31 +179,19 @@ const Checkout = () => {
       <div className="flex-col lg:flex-row-reverse flex w-full">
         <div className="relative overflow-y-auto items-center justify-center lg:w-3/4 sm:max-h-full md:max-h-[750px] pb-8">
           
-          <button className="p-2 w-full flex mx-auto items-center justify-center gap-4  font-light" onClick={toggleCart}>
+          <button className="p-2 w-full flex mx-auto items-center justify-center gap-4  " onClick={toggleCart}>
            <span>{`Varukorg (${cartItems && cartItems.length})st `}</span> 
                <Dropdown className={`h-7 w-7 mt-1 ${showCart ? 'rotate-180 transition-all' : 'transition-all'}`}/>
            </button>
           {showCart && (
           <div className="max-h-[50vh] overflow-y-auto w-full">
-          {cartItems &&
-            [...new Set((cartItems as Product[]).map((item) => item.id))].map(
-              (productId) => {
-                const product = (cartItems as Product[]).find(
-                  (item) => item.id === productId
-                );
-                const quantity = (cartItems as Product[]).filter(
-                  (item) => item.id === productId
-                ).length;
-                return (
+             {(cartItems as Product[]).map((product,index) => (
                   <CheckoutCard
-                    key={productId}
+                    key={index}
                     product={product!}
-                    quantity={quantity}
                   />
-                );
-              }
-            )}
-        </div>
+                ))}
+          </div>
           )}
           <div className="justify-between flex border-t pt-3 mt-4 px-3">
             <span className="font-semibold text-md">Frakt</span>
@@ -231,27 +219,27 @@ const Checkout = () => {
                 value={cardName}
                 onChange={(e) => setCardname(e.target.value)}
                 placeholder="Kortnamn"
-                className=" border-black border p-2 font-light text-sm"
+                className=" border-black border p-2  text-sm"
               />
 
               <input
                 value={cardNumber}
                 onChange={(e) => setCardNumber(e.target.value)}
                 placeholder="Kortnummer"
-                className=" border-black border p-2 font-light text-sm"
+                className=" border-black border p-2  text-sm"
               />
                 <div className="flex gap-2">
               <input
                 value={cvv}
                 onChange={(e) => setCvv(e.target.value)}
                 placeholder="CVV"
-                className=" border-black border p-2 font-light w-1/2 text-sm"
+                className=" border-black border p-2  w-1/2 text-sm"
               />
                 <input
                   value={expirationDate}
                   onChange={(e) => setExpirationDate(e.target.value)}
                   placeholder="Utgångsdatum"
-                  className=" border-black border w-1/2 p-2 font-light text-sm"
+                  className=" border-black border w-1/2 p-2  text-sm"
                 />
               </div>
               <button onClick={() => setAddress(undefined)} className="text-sm text-left border-b border-black w-fit">

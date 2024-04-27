@@ -55,7 +55,7 @@ const SearchBar: NextPage<Props> = ({ products }) => {
          style={{boxShadow:'none', border: '0px solid black', outline: 'none'}}
            ref={inputRef}
            onChange={(e) => setInputText(e.target.value)}
-           className={`text-md h-10 w-full px-4 py-2 md:text-start md:ml-8 ml-6 bg-transparent font-light text-sm md:text-base`}
+           className={`text-md h-10 w-full px-4 py-2 md:text-start md:ml-8 ml-6 bg-transparent text-sm md:text-base`}
            placeholder="Sök efter produkter, kategorier, varumärken.."
            value={inputText}
            onFocus={() => setIsSearchFocused(true)}

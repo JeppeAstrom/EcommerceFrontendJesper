@@ -61,28 +61,28 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
             value={firstname}
             onChange={(e) => setFirstName(e.target.value)}
             placeholder="Förnamn - Mottagare"
-            className=" border-black border p-2 font-light text-sm"
+            className=" border-black border p-2  text-sm"
           />
 
           <input
             value={lastName}
             onChange={(e) => setLastname(e.target.value)}
             placeholder="Efternamn - Mottagare"
-            className=" border-black border p-2 font-light text-sm"
+            className=" border-black border p-2  text-sm"
           />
 
           <input
             value={street}
             onChange={(e) => setCity(e.target.value)}
             placeholder="Stad"
-            className=" border-black border p-2 text-sm font-light"
+            className=" border-black border p-2 text-sm "
           />
 
           <input
             value={city}
             onChange={(e) => setStreet(e.target.value)}
             placeholder="Gata"
-            className=" border-black border p-2 text-sm font-light"
+            className=" border-black border p-2 text-sm "
           />
 
           <div className="flex w-full gap-3">
@@ -90,7 +90,7 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
               value={postal}
               onChange={(e) => setPostal(e.target.value)}
               placeholder="Postnummer"
-              className=" border-black border p-2 w-3/4 font-light text-sm"
+              className=" border-black border p-2 w-3/4  text-sm"
             />
 
             <button
