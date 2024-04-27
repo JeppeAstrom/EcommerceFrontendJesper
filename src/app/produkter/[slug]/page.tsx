@@ -3,15 +3,38 @@ import { GetProduct, GetProductGroup, getProductsFromCategory } from "@/utils/pr
 import { ReviewDto, GetReviewFromProductId } from "@/utils/reviewService";
 import PdpContainer from "./PdpContainer";
 
+
+
+async function getReviews(params:any) {
+  const reviews: ReviewDto[] = await GetReviewFromProductId(params);
+  return reviews;
+}
+
+async function getProductGroup(params:any) {
+  const ProductGroup: ProductGroup = await GetProductGroup(params);
+  return ProductGroup;
+}
+
+async function getProduct(params:any) {
+
+  const fetchedProduct: Product = await GetProduct(params);
+  return fetchedProduct;
+}
+
+
 export default async function ProductPage({ params }: { params: any }) {
-  const fetchedProduct: Product = await GetProduct(params.slug);
-  const ProductGroup: ProductGroup = await GetProductGroup(params.slug);
-  const reviews: ReviewDto[] = await GetReviewFromProductId(params.slug);
+
+  const reviewPromise = getReviews(params.slug);
+  const productGroupPromise = getProductGroup(params.slug);
+  const productPromise = getProduct(params.slug);
+  
+  const [review,productGroup,product] = await Promise.all([reviewPromise, productGroupPromise, productPromise])
+
   const recommendedProducts: Product[] = await getProductsFromCategory(
-    fetchedProduct.categories[0].name, fetchedProduct.genderType
+    product.categories[0].name, product.genderType
   );
 
   return(
-      <PdpContainer fetchedProduct={fetchedProduct} productGroup={ProductGroup} reviews={reviews} recommendedProducts={recommendedProducts}/>
+      <PdpContainer fetchedProduct={product} productGroup={productGroup} reviews={review} recommendedProducts={recommendedProducts}/>
   )
 }
