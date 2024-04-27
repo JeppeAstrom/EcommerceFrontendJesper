@@ -88,7 +88,7 @@ const Login: NextPage<Props> = ({ openModal }) => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email"
             type="email"
-            className="w-full border p-3 font-light"
+            className="w-full border p-3 "
           />
 
           {register && (
@@ -97,13 +97,13 @@ const Login: NextPage<Props> = ({ openModal }) => {
                 onChange={(e) => setFirstName(e.target.value)}
                 placeholder="Förnamn"
                 type="text"
-                className="w-full border p-3 font-light"
+                className="w-full border p-3 "
               />
               <input
                 onChange={(e) => setLastName(e.target.value)}
                 placeholder="Efternamn"
                 type="text"
-                className="w-full  border p-3 font-light"
+                className="w-full  border p-3 "
               />
             </>
           )}
@@ -111,7 +111,7 @@ const Login: NextPage<Props> = ({ openModal }) => {
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Lösenord"
             type="password"
-            className="w-full border p-3 font-light"
+            className="w-full border p-3 "
           />
           {register && (
         
@@ -121,7 +121,7 @@ const Login: NextPage<Props> = ({ openModal }) => {
               onBlur={() => setIsFocused(false)}
               placeholder="Verifiera lösenord"
               type="password"
-              className="w-full border p-3 font-light"
+              className="w-full border p-3 "
             />
            
          

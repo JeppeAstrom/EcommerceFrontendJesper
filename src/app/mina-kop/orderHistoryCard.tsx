@@ -109,7 +109,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
             </span>
           </div>
 
-          <span className="text-sm line-clamp-2 font-light max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+          <span className="text-sm line-clamp-2  max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
             {product.description}
           </span>
 

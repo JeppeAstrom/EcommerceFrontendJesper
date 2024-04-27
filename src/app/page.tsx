@@ -61,7 +61,7 @@ const Home = async () => {
         </Carousel>
       </div>
       <div className="mb-10">
-        <span className="text-2xl pl-1  font-light">Våra kategorier</span>
+        <span className="text-2xl pl-1  ">Våra kategorier</span>
         
           <div className="relative">
         <Carousel
@@ -93,7 +93,7 @@ const Home = async () => {
    
       </div>
       <div className="pt-10">
-      <span className="text-xl md:text-2xl pl-1 font-light border-b border-black pb-2 md:ml-20 ml-2">Nyheter</span>
+      <span className="text-xl md:text-2xl pl-1  border-b border-black pb-2 md:ml-20 ml-2">Nyheter</span>
         <ProductRain products={Products} />
       </div>
     </div>
