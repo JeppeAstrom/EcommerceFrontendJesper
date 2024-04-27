@@ -116,12 +116,24 @@ const Header = () => {
   },[toggleCart,loginModal])
 
   return (
-    <div className="sticky top-0 z-10">
-      <div
-        className={` bg-white  transition-opacity duration-300 ease-in-out ${headerShadow}  ${
-          visible ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
-      >
+    <>
+        <div className="sticky top-0 z-[15]">
+    {toggleCart && (
+        <CartModal isOpen={toggleCart} handleToggleCart={handlerToggleCart} />
+      )}
+      <LastAddeditem
+        showNotification={showNotification}
+        showHeader={showNotification}
+        clearLastAddedItem={clearLastAddedItem}
+        lastAddedItem={lastAddedItem}
+        handleOpenCart={handleOpenCart}
+      />
+      {loginModal && <Login openModal={handleOpenLoginModal} />}
+      </div>
+    <div className={` bg-white sticky top-0 z-[10]  transition-opacity duration-300 ease-in-out ${headerShadow}  ${
+      visible ? "opacity-100 transition-all" : "opacity-0 pointer-events-none transition-all"
+    }`}>
+     
         <div className="flex justify-center p-3">
           <div className="w-[1400px] mx-auto">
             <div className="flex flex-col md:py-1">
@@ -264,19 +276,11 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </div>
-      {toggleCart && (
-        <CartModal isOpen={toggleCart} handleToggleCart={handlerToggleCart} />
-      )}
-      <LastAddeditem
-        showNotification={showNotification}
-        showHeader={showNotification}
-        clearLastAddedItem={clearLastAddedItem}
-        lastAddedItem={lastAddedItem}
-        handleOpenCart={handleOpenCart}
-      />
-      {loginModal && <Login openModal={handleOpenLoginModal} />}
+    
+ 
     </div>
+
+    </>
   );
 };
 export default Header;

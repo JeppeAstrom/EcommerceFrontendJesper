@@ -34,9 +34,9 @@ const ProductRain: NextPage<Props> = ({
 
   return (
       <div className="mb-10">
-        <div className="flex justify-center sm:flex-col md:flex-row">
+        <div className="flex justify-center sm:flex-col lg:flex-row">
           {category && (
-            <div className="lg:min-w-[150px] mt-8 flex lg:flex lg:flex-col sm:max-lg:px-4">
+            <div className="lg:min-w-[150px] md:sticky pointer md:top-2 flex lg:flex lg:flex-col sm:max-lg:px-4 h-fit">
               {parentCategory && (
                 <Link
                   href={`/produkter/kategori/${

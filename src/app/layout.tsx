@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Quicksand } from "next/font/google";
+import {  Open_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header";
 import AuthContext from "./context/authContext";
 import CartContext from "./context/cartContext";
 
 
-const quicksand = Quicksand({ subsets: ["latin"] });
+const kanit = Open_Sans({
+  weight: ['400', '700'],  subsets: ['latin'],
+});
 
 
 export const metadata: Metadata = {
@@ -21,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={quicksand.className}>
+      <body className={kanit.className}>
         <CartContext>
         <AuthContext>
         <Header/>
