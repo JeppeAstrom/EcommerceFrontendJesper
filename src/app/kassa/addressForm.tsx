@@ -72,8 +72,8 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
           />
 
           <input
-            value={street}
-            onChange={(e) => setStreet(e.target.value)}
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
             placeholder="Stad"
             className=" border-black border p-2 text-sm "
           />
