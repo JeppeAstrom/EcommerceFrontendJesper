@@ -81,7 +81,7 @@ const Checkout = () => {
       }, 1500);
       return () => clearTimeout(timeoutId);
     }
-  }, [orderComplete]);
+  }, [orderComplete, router]);
 
   const handleBuy = async () => {
     const orderProducts = (cartItems as Product[]).map(item => ({

@@ -135,7 +135,7 @@ const Carousel: React.FC<Props> = ({
       clearInterval(intervalId);
     };
   }
-  }, [scrollByItself, visibleIndexes]);
+  }, [scrollByItself, visibleIndexes, disableAutomatic, handleDirectionClick, isAtEnd, slides.length]);
 
   
   

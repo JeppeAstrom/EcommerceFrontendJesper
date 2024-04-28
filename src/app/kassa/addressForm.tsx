@@ -73,13 +73,13 @@ const AddressForm: NextPage<Props> = ({ handleAddressId, savedAddress }) => {
 
           <input
             value={street}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={(e) => setStreet(e.target.value)}
             placeholder="Stad"
             className=" border-black border p-2 text-sm "
           />
 
           <input
-            value={city}
+            value={street}
             onChange={(e) => setStreet(e.target.value)}
             placeholder="Gata"
             className=" border-black border p-2 text-sm "
