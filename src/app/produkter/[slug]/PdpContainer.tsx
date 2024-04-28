@@ -43,7 +43,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const totalScore = reviews.reduce((sum, review) => sum + review.rating, 0);
-  const averageScore = totalScore / reviews.length;
+  const averageScore = Math.round((totalScore / reviews.length) * 10) / 10;
   
 
   const stars = (score: number, showNumber = true) => {
