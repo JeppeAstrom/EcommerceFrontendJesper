@@ -141,19 +141,12 @@ const Carousel: React.FC<Props> = ({
   
 
   useEffect(() => {
-    const sliderPercentage =
-      ((visibleIndexes[visibleIndexes.length - 1] + 1) / slides.length) * 100;
-    setProgressbar(sliderPercentage);
-  }, [visibleIndexes, slides.length]);
-
-
-  useEffect(() => {
     const { current: slider } = sliderRef;
     const { current: slides } = slidesRef;
     if (!slider || !slides) {
       return;
     }
- 
+
     const getCurrentXposition = (
       e:
         | React.MouseEvent<HTMLDivElement>
@@ -211,7 +204,7 @@ const Carousel: React.FC<Props> = ({
       if (!slider) {
         return;
       }
-      setDisableAutomatic(true);
+
       const currentX = getCurrentXposition(e);
       // Determines if we're scrolling vertically, rather than horizontally and if so,
       // return without preventDefault to be able to scroll down
@@ -268,7 +261,6 @@ const Carousel: React.FC<Props> = ({
       if (index <= -1) {
         return;
       }
-
       slider.scrollTo({ left: slides[index].offsetLeft, behavior: 'smooth' });
     };
 
@@ -293,13 +285,16 @@ const Carousel: React.FC<Props> = ({
 
     // Function that ensures a correct scroll position when resizing the window
     const handleResize = () => {
-      const leftMostIndex = visibleIndexes[0];
-      if (leftMostIndex <= -1) {
+      if (visibleIndexes.length <= 0 && visibleIndexes[0] <= -1) {
         return;
       }
 
-      slider.scrollTo({ left: slides[leftMostIndex].offsetLeft });
-      handleVisibleIndexes();
+      const leftMostIndex = visibleIndexes[0];
+
+      if (slides[leftMostIndex]?.offsetLeft) {
+        slider.scrollTo({ left: slides[leftMostIndex].offsetLeft });
+        handleVisibleIndexes();
+      }
     };
 
     // Set visible slides after mount on initial load
@@ -320,8 +315,8 @@ const Carousel: React.FC<Props> = ({
     slider.addEventListener('touchend', handleEnd, { passive: false });
     slider.addEventListener('touchcancel', handleEnd, { passive: false });
     slider.addEventListener('scroll', handleScroll, { passive: false });
-    window.addEventListener('resize', handleResize, { passive: false });
 
+    window.addEventListener('resize', handleResize, { passive: false });
     return () => {
       slider.removeEventListener('mousedown', handleStart);
       slider.removeEventListener('touchstart', handleStart);
@@ -335,7 +330,14 @@ const Carousel: React.FC<Props> = ({
       window.clearTimeout(timeout);
       window.removeEventListener('resize', handleResize);
     };
-  }, [disableDrag, sliderRef, slidesRef, initialLoadRef, calculationValues, visibleIndexes]);
+  }, [
+    disableDrag,
+    sliderRef,
+    slidesRef,
+    initialLoadRef,
+    calculationValues,
+    visibleIndexes,
+  ]);
 
   // STYLES
   let slideWidthClassMobile = '';

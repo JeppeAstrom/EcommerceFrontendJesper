@@ -90,9 +90,8 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
   
   return (
     <>
-      <div className="flex flex-row p-2 lg:p-2 py-3 pr-6 w-full">
-        <div className="w-2/4 items-center flex justify-center pl-3">
-          <Link href={'/produkter/' + product.id} className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full">
+      <div className="flex flex-col w-full">
+          <Link href={'/produkter/' + product.id} className="aspect-[9/13] bg-neutral-100 items-center justify-center flex min-w-full h-full">
             <Image
               width={1300}
               height={900}
@@ -101,15 +100,15 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
               className="object-contain object-center min-h-full min-w-full"
             />
           </Link>
-        </div>
+   
         <div className="flex flex-col pl-2 w-full relative">
           <div className="flex justify-between">
-            <span className="text-serif font-semibold line-clamp-2 max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+            <span className="mt-2 font-semibold line-clamp-1 max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
               {product.name}
             </span>
           </div>
 
-          <span className="text-sm line-clamp-2  max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
+          <span className="text-sm line-clamp-1  max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
             {product.description}
           </span>
 
@@ -117,10 +116,10 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
             <span className="text-sm font-bold">{product.price} kr</span>
             <span className=" text-sm font-semibold">Storlek: {size}</span>
           </div>
-          <div className="gap-2 flex mt-auto w-full items-center">
+          <div className="mt-3 gap-1 flex w-full items-center">
             <button
               onClick={toggleReview}
-              className="border p-2  bg-black font-semibold text-white text-center"
+              className="border p-2 border-black text-xs md:text-sm w-full font-semibold text-center"
             >
               Recensera
             </button>
@@ -129,7 +128,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                 product.chosenSize = product.chosenSize = size;
                 handleAddToCart(product);
               }}
-              className="border p-2 bg-black font-semibold text-white text-center"
+              className="border w-full p-2 bg-black text-xs md:text-sm font-semibold text-white text-center"
             >
               Köp igen
             </button>
@@ -170,7 +169,7 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                 </button>
               </div>
               <div className="w-2/5 mx-auto items-center flex justify-center pl-3">
-                <figure className="aspect-[9/13] flex-col bg-white items-center justify-center flex min-w-full h-full">
+                <figure className="aspect-[9/13] flex-col bg-neutral-100 items-center justify-center flex min-w-full h-full">
                   <Image
                     width={1300}
                     height={900}

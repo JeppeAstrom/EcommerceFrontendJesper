@@ -29,9 +29,9 @@ export default async function ProductPage({ params }: { params: any }) {
   const productPromise = getProduct(params.slug);
   
   const [review,productGroup,product] = await Promise.all([reviewPromise, productGroupPromise, productPromise])
-
+  
   const recommendedProducts: Product[] = await getProductsFromCategory(
-    product.categories[0].name, product.genderType
+    product.parentCategory ? product.parentCategory :  product.categories[0].name, product.genderType
   );
 
   return(

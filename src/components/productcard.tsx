@@ -23,9 +23,10 @@ import CartProductCard from "@/app/icons/cartproductcard";
 
 interface Props {
   product: Product;
+  hideIcons?:boolean;
 }
 
-const ProductCard: NextPage<Props> = ({ product }) => {
+const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
   const {
     handleAddToCart,
     getFavouritesFromLocalStorage,
@@ -99,25 +100,23 @@ const ProductCard: NextPage<Props> = ({ product }) => {
   const [hoverSwatchModal, setHoverSwatchModal] = useState<Product>();
 
   return (
-    <>
+    <>  
       <div className="flex flex-col max-w-sm items-center justify-center">
         <div className="py-4 items-center justify-center flex flex-col w-full relative">
+        {!hideIcons && (
           <div className="flex justify-between absolute top-5 md:px-7 px-5 w-full">
             <CartProductCard
               quickshop={handleProduct}
               className="cursor-pointer z-[5] absolute left-1 top-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
             />
-
             <HeartIcon
               onClick={() => toggleFavourite()}
               favourite={favourite}
               className="cursor-pointer z-[5] absolute top-1 right-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
             />
           </div>
-          <Carousel visibleSlidesCountDesktop={1} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} hideArrows={true}>
-            {product.images.map((image, index) => (
+            )}
           <Link
-            key={index}
             className="aspect-[9/13] items-center  flex min-h-full bg-neutral-100 justify-center relative"
             href={"/produkter/" + product.id}
           >
@@ -125,12 +124,11 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               width={900}
               height={1300}
               alt=""
-              src={hoverSwatch ? hoverSwatch : image.imageUrl}
+              src={hoverSwatch ? hoverSwatch : product.images[0].imageUrl}
               className="object-contain transition-all object-center items-center justify-center"
             />
           </Link>
-           ))}
-          </Carousel>
+   
           <span className="line-clamp-1 text-start w-full text-md pt-2">
             {product.name}
           </span>
@@ -142,8 +140,9 @@ const ProductCard: NextPage<Props> = ({ product }) => {
               </span>
             </div>
           </div>
+        
           <div className="flex justify-start items-start mr-auto gap-1 pt-1">
-            {productGroup &&
+            {productGroup && !hideIcons &&
               productGroup.products &&
               productGroup.products.length > 0 &&
               [...productGroup.products]

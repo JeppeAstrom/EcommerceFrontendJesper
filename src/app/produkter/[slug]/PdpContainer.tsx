@@ -12,12 +12,13 @@ import Carousel from "@/components/carousel";
 
 import Image from "next/image";
 
-import { GetReviewFromProductId, ReviewDto } from "@/utils/reviewService";
+import { ReviewDto } from "@/utils/reviewService";
 import Star from "@/app/icons/star";
 import HeartIcon from "@/app/icons/hearticon";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import Dropdown from "@/app/icons/dropdown";
 import { NextPage } from "next";
+import ProductCard from "@/components/productcard";
 interface Props {
 fetchedProduct: Product;
 productGroup: ProductGroup | null;
@@ -32,10 +33,9 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
     getFavouritesFromLocalStorage,
   }: any = useContext(Context);
 
-
   const reviewRef = useRef<HTMLDivElement>(null);
 
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(fetchedProduct.chosenSize);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -311,32 +311,26 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
           )}
         </div>
       )}
-      {recommendedProducts && recommendedProducts.length > 3 && (
+      {recommendedProducts && recommendedProducts.length > 2 && (
         <div className="py-4">
           <span className="font-semibold text-lg">
             Rekommenderade produkter
           </span>
+          <div className="mt-5">
           <Carousel
-            visibleSlidesCountDesktop={5}
+            visibleSlidesCountDesktop={4}
             visibleSlidesCountTablet={2}
             visibleSlidesCountMobile={2}
           >
             {recommendedProducts.map((product, index) => (
-              <Link
-                href={`/produkter/${product.id}`}
-                className="aspect-[9/13] bg-white min-h-full min-w-full pt-4"
+              <figure
                 key={index}
               >
-                <Image
-                  className="min-w-full object-center h-full object-contain"
-                  width={900}
-                  height={1300}
-                  alt={product.name}
-                  src={product.images[0].imageUrl}
-                />
-              </Link>
+                <ProductCard product={product}/>
+              </figure>
             ))}
           </Carousel>
+          </div>
         </div>
       )}
     </div>

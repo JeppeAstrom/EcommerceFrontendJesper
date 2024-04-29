@@ -53,12 +53,12 @@ const MyPurchases = () => {
   return (
     <div className="w-full lg:flex px-4 mb-10">
       <div className="lg:min-w-[150px] pt-8 sm:max-lg:w-full md:relative sm:relative">
-      <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">Mina sidor</span>
+      <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">Beställningar</span>
         <button
           onClick={toggleMenu}
           className="flex gap-2 md:mt-16 text-normal text-black"
         >
-          <span className="border-b border-black">Mina sidor</span>
+          <span className="border-b border-black">Mina köp</span>
           <Dropdown
             className={`w-7 h-7 ${
               isOpen ? "rotate-180 transition-all" : "transition-all"
@@ -79,7 +79,7 @@ const MyPurchases = () => {
         </button>
       </div>
       <div>
-        <div className="w-3/4 lg:px-8 items-center justify-center sm:w-full mx-auto sm:pt-10">
+        <div className="lg:px-8 items-center justify-center lg:mt-14 w-full mx-auto sm:pt-10">
           {orderHistory &&
             orderHistory.map((order:any) => (
               <div key={order.id} className="text-sm mt-4 mx-auto">
@@ -88,8 +88,7 @@ const MyPurchases = () => {
                 <span className="">Order ID: {order.id}</span>
                 <span className="font-semibold">Totalpris: {order.totalPrice} kr</span>
                 </div>
-                <div className="pt-2 pb-4 border-b border-gray-400 overflow-x-auto w-full">
-                  <Carousel visibleSlidesCountDesktop={order.orderProducts.length > 2 ? 3 : order.orderProducts.length} visibleSlidesCountMobile={1} visibleSlidesCountTablet={1} useProgressBar={true}>
+                <div className="px-2 gap-4 border-b pb-10 mt-10 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4"> 
                   {order.orderProducts.map((orderProduct: any) => (
                     <OrderHistoryCard
                       size={orderProduct.size}
@@ -97,7 +96,6 @@ const MyPurchases = () => {
                       product={orderProduct.product}
                     />
                   ))}
-                  </Carousel>
                 </div>
               </div>
             ))}

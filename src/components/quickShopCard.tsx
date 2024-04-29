@@ -20,7 +20,7 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
   const {
     handleAddToCart,
   }: any = useContext(Context);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(product.sizes[0].size);
   const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {

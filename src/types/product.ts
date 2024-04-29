@@ -8,7 +8,8 @@ export interface Product {
   sizes: SizeType[];
   color: string;
   quantity: number;
-  chosenSize?: string;
+  chosenSize: string;
+  parentCategory?: string;
   genderType: number;
 }
 
