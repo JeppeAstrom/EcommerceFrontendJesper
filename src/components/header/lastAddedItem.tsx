@@ -36,6 +36,7 @@ return(
   
     </div>
     <span className="text-sm line-clamp-1">{lastAddedItem.description}</span>
+    <span className="text-sm mt-1">{lastAddedItem.chosenSize}</span>
         <div className="justify-between flex pt-1 mt-auto">
         <span className="text-sm font-semibold">{lastAddedItem.price} kr</span>
         </div>
