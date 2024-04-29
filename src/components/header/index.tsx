@@ -136,7 +136,7 @@ const Header = () => {
      
         <div className="flex justify-center p-3">
           <div className="w-[1400px] mx-auto">
-            <div className="flex flex-col md:py-1">
+            <div className="flex flex-col md:py-1 mt-1">
               <div className="flex lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-3 items-center justify-center">
                 <div className="flex items-center justify-start w-1/3 gap-x-3">
                   <Link href="/favoriter" className="flex items-center gap-2">
