@@ -251,7 +251,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
                     <Dropdown className={`w-8 h-8 ${isOpen ? 'rotate-180 transition-all' : 'transition-all'}`}/>
                   </button>
                   {isOpen && (
-                    <ul className="absolute border-l border-r w-full bg-white z-[2] cursor-pointer">
+                    <ul className="absolute border-l border-r w-full bg-white z-[6] cursor-pointer">
                       {fetchedProduct.sizes.map((size, index) => (
                         <li
                           key={index}
