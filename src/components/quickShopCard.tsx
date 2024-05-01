@@ -107,7 +107,7 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
                       productId: product.id,
                       quantity: product.quantity,
                       price:product.price,
-                      chosenSize: selectedSize ? selectedSize : product.ChosenSize
+                      chosenSize: selectedSize ? selectedSize : product.chosenSize
                     }
                     handleAddToCart(cartItem, product);
                     toggleModal();
