@@ -20,6 +20,7 @@ import Login from "../forms/login";
 import { AuthContext } from "@/app/context/authContext";
 import Service from "@/app/icons/service";
 import Image from "next/image";
+import { CartItem } from "@/utils/cartService";
 
 const Header = () => {
   const { isAuthenticated }: any = useContext(AuthContext);
@@ -51,7 +52,12 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setCartCount(cartItems ? cartItems.length : 0);
+    if (cartItems) {
+      const totalCount = (cartItems as CartItem[]).reduce((acc, item) => acc + item.quantity, 0);
+      setCartCount(totalCount);
+  } else {
+      setCartCount(0);
+  }
   }, [cartItems]);
 
   useEffect(() => {

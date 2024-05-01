@@ -12,6 +12,7 @@ import { AuthContext } from "../context/authContext";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import { GetPayment, PaymentDetail, PostPayment } from "@/utils/paymentService";
 import { useRouter } from "next/navigation";
+import { CartItem } from "@/utils/cartService";
 
 const Checkout = () => {  
   const router = useRouter();
@@ -185,10 +186,10 @@ const Checkout = () => {
            </button>
           {showCart && (
           <div className="max-h-[50vh] overflow-y-auto w-full">
-             {(cartItems as Product[]).map((product,index) => (
+             {(cartItems as CartItem[]).map((product,index) => (
                   <CheckoutCard
                     key={index}
-                    product={product!}
+                    cartItem={product!}
                   />
                 ))}
           </div>

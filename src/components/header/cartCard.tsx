@@ -74,7 +74,8 @@ const CartCard: NextPage<Props> = ({
                       <Minus className="w-5 h-5" />
                     </button>
                     <button
-                      onClick={() => handleAddToCart(cartItem)}
+                      onClick={() => {
+                        handleAddToCart(cartItem)}}
                     >
                       <Plus className="w-5 h-5" />
                     </button>

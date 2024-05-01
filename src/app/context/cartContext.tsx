@@ -42,6 +42,13 @@ function CartContext({ children }: { children: ReactNode }) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
+  const GetCartItems = async () => {
+    const cartItems = await GetCart();
+    if (cartItems) {
+      setCartItems(cartItems.items);
+    }
+  };
+
   useEffect(() => {
     const checkAuthentication = async () => {
       const isLoggedin = await isAuthenticated();
@@ -50,14 +57,10 @@ function CartContext({ children }: { children: ReactNode }) {
 
     checkAuthentication();
   }, [isAuthenticated]);
+
   useEffect(() => {
     if (isLoggedIn) {
-      const GetCartItems = async () => {
-        const cartItems = await GetCart();
-        if (cartItems) {
-          setCartItems(cartItems.items);
-        }
-      };
+    
       GetCartItems();
     }
 
@@ -97,7 +100,8 @@ function CartContext({ children }: { children: ReactNode }) {
 
  async function handleAddToCart(getCurrentItem: CartItem, lastAddedItem:Product, skipNotification?: string) {
     if(isLoggedIn){
-       const response = await AddToCart(getCurrentItem.id, getCurrentItem.name, getCurrentItem.imageUrl, getCurrentItem.description, getCurrentItem.price, getCurrentItem.chosenSize);
+       const response = await AddToCart(getCurrentItem.productId, getCurrentItem.name, getCurrentItem.imageUrl, getCurrentItem.description, getCurrentItem.price, getCurrentItem.chosenSize);
+       GetCartItems();
        setLastAddedItem(lastAddedItem);
     }
     else{
@@ -129,6 +133,7 @@ function CartContext({ children }: { children: ReactNode }) {
     if(isLoggedIn){
       if(cartItem.id){
         const response = await DeleteItem(cartItem.id);
+       GetCartItems();
       }
     }
     else{
@@ -143,6 +148,7 @@ function CartContext({ children }: { children: ReactNode }) {
     if(isLoggedIn){
       if(product.id){
         const response = await DecreaseItem(product.id);
+        GetCartItems();
       }
     }
     else{

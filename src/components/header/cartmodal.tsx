@@ -43,7 +43,6 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-10 h-full p-4">
-      
       <div
         ref={modalRef}
         className="fixed top-0 right-0 lg:w-[600px] w-full h-full z-20 bg-white"
@@ -60,25 +59,24 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
         </div>
         <div className="flex flex-col py-5 pt-2 h-[75dvh] md:h-[80vh] overflow-y-auto">
           {cartItems && cartItems.length > 0 ? (
-          (cartItems as CartItem[]).map((cartItem, index) => {
-                return (
-                  <CartCard
-                   handleToggleCart={handleToggleCart}
-                    key={index}
-                    cartItem={cartItem!}
-                  />
-                );
-              
-              })
+            (cartItems as CartItem[]).map((cartItem, index) => {
+              return (
+                <CartCard
+                  handleToggleCart={handleToggleCart}
+                  key={index}
+                  cartItem={cartItem!}
+                />
+              );
+            })
           ) : (
             <div className="bg-white">
-            <Image
-            className=" object-contain"
-              width="900"
-              height="1300"
-              alt="empty"
-              src="https://ew.com/thmb/Z2g30rIL2w8b7gHilkA9pY7Tp1I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sandler-samberg_458-f0247cb3789a4ad9bc718cfcd305c04a.jpg"
-            />
+              <Image
+                className=" object-contain"
+                width="900"
+                height="1300"
+                alt="empty"
+                src="https://ew.com/thmb/Z2g30rIL2w8b7gHilkA9pY7Tp1I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/sandler-samberg_458-f0247cb3789a4ad9bc718cfcd305c04a.jpg"
+              />
             </div>
           )}
         </div>
@@ -87,17 +85,24 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             <div className="flex flex-col gap-4">
               <div className="justify-between flex">
                 <span className="font-semibold">Totalt</span>
-                <span className="font-semibold">{cartItems && (cartItems as Product[]).filter(p => p.price)
-  .reduce((total, product) => total + product.price, 0)} kr</span>
+                <span className="font-semibold">
+                  {cartItems &&
+                    (cartItems as CartItem[]).reduce(
+                      (total, product) =>
+                        total + product.price * product.quantity,
+                      0
+                    )}
+                  kr
+                </span>
               </div>
-            <Link
-              onClick={handleToggleCart}
-              href="/kassa"
-              className="w-full bg-black flex items center justify-center font-semibold text-white p-3"
-              aria-disabled={cartItems && cartItems.length > 0}
-            >
-              Till kassan
-            </Link>
+              <Link
+                onClick={handleToggleCart}
+                href="/kassa"
+                className="w-full bg-black flex items center justify-center font-semibold text-white p-3"
+                aria-disabled={cartItems && cartItems.length > 0}
+              >
+                Till kassan
+              </Link>
             </div>
           ) : (
             <span className="w-full bg-black flex items center justify-center font-semibold text-white p-3">
@@ -106,7 +111,6 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
           )}
         </div>
       </div>
-      
     </div>
   );
 };

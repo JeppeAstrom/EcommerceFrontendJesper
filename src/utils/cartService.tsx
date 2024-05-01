@@ -8,9 +8,10 @@ export interface CartItem {
     description:string;
     imageUrl:string;
     chosenSize:string;
+    productId:number;
     id:number;
     price:number;
-    quantity?:number
+    quantity:number
     totalPrice?:number;
 }
 
