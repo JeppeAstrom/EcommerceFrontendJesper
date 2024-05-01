@@ -274,7 +274,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
                       productId: fetchedProduct.id,
                       quantity: fetchedProduct.quantity,
                       price:fetchedProduct.price,
-                      chosenSize:fetchedProduct.chosenSize ? fetchedProduct.chosenSize : fetchedProduct.sizes[0].size
+                      chosenSize:selectedSize ? selectedSize: fetchedProduct.ChosenSize
                     }
                     addToCart(cartItem, fetchedProduct)}}
                   className="border w-full p-3 bg-black text-white font-semibold"
