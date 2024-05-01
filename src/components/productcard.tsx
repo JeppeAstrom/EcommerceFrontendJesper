@@ -20,6 +20,7 @@ import OrderHistoryCard from "@/app/mina-kop/orderHistoryCard";
 import QuickShopCard from "./quickShopCard";
 import Carousel from "./carousel";
 import CartProductCard from "@/app/icons/cartproductcard";
+import { CartItem } from "@/utils/cartService";
 
 interface Props {
   product: Product;
@@ -92,7 +93,15 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
     ) {
       toggleMenu();
     } else {
-      handleAddToCart(product);
+      const cartItem:CartItem = {
+        id: product.id,
+        name:product.name,
+        imageUrl:product.images[0].imageUrl,
+        description:product.description,
+        price:product.price,
+        chosenSize:product.chosenSize
+      }
+      handleAddToCart(cartItem, product);
     }
   };
 

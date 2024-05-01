@@ -10,6 +10,8 @@ import router, { useRouter } from "next/router";
 import CartIcon from "@/app/icons/cartIcon";
 import Image from "next/image";
 import { TransitionEvent } from "react";
+import CartCard from "./cartCard";
+import { CartItem } from "@/utils/cartService";
 
 interface Props {
   handleToggleCart: () => void;
@@ -58,12 +60,12 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
         </div>
         <div className="flex flex-col py-5 pt-2 h-[75dvh] md:h-[80vh] overflow-y-auto">
           {cartItems && cartItems.length > 0 ? (
-          (cartItems as Product[]).map((product, index) => {
+          (cartItems as CartItem[]).map((cartItem, index) => {
                 return (
-                  <HorizontalCard
+                  <CartCard
                    handleToggleCart={handleToggleCart}
                     key={index}
-                    product={product!}
+                    cartItem={cartItem!}
                   />
                 );
               

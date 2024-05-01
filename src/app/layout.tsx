@@ -24,15 +24,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={kanit.className}>
+      <AuthContext>
         <CartContext>
-        <AuthContext>
+   
         <Header/>
       
         <div className="main-container">
         {children}
         </div>
-        </AuthContext>
         </CartContext>
+        </AuthContext>
         </body>
     </html>
   );

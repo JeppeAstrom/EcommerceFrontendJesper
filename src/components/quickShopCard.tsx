@@ -9,6 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect, useContext } from "react";
 import Carousel from "./carousel";
+import { CartItem } from "@/utils/cartService";
 
 interface Props {
   product: Product;
@@ -98,18 +99,16 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
             <div className="mt-5">
                 <button
                   onClick={() =>{ 
-                    const productWithSize = {
-                      ...product,
-                      chosenSize: selectedSize
-                    };
-                    if(selectedSize){
-                    handleAddToCart(productWithSize);
+                    const cartItem:CartItem = {
+                      id: product.id,
+                      name:product.name,
+                      imageUrl:product.images[0].imageUrl,
+                      description:product.description,
+                      price:product.price,
+                      chosenSize:product.chosenSize ? product.chosenSize : product.sizes[0].size
+                    }
+                    handleAddToCart(cartItem, product);
                     toggleModal();
-                    }
-                    else{
-                      setError(true);
-                    }
-                   
                   }}
                   className={`border w-full p-3 bg-black text-white font-semibold ${error ? 'transition-all scale-105' : 'transition-all'}`}
             

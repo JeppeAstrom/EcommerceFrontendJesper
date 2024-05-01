@@ -19,6 +19,7 @@ import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import Dropdown from "@/app/icons/dropdown";
 import { NextPage } from "next";
 import ProductCard from "@/components/productcard";
+import { CartItem } from "@/utils/cartService";
 interface Props {
 fetchedProduct: Product;
 productGroup: ProductGroup | null;
@@ -112,12 +113,8 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
     setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct?.id));
   }, [getFavouritesFromLocalStorage, fetchedProduct?.id]);
 
-  const addToCart = (product:Product, chosenSize:string |null) => {
-    const productWithSize = {
-      ...product,
-      chosenSize: chosenSize
-    };
-    handleAddToCart(productWithSize);
+  const addToCart = (product:CartItem, lastAddedItem:Product) => {
+    handleAddToCart(product, lastAddedItem);
   }
   const [hoverSwatch, setHoverSwatch] = useState<string>();
  
@@ -268,7 +265,16 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
 
               <div className="pt-4 flex justify-center items-center">
                 <button
-                  onClick={() => addToCart(fetchedProduct, selectedSize ? selectedSize : fetchedProduct.sizes.length > 0 ? fetchedProduct.sizes[0].size : null)}
+                  onClick={() =>{
+                    const cartItem:CartItem = {
+                      id: fetchedProduct.id,
+                      name:fetchedProduct.name,
+                      imageUrl:fetchedProduct.images[0].imageUrl,
+                      description:fetchedProduct.description,
+                      price:fetchedProduct.price,
+                      chosenSize:fetchedProduct.chosenSize ? fetchedProduct.chosenSize : fetchedProduct.sizes[0].size
+                    }
+                    addToCart(cartItem, fetchedProduct)}}
                   className="border w-full p-3 bg-black text-white font-semibold"
                 >
                   Handla

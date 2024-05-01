@@ -18,7 +18,6 @@ import SearchBar from "./searchbar";
 import { Category } from "@/types/category";
 import Login from "../forms/login";
 import { AuthContext } from "@/app/context/authContext";
-import { getMainCategories } from "@/utils/productService";
 import Service from "@/app/icons/service";
 import Image from "next/image";
 

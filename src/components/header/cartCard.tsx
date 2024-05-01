@@ -4,18 +4,23 @@ import Minus from "@/app/icons/minus";
 import Plus from "@/app/icons/plus";
 import TrashCan from "@/app/icons/trashcan";
 import { Product } from "@/types/product";
+import { CartItem } from "@/utils/cartService";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { useContext } from "react";
 
 interface Props {
-  product: Product;
+  cartItem: CartItem;
   quantity?: number;
   handleToggleCart?: () => void;
 }
 
-const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }) => {
+const CartCard: NextPage<Props> = ({
+  cartItem,
+  quantity,
+  handleToggleCart,
+}) => {
   const context = useContext(Context);
 
   const { removeFromCart, handleAddToCart, removeAllOfSameItem }: any = context;
@@ -24,12 +29,16 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }
     <>
       <div className="flex flex-row p-2 lg:p-2 py-3 pr-6 w-full">
         <div className="w-2/4 items-center flex justify-center pl-3">
-          <Link onClick={handleToggleCart} href={`/produkter/${product.id}`} className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full">
+          <Link
+            onClick={handleToggleCart}
+            href={`/produkter/${cartItem.id}`}
+            className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full"
+          >
             <Image
               width={1300}
               height={900}
               alt=""
-              src={product.images[0].imageUrl}
+              src={cartItem.imageUrl}
               className="object-contain object-center min-h-full min-w-full"
             />
           </Link>
@@ -37,39 +46,41 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }
         <div className="flex flex-col pl-2 w-full relative">
           <div className="flex justify-between">
             <span className="text-serif font-semibold line-clamp-1 max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
-              {product.name}
+              {cartItem.name}
             </span>
-            <button className="lg:pr-2" onClick={() => removeFromCart(product)}>
+            <button className="lg:pr-2" onClick={() => removeAllOfSameItem(cartItem)}>
               <TrashCan className="h-5 w-8" />
             </button>
           </div>
 
           <span className="text-sm line-clamp-1  max-w-[200px] lg:max-w-[300px] md:max-w-[500px]">
-            {product.description}
+            {cartItem.description}
           </span>
-          {product.chosenSize && (
+          {cartItem.chosenSize && (
             <span className="md:pt-2 text-sm font-semibold">
-            Storlek: {product.chosenSize}
-           </span>
-        )}
+              Storlek: {cartItem.chosenSize}
+            </span>
+          )}
           <div className="justify-between flex pt-1">
             <span className="text-sm absolute bottom-0 left-2 font-bold">
-              {product.price} kr
+              {cartItem.price} kr
             </span>
             <div className="gap-2 flex justify-end w-full items-center">
-            
+          
                 <div className="flex border border-black w-[80px] text-sm py-1 absolute right-2 bottom-0">
-                  <p className="text-sm justify-start ml-2">{quantity} </p>
+                  <p className="text-sm justify-start ml-2">{cartItem.quantity} </p>
                   <div className="flex justify-end w-full gap-1">
-                    <button onClick={() => removeFromCart(product)}>
+                    <button onClick={() => removeFromCart(cartItem)}>
                       <Minus className="w-5 h-5" />
                     </button>
-                    <button onClick={() => handleAddToCart(product, "YES")}>
+                    <button
+                      onClick={() => handleAddToCart(cartItem)}
+                    >
                       <Plus className="w-5 h-5" />
                     </button>
                   </div>
                 </div>
-             
+           
             </div>
           </div>
         </div>
@@ -77,4 +88,4 @@ const HorizontalCard: NextPage<Props> = ({ product, quantity, handleToggleCart }
     </>
   );
 };
-export default HorizontalCard;
+export default CartCard;

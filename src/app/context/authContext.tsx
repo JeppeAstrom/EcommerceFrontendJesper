@@ -67,14 +67,14 @@ export const AuthContext = createContext<AuthContextType | null>(null);
     return result;
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-  };
 
   const isAuthenticated = async () => {
     return await CheckJWTToken();
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+  };
   return (
     <AuthContext.Provider value={{ handleRegister, handleLogin, handleLogout, isAuthenticated }}>
       {children}

@@ -12,6 +12,7 @@ import Star from "../icons/star";
 import { PostReview } from "@/utils/reviewService";
 import LoadingSpinner from "@/components/spinners/loadingSpinner";
 import Link from "next/link";
+import { CartItem } from "@/utils/cartService";
 
 interface Props {
   product: Product;
@@ -125,8 +126,15 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
             </button>
             <button
               onClick={() => {
-                product.chosenSize = product.chosenSize = size;
-                handleAddToCart(product);
+                const cartItem:CartItem = {
+                  id: product.id,
+                  name:product.name,
+                  imageUrl:product.images[0].imageUrl,
+                  description:product.description,
+                  price:product.price,
+                  chosenSize:product.chosenSize ? product.chosenSize : product.sizes[0].size
+                }
+                handleAddToCart(cartItem, product);
               }}
               className="border w-full p-2 bg-black text-xs md:text-sm font-semibold text-white text-center"
             >
