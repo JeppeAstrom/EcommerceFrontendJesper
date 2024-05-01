@@ -131,6 +131,8 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                   name:product.name,
                   imageUrl:product.images[0].imageUrl,
                   description:product.description,
+                  productId: product.id,
+                  quantity: product.quantity,
                   price:product.price,
                   chosenSize:product.chosenSize ? product.chosenSize : product.sizes[0].size
                 }

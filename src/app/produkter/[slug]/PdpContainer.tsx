@@ -271,6 +271,8 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
                       name:fetchedProduct.name,
                       imageUrl:fetchedProduct.images[0].imageUrl,
                       description:fetchedProduct.description,
+                      productId: fetchedProduct.id,
+                      quantity: fetchedProduct.quantity,
                       price:fetchedProduct.price,
                       chosenSize:fetchedProduct.chosenSize ? fetchedProduct.chosenSize : fetchedProduct.sizes[0].size
                     }
