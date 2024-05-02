@@ -47,14 +47,13 @@ const Favourites = () => {
         const favs = getFavouritesFromLocalStorage();
         setFavourites(favs);
     }
-    }, [isAuthenticated, isLoggedIn]);
+    }, [isAuthenticated, isLoggedIn, favourites]);
 
     if (isLoading || !favourites) {
         return (
      <LoadingSpinner/>
         );
       }
-    
 
     return(<>
     <ProductRain products={favourites}/>
