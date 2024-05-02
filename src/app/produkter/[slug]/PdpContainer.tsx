@@ -173,7 +173,7 @@ const PdpContainer: NextPage<Props> = ({
 
   return (
     <>
-      <div className="mx-auto px-4 mb-10">
+      <div className="mx-auto px-4 mb-10 mt-8 lg:mt-0">
         <div className="flex w-full justify-center items-center mx-auto mb-10">
           <div className="lg:flex w-full">
             <Carousel
