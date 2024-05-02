@@ -198,7 +198,7 @@ const PdpContainer: NextPage<Props> = ({
               ))}
             </Carousel>
 
-            <div className="lg:p-4 w-full lg:px-6 relative md:pt-2 pt-7">
+            <div className="lg:p-4 w-full lg:px-6 relative">
               <span className="line-clamp-1 text-lg">
                 {fetchedProduct.name}
               </span>
