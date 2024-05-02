@@ -315,7 +315,7 @@ const PdpContainer: NextPage<Props> = ({
                     )}
                   </div>
                 )}
-                <div className="pt-4 gap-2 justify-center items-center hidden lg:flex">
+                <div className="lg:pt-4 pt-0 gap-2 justify-center items-center hidden lg:flex">
                   <button
                     onClick={() => {
                       const cartItem: CartItem = {
