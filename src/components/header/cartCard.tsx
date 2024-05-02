@@ -1,14 +1,17 @@
 /* eslint-disable @next/next/no-img-element */
+import { AuthContext } from "@/app/context/authContext";
 import { Context } from "@/app/context/cartContext";
+import HeartIcon from "@/app/icons/hearticon";
 import Minus from "@/app/icons/minus";
 import Plus from "@/app/icons/plus";
 import TrashCan from "@/app/icons/trashcan";
 import { Product } from "@/types/product";
 import { CartItem } from "@/utils/cartService";
+import { AddToFavourites, GetFavourites } from "@/utils/favouriteService";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 interface Props {
   cartItem: CartItem;
@@ -23,17 +26,74 @@ const CartCard: NextPage<Props> = ({
 }) => {
   const context = useContext(Context);
 
-  const { removeFromCart, handleAddToCart, removeAllOfSameItem }: any = context;
+  const { removeFromCart, handleAddToCart, removeAllOfSameItem, addProductToFavouritesLocalStorage,
+    getFavouritesFromLocalStorage, }: any = context;
+
+    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+    const { isAuthenticated }: any = useContext(AuthContext);
+  
+    useEffect(() => {
+      const checkAuthentication = async () => {
+        const isLoggedin = await isAuthenticated();
+        setIsLoggedIn(isLoggedin);
+      };
+  
+      checkAuthentication();
+    }, [isAuthenticated]);
+
+  const [favourite, setFavourite] = useState<boolean>(false);
+  const toggleFavourite = async () => {
+    if (isLoggedIn) {
+      const response = await AddToFavourites(cartItem.productId);
+    } else {
+      addProductToFavouritesLocalStorage(cartItem);
+    }
+    setFavourite(!favourite);
+  };
+  useEffect(() => {
+    const fetchAndSetFavourites = async () => {
+      if (isLoggedIn) {
+        try {
+          const favouriteProducts: Product[] | undefined =
+            await GetFavourites();
+          if (favouriteProducts) {
+            setFavourite(
+              favouriteProducts.some((p) => p.id === cartItem.productId)
+            );
+          }
+        } catch (error) {
+          console.error("Failed to fetch favourites:", error);
+        }
+      } else {
+        const favouriteProducts: Product[] = getFavouritesFromLocalStorage();
+        setFavourite(favouriteProducts.some((p) => p.id === cartItem.productId));
+      }
+    };
+
+    fetchAndSetFavourites();
+  }, [
+    isLoggedIn,
+    getFavouritesFromLocalStorage,
+    cartItem.productId,
+    setFavourite,
+    isAuthenticated,
+  ]);
 
   return (
     <>
       <div className="flex flex-row p-2 lg:p-2 py-3 pr-6 w-full">
-        <div className="w-2/4 items-center flex justify-center pl-3">
+        <div className="w-2/4 items-center flex justify-center relative pl-3">
+        <HeartIcon
+                  favourite={favourite}
+                  onClick={toggleFavourite}
+                  className="h-6 w-6 z-[2] md:w-8 md:h-8 absolute left-4 top-1 cursor-pointer"
+                />
           <Link
             onClick={handleToggleCart}
             href={`/produkter/${cartItem.productId}`}
-            className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full"
+            className="aspect-[9/13] bg-white items-center justify-center  flex min-w-full h-full"
           >
+     
             <Image
               width={1300}
               height={900}
