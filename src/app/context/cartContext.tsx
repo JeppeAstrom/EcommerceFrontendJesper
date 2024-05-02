@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 import { AuthContext } from "./authContext";
-import { AddToCart, Cart, CartItem, DecreaseItem, DeleteItem, GetCart } from "@/utils/cartService";
+import { AddToCart, Cart, CartItem, DecreaseItem, DeleteItem, GetCart, ResetCart } from "@/utils/cartService";
 
 interface ContextType {
   lastAddedItem: Product | null;
@@ -162,9 +162,10 @@ function CartContext({ children }: { children: ReactNode }) {
     }
   }
   }
-
+  
   function resetCart() {
     setCartItems([]);
+    ResetCart();
   }
 
   const getFavouritesFromLocalStorage = (): Product[] => {

@@ -116,5 +116,28 @@ const DeleteItem = async  (cartItemId:number) => {
     }
 }
 
+const ResetCart = async  () => {
 
-export {GetCart, DecreaseItem, DeleteItem, AddToCart};
+    const token = localStorage.getItem('accessToken');
+    
+    const url = "https://wa-okx-jesper-aa.azurewebsites.net/api/Cart/ResetCart";
+
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json' 
+        }
+    };
+    try {
+        const response = await fetch(url, requestOptions);
+        return response;
+    } catch (error) {
+        console.error('There was a problem with the fetch operation:', error);
+        
+    }
+}
+
+
+
+export {GetCart, DecreaseItem, DeleteItem, AddToCart, ResetCart};

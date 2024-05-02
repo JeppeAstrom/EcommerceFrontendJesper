@@ -103,7 +103,7 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
         price:product.price,
         chosenSize:product.chosenSize ? product.chosenSize : product.sizes[0].size
       }
-      handleAddToCart(cartItem, product);
+      handleAddToCart(cartItem, cartItem);
     }
   };
 

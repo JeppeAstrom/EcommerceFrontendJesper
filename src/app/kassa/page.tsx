@@ -85,8 +85,8 @@ const Checkout = () => {
   }, [orderComplete, router]);
 
   const handleBuy = async () => {
-    const orderProducts = (cartItems as Product[]).map(item => ({
-      productId: item.id,
+    const orderProducts = (cartItems as CartItem[]).map(item => ({
+      productId: item.productId,
       size: item.chosenSize
     }));
     

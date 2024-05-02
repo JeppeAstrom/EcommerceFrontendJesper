@@ -2,6 +2,7 @@
 import { Context } from "@/app/context/cartContext";
 import CloseIcon from "@/app/icons/closeIcon";
 import { Product } from "@/types/product";
+import { CartItem } from "@/utils/cartService";
 import { NextPage } from "next";
 import Image from "next/image";
 
@@ -9,7 +10,7 @@ import Image from "next/image";
 interface Props {
 showHeader: boolean;
 showNotification: boolean;
-lastAddedItem: Product;
+lastAddedItem: CartItem;
 clearLastAddedItem: () => void;
 handleOpenCart: () => void;
 }
@@ -27,12 +28,12 @@ return(
 <div className="flex w-full flex-row py-3 px-4">
     <div className="w-2/4">
     <figure className="min-w-full min-h-full aspect-[9/13]">
-    <Image width={1300} height={900} alt="" src={lastAddedItem.images[0].imageUrl} className="w-full h-full object-contain"/>
+    <Image width={1300} height={900} alt="" src={lastAddedItem.imageUrl} className="w-full h-full object-contain"/>
     </figure>
     </div>
     <div className="flex flex-col pl-2 w-fit mr-6 justify-center">
     <div className="flex justify-between">
-    <span className="text-serif font-semibold line-clamp-2">{lastAddedItem.name}</span>
+    <span className="text-serif font-semibold line-clamp-1">{lastAddedItem.name}</span>
   
     </div>
     <span className="text-sm line-clamp-1">{lastAddedItem.description}</span>

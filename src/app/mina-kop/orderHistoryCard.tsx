@@ -134,9 +134,9 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                   productId: product.id,
                   quantity: product.quantity,
                   price:product.price,
-                  chosenSize:product.chosenSize ? product.chosenSize : product.sizes[0].size
+                  chosenSize:size
                 }
-                handleAddToCart(cartItem, product);
+                handleAddToCart(cartItem, cartItem);
               }}
               className="border w-full p-2 bg-black text-xs md:text-sm font-semibold text-white text-center"
             >

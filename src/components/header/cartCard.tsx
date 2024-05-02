@@ -31,7 +31,7 @@ const CartCard: NextPage<Props> = ({
         <div className="w-2/4 items-center flex justify-center pl-3">
           <Link
             onClick={handleToggleCart}
-            href={`/produkter/${cartItem.id}`}
+            href={`/produkter/${cartItem.productId}`}
             className="aspect-[9/13] bg-white items-center justify-center flex min-w-full h-full"
           >
             <Image

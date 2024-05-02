@@ -109,7 +109,7 @@ const QuickShopCard: NextPage<Props> = ({ product, toggleModal}) => {
                       price:product.price,
                       chosenSize: selectedSize ? selectedSize : product.chosenSize
                     }
-                    handleAddToCart(cartItem, product);
+                    handleAddToCart(cartItem, cartItem);
                     toggleModal();
                   }}
                   className={`border w-full p-3 bg-black text-white font-semibold ${error ? 'transition-all scale-105' : 'transition-all'}`}

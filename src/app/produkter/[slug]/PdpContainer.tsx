@@ -113,8 +113,8 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
     setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct?.id));
   }, [getFavouritesFromLocalStorage, fetchedProduct?.id]);
 
-  const addToCart = (product:CartItem, lastAddedItem:Product) => {
-    handleAddToCart(product, lastAddedItem);
+  const addToCart = (product:CartItem) => {
+    handleAddToCart(product, product);
   }
   const [hoverSwatch, setHoverSwatch] = useState<string>();
  
@@ -276,7 +276,7 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
                       price:fetchedProduct.price,
                       chosenSize:selectedSize ? selectedSize: fetchedProduct.chosenSize
                     }
-                    addToCart(cartItem, fetchedProduct)}}
+                    addToCart(cartItem)}}
                   className="border w-full p-3 bg-black text-white font-semibold"
                 >
                   Handla
