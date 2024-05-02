@@ -13,6 +13,7 @@ export interface Product {
   genderType: number;
 }
 
+
 export interface Categories {
   id: number;
   name: string;

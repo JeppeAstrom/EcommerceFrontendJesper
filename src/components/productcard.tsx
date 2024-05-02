@@ -21,6 +21,8 @@ import QuickShopCard from "./quickShopCard";
 import Carousel from "./carousel";
 import CartProductCard from "@/app/icons/cartproductcard";
 import { CartItem } from "@/utils/cartService";
+import { AuthContext } from "@/app/context/authContext";
+import { AddToFavourites, GetFavourites } from "@/utils/favouriteService";
 
 interface Props {
   product: Product;
@@ -33,6 +35,18 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
     getFavouritesFromLocalStorage,
     addProductToFavouritesLocalStorage,
   }: any = useContext(Context);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isAuthenticated }: any = useContext(AuthContext);
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const isLoggedin = await isAuthenticated();
+      setIsLoggedIn(isLoggedin);
+    };
+
+    checkAuthentication();
+  }, [isAuthenticated]);
+
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -54,14 +68,36 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
   }, [product.id]);
 
   const [favourite, setFavourite] = useState<boolean>(false);
-  const toggleFavourite = () => {
-    addProductToFavouritesLocalStorage(product);
+  const toggleFavourite = async () => {
+    if(isLoggedIn){
+      const response = await AddToFavourites(product.id);
+    }
+    else{
+     addProductToFavouritesLocalStorage(product);
+    }
     setFavourite(!favourite);
   };
+
   useEffect(() => {
-    const favouriteProducts: Product[] = getFavouritesFromLocalStorage();
-    setFavourite(favouriteProducts.some((p) => p.id === product.id));
-  }, [getFavouritesFromLocalStorage, product.id]);
+    const fetchAndSetFavourites = async () => {
+      if (isLoggedIn) {
+        try {
+          const favouriteProducts = await GetFavourites();
+          if (favouriteProducts) {
+            setFavourite(favouriteProducts.some((p) => p.id === product.id));
+          }
+        } catch (error) {
+          console.error("Failed to fetch favourites:", error);
+        }
+      } else {
+        const favouriteProducts:Product[] = getFavouritesFromLocalStorage();
+        setFavourite(favouriteProducts.some((p) => p.id === product.id));
+      }
+    };
+  
+    fetchAndSetFavourites();
+  }, [isLoggedIn, getFavouritesFromLocalStorage, product.id, setFavourite, isAuthenticated]);
+  
 
   const [hoverSwatch, setHoverSwatch] = useState<string>();
 

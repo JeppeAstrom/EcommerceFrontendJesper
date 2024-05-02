@@ -27,6 +27,7 @@ const ProductRain: NextPage<Props> = ({
   childCategories,
   parentCategory,
 }) => {
+
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const pathname = usePathname();

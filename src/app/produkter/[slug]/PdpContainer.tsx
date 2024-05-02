@@ -20,6 +20,8 @@ import Dropdown from "@/app/icons/dropdown";
 import { NextPage } from "next";
 import ProductCard from "@/components/productcard";
 import { CartItem } from "@/utils/cartService";
+import { AddToFavourites, GetFavourites } from "@/utils/favouriteService";
+import { AuthContext } from "@/app/context/authContext";
 interface Props {
 fetchedProduct: Product;
 productGroup: ProductGroup | null;
@@ -28,6 +30,19 @@ reviews: ReviewDto[];
 }
 
 const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommendedProducts, reviews }) => {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const { isAuthenticated }: any = useContext(AuthContext);
+
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const isLoggedin = await isAuthenticated();
+      setIsLoggedIn(isLoggedin);
+    };
+
+    checkAuthentication();
+  }, [isAuthenticated]);
+
   const {
     handleAddToCart,
     addProductToFavouritesLocalStorage,
@@ -104,20 +119,41 @@ const PdpContainer: NextPage<Props> = ({ fetchedProduct, productGroup, recommend
   }, [wrapperRef]);
  
   const [favourite, setFavourite] = useState<boolean>(false);
-  const toggleFavourite = () => {
-    addProductToFavouritesLocalStorage(fetchedProduct);
+  const toggleFavourite = async () => {
+    if(isLoggedIn){
+      const response = await AddToFavourites(fetchedProduct.id);
+    }
+    else{
+     addProductToFavouritesLocalStorage(fetchedProduct);
+    }
     setFavourite(!favourite);
   };
+  
   useEffect(() => {
-    const favouriteProducts: Product[] = getFavouritesFromLocalStorage();
-    setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct?.id));
-  }, [getFavouritesFromLocalStorage, fetchedProduct?.id]);
+    const fetchAndSetFavourites = async () => {
+      if (isLoggedIn) {
+        try {
+          const favouriteProducts:Product[] | undefined = await GetFavourites();
+          if (favouriteProducts) {
+            setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct.id));
+          }
+        } catch (error) {
+          console.error("Failed to fetch favourites:", error);
+        }
+      } else {
+        const favouriteProducts:Product[] = getFavouritesFromLocalStorage();
+        setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct.id));
+      }
+    };
+  
+    fetchAndSetFavourites();
+  }, [isLoggedIn, getFavouritesFromLocalStorage, fetchedProduct.id, setFavourite, isAuthenticated]);
 
   const addToCart = (product:CartItem) => {
     handleAddToCart(product, product);
   }
   const [hoverSwatch, setHoverSwatch] = useState<string>();
- 
+
   if (!fetchedProduct) {
     return (
  <LoadingSpinner/>
