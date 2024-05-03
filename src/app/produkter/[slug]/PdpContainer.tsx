@@ -122,7 +122,7 @@ const PdpContainer: NextPage<Props> = ({
 
   const toggleFavourite = async () => {
     if (isLoggedIn) {
-      const response = await AddToFavourites(fetchedProduct.id);
+       await AddToFavourites(fetchedProduct.id);
     } else {
       addProductToFavouritesLocalStorage(fetchedProduct);
     }
@@ -132,14 +132,12 @@ const PdpContainer: NextPage<Props> = ({
   useEffect(() => {
     const fetchAndSetFavourites = async () => {
       if (isLoggedIn) {
-        try {
+  
           const favouriteProducts: Product[] | undefined = await GetFavourites();
           if (favouriteProducts) {
             setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct.id));
           }
-        } catch (error) {
-      
-        }
+     
       } else {
         const favouriteProducts: Product[] = getFavouritesFromLocalStorage();
         setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct.id));

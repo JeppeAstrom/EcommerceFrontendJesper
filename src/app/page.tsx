@@ -57,12 +57,10 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async (pageNum: number) => {
       setLoading(true);
-      try {
+     
         const productList = await GetAllProducts(pageNum, pageSize);
         setProducts(productList);
-      } catch (error) {
-       
-      }
+    
       setLoading(false);
     };
     fetchProducts(page);
