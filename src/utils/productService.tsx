@@ -7,12 +7,12 @@ const GetAllProducts = async (page: number = 1, pageSize: number = 12) => {
   try {
       const response = await fetch(apiRoute);
       if (!response.ok) {
-          throw new Error('Network response was not ok');
+     
       }
       const productList: Product[] = await response.json();
       return productList;
   } catch (error) {
-      console.error('Failed to fetch all products:', error);
+    
       return [];
   }
 }
@@ -40,12 +40,12 @@ const getProductsFromCategory = async (category: string, gender: number, page: n
   try {
       const response = await fetch(apiRoute);
       if (!response.ok) {
-          throw new Error('Network response was not ok');
+       
       }
       const productList: Product[] = await response.json();
       return productList;
   } catch (error) {
-      console.error('Failed to fetch products:', error);
+  
       return []; 
   }
 }
@@ -79,7 +79,7 @@ const getChildCategoriesFromName = async (categoryName: string) => {
       return childCategoriesData.childCategories || [];
     } catch (error) {
 
-      console.error('Error fetching child categories:', error);
+
 
       return [];
     }

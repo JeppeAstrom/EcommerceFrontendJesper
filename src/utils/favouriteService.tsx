@@ -20,7 +20,7 @@ import {  Product } from "@/types/product";
         return response;
         }
         catch(error){
-            console.error(error);
+           
         }
         }
     
@@ -42,7 +42,7 @@ import {  Product } from "@/types/product";
             const favourites:Product[] = await response.json();
             return favourites;
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+          
             
         }
     }
@@ -64,7 +64,7 @@ import {  Product } from "@/types/product";
             const response = await fetch(url, requestOptions);
             return response;
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+        
             
         }
     }
