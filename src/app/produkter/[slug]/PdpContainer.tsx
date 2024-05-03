@@ -359,7 +359,7 @@ const PdpContainer: NextPage<Props> = ({
             ))}
             {visibleReviews && !isReviewsExpanded && reviews.length > 2 && (
               <button
-                className="text-center py-2 border-b border-black font-semibold px-1 text-sm w-[70px]"
+                className="text-center py-2 border-b border-black font-semibold px-1 text-sm w-fit"
                 onClick={() => setReviewsExpanded(true)}
               >
                 Visa mer
@@ -367,7 +367,7 @@ const PdpContainer: NextPage<Props> = ({
             )}
             {visibleReviews && isReviewsExpanded && reviews.length > 2 && (
               <button
-                className="text-center py-2 border-b border-black font-semibold px-1 text-sm w-[90px]"
+                className="text-center py-2 border-b border-black font-semibold px-1 text-sm w-fit"
                 onClick={() => setReviewsExpanded(false)}
               >
                 Visa mindre
