@@ -26,10 +26,15 @@ import { AddToFavourites, GetFavourites } from "@/utils/favouriteService";
 
 interface Props {
   product: Product;
-  hideIcons?:boolean;
+  hideIcons?: boolean;
+  handleFavourite?: () => void;
 }
 
-const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
+const ProductCard: NextPage<Props> = ({
+  product,
+  hideIcons = false,
+  handleFavourite,
+}) => {
   const {
     handleAddToCart,
     getFavouritesFromLocalStorage,
@@ -46,7 +51,6 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
 
     checkAuthentication();
   }, [isAuthenticated]);
-
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -69,11 +73,10 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
 
   const [favourite, setFavourite] = useState<boolean>(false);
   const toggleFavourite = async () => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       const response = await AddToFavourites(product.id);
-    }
-    else{
-     addProductToFavouritesLocalStorage(product);
+    } else {
+      addProductToFavouritesLocalStorage(product);
     }
     setFavourite(!favourite);
   };
@@ -90,14 +93,19 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
           console.error("Failed to fetch favourites:", error);
         }
       } else {
-        const favouriteProducts:Product[] = getFavouritesFromLocalStorage();
+        const favouriteProducts: Product[] = getFavouritesFromLocalStorage();
         setFavourite(favouriteProducts.some((p) => p.id === product.id));
       }
     };
-  
+
     fetchAndSetFavourites();
-  }, [isLoggedIn, getFavouritesFromLocalStorage, product.id, setFavourite, isAuthenticated]);
-  
+  }, [
+    isLoggedIn,
+    getFavouritesFromLocalStorage,
+    product.id,
+    setFavourite,
+    isAuthenticated,
+  ]);
 
   const [hoverSwatch, setHoverSwatch] = useState<string>();
 
@@ -123,46 +131,53 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
 
   const handleProduct = () => {
     if (
-      productGroup &&
-      productGroup.products &&
-      productGroup.products.length > 1 || product.sizes.length > 0
+      (productGroup &&
+        productGroup.products &&
+        productGroup.products.length > 1) ||
+      product.sizes.length > 0
     ) {
       toggleMenu();
     } else {
-      const cartItem:CartItem = {
+      const cartItem: CartItem = {
         id: product.id,
-        name:product.name,
-        imageUrl:product.images[0].imageUrl,
-        description:product.description,
+        name: product.name,
+        imageUrl: product.images[0].imageUrl,
+        description: product.description,
         productId: product.id,
         quantity: product.quantity,
-        price:product.price,
-        chosenSize:product.chosenSize ? product.chosenSize : product.sizes[0].size
-      }
+        price: product.price,
+        chosenSize: product.chosenSize
+          ? product.chosenSize
+          : product.sizes[0].size,
+      };
       handleAddToCart(cartItem, cartItem);
     }
   };
 
-
   const [hoverSwatchModal, setHoverSwatchModal] = useState<Product>();
 
   return (
-    <>  
+    <>
       <div className="flex flex-col max-w-sm items-center justify-center">
         <div className="py-4 items-center justify-center flex flex-col w-full relative">
-        {!hideIcons && (
-          <div className="flex justify-between absolute top-5 md:px-7 px-5 w-full">
-            <CartProductCard
-              quickshop={handleProduct}
-              className="cursor-pointer z-[5] absolute left-1 top-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
-            />
-            <HeartIcon
-              onClick={() => toggleFavourite()}
-              favourite={favourite}
-              className="cursor-pointer z-[5] absolute top-1 right-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
-            />
-          </div>
-            )}
+          {!hideIcons && (
+            <div className="flex justify-between absolute top-5 md:px-7 px-5 w-full">
+              <CartProductCard
+                quickshop={handleProduct}
+                className="cursor-pointer z-[5] absolute left-1 top-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
+              />
+              <HeartIcon
+                onClick={() => {
+                  toggleFavourite();
+                  if (handleFavourite) {
+                    handleFavourite();
+                  }
+                }}
+                favourite={favourite}
+                className="cursor-pointer z-[5] absolute top-1 right-1 w-[25px] h-[25px] md:w-[32px] md:h-[32px]"
+              />
+            </div>
+          )}
           <Link
             className="aspect-[9/13] items-center  flex min-h-full bg-neutral-100 justify-center relative"
             href={"/produkter/" + product.id}
@@ -175,21 +190,20 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
               className="object-contain transition-all object-center items-center justify-center"
             />
           </Link>
-   
+
           <span className="line-clamp-1 text-start w-full text-md pt-2">
             {product.name}
           </span>
 
           <div className="flex relative w-full justify-between">
             <div>
-              <span className="text-sm font-bold">
-                {product.price} kr
-              </span>
+              <span className="text-sm font-bold">{product.price} kr</span>
             </div>
           </div>
-        
+
           <div className="flex justify-start items-start mr-auto gap-1 pt-1">
-            {productGroup && !hideIcons &&
+            {productGroup &&
+              !hideIcons &&
               productGroup.products &&
               productGroup.products.length > 0 &&
               [...productGroup.products]
@@ -218,7 +232,13 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
           <div className="w-full flex flex-col">
             <QuickShopCard
               toggleModal={toggleMenu}
-              product={hoverSwatchModal ? hoverSwatchModal : activeVariant ? activeVariant : product}
+              product={
+                hoverSwatchModal
+                  ? hoverSwatchModal
+                  : activeVariant
+                  ? activeVariant
+                  : product
+              }
             />
             <div className="px-5">
               {productGroup?.products &&
@@ -237,9 +257,7 @@ const ProductCard: NextPage<Props> = ({ product, hideIcons = false }) => {
                           key={product.id}
                           onClick={() => setActiveVariant(variant)}
                           onMouseOver={() => setHoverSwatchModal(variant)}
-                          onMouseLeave={() => setHoverSwatchModal(undefined)
-                          
-                          }
+                          onMouseLeave={() => setHoverSwatchModal(undefined)}
                         >
                           <Image
                             className="w-full h-full object-contain object-center"

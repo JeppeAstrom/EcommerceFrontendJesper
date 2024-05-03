@@ -19,6 +19,7 @@ interface Props {
   category?: string;
   childCategories?: ChildCategories[];
   parentCategory?: string | undefined;
+  handleFavourite?: () => void;
 }
 
 const ProductRain: NextPage<Props> = ({
@@ -26,6 +27,7 @@ const ProductRain: NextPage<Props> = ({
   category,
   childCategories,
   parentCategory,
+  handleFavourite
 }) => {
 
   const [isOpen, setIsOpen] = useState<boolean>(true);
@@ -73,7 +75,7 @@ const ProductRain: NextPage<Props> = ({
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2 md:gap-7 p-2 gap-x-2  md:p-4 items-center justify-between">
             {[...products].reverse().map((product, index) => (
               <div key={index}>
-                <ProductCard product={product} />
+                <ProductCard handleFavourite={handleFavourite} product={product} />
               </div>
             ))}
           </div>

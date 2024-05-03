@@ -4,6 +4,8 @@ import "./globals.css";
 import Header from "@/components/header";
 import AuthContext from "./context/authContext";
 import CartContext from "./context/cartContext";
+import Footer from "@/components/footer/footer";
+import { useRouter } from "next/router";
 
 
 const kanit = Open_Sans({
@@ -21,6 +23,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
+
   return (
     <html lang="en">
       <body className={kanit.className}>
@@ -32,6 +37,7 @@ export default function RootLayout({
         <div className="main-container">
         {children}
         </div>
+        <Footer/>
         </CartContext>
         </AuthContext>
         </body>

@@ -9,45 +9,42 @@ import LoadingSpinner from "@/components/spinners/loadingSpinner";
 
 const Favourites = () => {
 
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
     const { isAuthenticated }: any = useContext(AuthContext);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [favourites, setFavourites] = useState<Product[]>([]);
+    const {getFavouritesFromLocalStorage}: any = useContext(Context);
+
     useEffect(() => {
       const checkAuthentication = async () => {
-        const isLoggedin = await isAuthenticated();
-        if(!isLoggedIn){
-            setIsLoading(false);
-        }
-        setIsLoggedIn(isLoggedin);
+          const isLoggedin = await isAuthenticated();
+          setIsLoggedIn(isLoggedin);
+          setIsLoading(false); 
       };
-  
+
       checkAuthentication();
-    }, [isAuthenticated]);
+  }, [isAuthenticated]);
   
 
-
-
-    const {getFavouritesFromLocalStorage}: any = useContext(Context);
-    const [favourites, setFavourites] = useState<Product[]>([]);
-
-    useEffect(() => {
-       const fetchFavourites = async () => {
-        const response = await GetFavourites();
-        if(response){
-            setFavourites(response);
-        }
-        setIsLoading(false);
-     
-        }
-        if(isLoggedIn){
-         
-           fetchFavourites();
-        }
-        else{
-        const favs = getFavouritesFromLocalStorage();
-        setFavourites(favs);
+  useEffect(() => {
+    if (isLoggedIn === null) {
+        return;
     }
-    }, [isAuthenticated, isLoggedIn, favourites]);
+
+    const fetchFavourites = async () => {
+        let response;
+        if (isLoggedIn) {
+            response = await GetFavourites();
+            setFavourites(response || []);
+        } else {
+            const favs = getFavouritesFromLocalStorage();
+            setFavourites(favs);
+        }
+    };
+
+    fetchFavourites();
+}, [isLoggedIn, favourites]);
+
 
     if (isLoading || !favourites) {
         return (

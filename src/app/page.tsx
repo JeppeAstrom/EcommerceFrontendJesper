@@ -1,11 +1,15 @@
-
+"use client";
 import Carousel from "@/components/carousel";
 import ProductRain from "@/components/productrain";
 import { Category } from "@/types/category";
+import { Product } from "@/types/product";
 import { Promotion } from "@/types/promotion";
 import { GetAllProducts, getMainCategories } from "@/utils/productService";
 import Image from "next/image";
 import Link from "next/link";
+import { useCallback, useEffect, useRef, useState } from "react";
+import ArrowLeft from "./icons/arrowleft";
+import Dropdown from "./icons/dropdown";
 const promotion: Promotion[] = [
   {
     promotionTitle: "Rabatt",
@@ -29,15 +33,56 @@ const promotion: Promotion[] = [
   },
 ];
 
-const Home = async () => {
-  const Products = await GetAllProducts();
-  const Categories:Category[] = await getMainCategories()
+const Home = () => {
+  const productRainRef = useRef<HTMLDivElement>(null);
+
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+
+  const pageSize = 12;
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const categories = await getMainCategories();
+      setCategories(categories)
+    }
+    fetchCategories();
+  },[])
+
+  const fetchProducts = async (pageNum: number) => {
+    setLoading(true);
+    try {
+      const productList = await GetAllProducts(pageNum, pageSize);
+      setProducts(productList);
+
+    } catch (error) {
+      console.error("Failed to fetch products:", error);
+    }
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchProducts(page);
+  }, [page]);
+
+  const handleNextPage = () => {
+    setPage((prevPage) => prevPage + 1);
+    productRainRef.current?.scrollIntoView({  behavior: 'smooth' });
+  };
+  
+  const handlePreviousPage = () => {
+    setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
+    productRainRef.current?.scrollIntoView({  behavior: 'smooth' });
+  };
+  
 
   return (
     <div className="px-4">
-      
       <div className="mb-10 mt-6">
-      <span className="text-2xl pl-1">Sandler kollektionen</span>
+        <span className="text-2xl pl-1">Sandler kollektionen</span>
         <Carousel
           visibleSlidesCountDesktop={2}
           visibleSlidesCountTablet={2}
@@ -61,40 +106,69 @@ const Home = async () => {
         </Carousel>
       </div>
       <div className="mb-10">
-        <span className="text-2xl pl-1  ">Våra kategorier</span>
-        
-          <div className="relative">
-        <Carousel
-          visibleSlidesCountDesktop={4}
-          visibleSlidesCountTablet={3}
-          visibleSlidesCountMobile={2}
-        >
-          {Categories.map((category, index) => (
-            <div key={index} className="flex flex-col min-h-full">
-            <Link
-              href={`/produkter/kategori/${category.name}`}
-              className="aspect-[9/13] bg-white h-full min-w-full pt-4"
-              
-            >
-              <Image
-                className="min-w-full object-center h-full object-fill"
-                width={900}
-                height={1300}
-                alt={category.name}
-                src={category.imageUrl}
-              />
-         
-            </Link>
-        <Link href={`/produkter/kategori/${category.name}`} className="mt-4 text-normal pl-1  font-semibold border-b w-fit border-black pb-1">{category.name}</Link>
+        <span className="text-2xl pl-1">Våra kategorier</span>
+
+        <div className="relative">
+          <Carousel
+            visibleSlidesCountDesktop={4}
+            visibleSlidesCountTablet={3}
+            visibleSlidesCountMobile={2}
+          >
+            {categories.map((category, index) => (
+              <div key={index} className="flex flex-col min-h-full">
+                <Link
+                  href={`/produkter/kategori/${category.name}`}
+                  className="aspect-[9/13] bg-white h-full min-w-full pt-4"
+                >
+                  <Image
+                    className="min-w-full object-center h-full object-fill"
+                    width={900}
+                    height={1300}
+                    alt={category.name}
+                    src={category.imageUrl}
+                  />
+                </Link>
+                <Link
+                  href={`/produkter/kategori/${category.name}`}
+                  className="mt-4 text-normal pl-1  font-semibold border-b w-fit border-black pb-1"
+                >
+                  {category.name}
+                </Link>
+              </div>
+            ))}
+          </Carousel>
         </div>
-          ))}
-        </Carousel>
-        </div>
-   
       </div>
-      <div className="pt-10">
-      <span className="text-xl md:text-2xl pl-1  border-b border-black pb-2 md:ml-20 ml-2">Nyheter</span>
-        <ProductRain products={Products} />
+      <div ref={productRainRef} className="pt-10">
+        <span className="text-xl md:text-2xl pl-1  border-b border-black pb-2 md:ml-20 ml-2">
+          Nyheter
+        </span>
+        <ProductRain products={products} />
+
+        {!loading && (
+          <div className="flex w-full items-center justify-center gap-2 mb-10">
+          <button
+            className={`p-3    ${
+              page === 1 ? "opacity-50" : ""
+            }`}
+            onClick={handlePreviousPage}
+            disabled={page === 1}
+          >
+            <button className="items-center flex">
+              <Dropdown className="w-9 h-9 rotate-90" />
+            </button>
+          </button>
+          <span>{`Sida ${page}`}</span>
+          <button
+            className="p-3  "
+            onClick={handleNextPage}
+          >
+            <button className="items-center flex" style={{ transform: "rotate(270deg)" }}>
+              <Dropdown className="w-9 h-9" />
+            </button>
+          </button>
+        </div>
+        )}
       </div>
     </div>
   );

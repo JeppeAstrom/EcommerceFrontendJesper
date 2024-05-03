@@ -287,7 +287,6 @@ const PdpContainer: NextPage<Props> = ({
                       <div className="flex items-center justify-center gap-1">
                         <span className="text-gray-700">Storlek: </span>{" "}
                         <span className="text-black">
-                          {" "}
                           {selectedSize || fetchedProduct.sizes[0].size}
                         </span>
                       </div>
@@ -406,7 +405,7 @@ const PdpContainer: NextPage<Props> = ({
           </div>
         )}
       </div>
-      <div className="p-3 gap-2 flex md:hidden justify-center items-center sticky bottom-0 bg-white z-[10]">
+      <div className="p-3 gap-2 flex md:hidden justify-center items-center fixed w-full bottom-0 bg-white z-[10]">
         <button
           onClick={() => {
             const cartItem: CartItem = {
@@ -419,7 +418,7 @@ const PdpContainer: NextPage<Props> = ({
               price: fetchedProduct.price,
               chosenSize: selectedSize
                 ? selectedSize
-                : fetchedProduct.chosenSize,
+                : fetchedProduct.sizes[0].size,
             };
             addToCart(cartItem);
           }}
