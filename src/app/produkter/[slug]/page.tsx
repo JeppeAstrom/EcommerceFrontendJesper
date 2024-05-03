@@ -24,17 +24,21 @@ async function getProduct(params:any) {
 
 export default async function ProductPage({ params }: { params: any }) {
 
-  const reviewPromise = getReviews(params.slug);
-  const productGroupPromise = getProductGroup(params.slug);
-  const productPromise = getProduct(params.slug);
-  
-  const [review,productGroup,product] = await Promise.all([reviewPromise, productGroupPromise, productPromise])
-  
-  const recommendedProducts: Product[] = await getProductsFromCategory(
-    product.parentCategory ? product.parentCategory :  product.categories[0].name, product.genderType
-  );
+  try {
+    const reviewPromise = getReviews(params.slug);
+    const productGroupPromise = getProductGroup(params.slug);
+    const productPromise = getProduct(params.slug);
 
-  return(
-      <PdpContainer fetchedProduct={product} productGroup={productGroup} reviews={review} recommendedProducts={recommendedProducts}/>
-  )
+    const [review, productGroup, product] = await Promise.all([reviewPromise, productGroupPromise, productPromise]);
+    if (!product) throw new Error('Failed to load product details.');
+
+    const categoryName = product.parentCategory || product.categories?.[0]?.name || 'defaultCategory';
+    const recommendedProducts: Product[] = await getProductsFromCategory(categoryName, product.genderType);
+
+    return <PdpContainer fetchedProduct={product} productGroup={productGroup} reviews={review} recommendedProducts={recommendedProducts}/>;
+  } catch (error) {
+    console.error('Error in ProductPage:', error);
+   
+    return <div>Error loading page</div>;  
+  }
 }
