@@ -1,15 +1,15 @@
-'use client'
+
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
 
 
 
 export default  function Footer() {
-    const pathname = usePathname()
+  
   return (
     <>
-    { pathname !== '/kassa' && (
+   
     <div className="h-[50vh] min-w-full flex py-4 justify-center mt-10  bg-blue-50">
         <div className="w-full flex items-center flex-col">
       <Link
@@ -57,7 +57,7 @@ export default  function Footer() {
       </div>
       </div>
     </div>
-   )}
+ 
 </>
   );
 };

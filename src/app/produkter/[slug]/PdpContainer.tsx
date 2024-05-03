@@ -121,12 +121,12 @@ const PdpContainer: NextPage<Props> = ({
   const [favourite, setFavourite] = useState<boolean>(false);
 
   const toggleFavourite = async () => {
-    // if (isLoggedIn) {
-    //   const response = await AddToFavourites(fetchedProduct.id);
-    // } else {
-    //   addProductToFavouritesLocalStorage(fetchedProduct);
-    // }
-    // setFavourite(!favourite);
+    if (isLoggedIn) {
+      const response = await AddToFavourites(fetchedProduct.id);
+    } else {
+      addProductToFavouritesLocalStorage(fetchedProduct);
+    }
+    setFavourite(!favourite);
   };
 
   useEffect(() => {
