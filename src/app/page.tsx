@@ -143,25 +143,25 @@ const Home = () => {
         <ProductRain products={products} />
 
         {!loading && (
-          <div className="flex w-full items-center justify-center gap-2 mb-10">
-            <button
-              className={`p-3    ${page === 1 ? "opacity-50" : ""}`}
-              onClick={handlePreviousPage}
-              disabled={page === 1}
-            >
-              <Dropdown className="w-9 h-9 rotate-90" />
-            </button>
-            <span>{`Sida ${page}`}</span>
+  <div className="flex w-full items-center justify-center gap-2 mb-10">
+      <button
+        className={`p-3 ${page === 1 ? "opacity-50" : ""}`}
+        onClick={handlePreviousPage}
+        disabled={page === 1}
+      >
+        <Dropdown className="w-9 h-9 rotate-90" />
+      </button>
+    <span>{`Sida ${page}`}</span>
+    <button
+      style={{ transform: "rotate(270deg)" }}
+      className="p-3"
+      onClick={handleNextPage}
+    >
+      <Dropdown className="w-9 h-9" />
+    </button>
+  </div>
+)}
 
-            <button
-              style={{ transform: "rotate(270deg)" }}
-              className="p-3  "
-              onClick={handleNextPage}
-            >
-              <Dropdown className="w-9 h-9" />
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );

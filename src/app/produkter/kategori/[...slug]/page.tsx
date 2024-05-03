@@ -1,18 +1,23 @@
-'use client'
-import { GetAllProducts, getChildCategoriesFromName, getProductsFromCategory } from "@/utils/productService";
+"use client";
+import {
+  GetAllProducts,
+  getChildCategoriesFromName,
+  getProductsFromCategory,
+} from "@/utils/productService";
 import CategoryContainer from "../categoryContainer";
 import { useEffect, useState } from "react";
 import page from "../../[slug]/page";
 import { Category } from "@/types/category";
 import { Product } from "@/types/product";
 import Dropdown from "@/app/icons/dropdown";
+import LoadingSpinner from "@/components/spinners/loadingSpinner";
 
 export default function CategoryPage({ params }: { params: any }) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const [currentPage, setCurrentPage] = useState(1);
   const currentCategory = params.slug[params.slug.length - 1];
   let gender = 0;
-
 
   const determineGender = (category: string) => {
     switch (category) {
@@ -27,8 +32,14 @@ export default function CategoryPage({ params }: { params: any }) {
     }
   };
 
-  if (["Herr", "Dam", "Barn"].includes(params.slug.length > 1 ? params.slug[0] : undefined)) {
-    gender = determineGender(params.slug.length > 1 ? params.slug[0] : undefined);
+  if (
+    ["Herr", "Dam", "Barn"].includes(
+      params.slug.length > 1 ? params.slug[0] : undefined
+    )
+  ) {
+    gender = determineGender(
+      params.slug.length > 1 ? params.slug[0] : undefined
+    );
   } else if (["Herr", "Dam", "Barn"].includes(currentCategory)) {
     gender = determineGender(currentCategory);
   }
@@ -38,11 +49,18 @@ export default function CategoryPage({ params }: { params: any }) {
 
   useEffect(() => {
     async function fetchData() {
-      const childCategoriesData = await getChildCategoriesFromName(currentCategory);
+      const childCategoriesData = await getChildCategoriesFromName(
+        currentCategory
+      );
       setChildCategories(childCategoriesData);
 
-      const data = await getProductsFromCategory(currentCategory, gender, currentPage);
+      const data = await getProductsFromCategory(
+        currentCategory,
+        gender,
+        currentPage
+      );
       setCategoryData(data);
+      setIsLoading(false);
     }
 
     fetchData();
@@ -56,11 +74,20 @@ export default function CategoryPage({ params }: { params: any }) {
     setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
   };
 
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
 
-  return(
+  return (
     <div>
-      <CategoryContainer currentCategory={params.slug[params.slug.length - 1]} categoryData={categoryData} childCategories={childCategories} parentCategory={params.slug.length > 1 ? params.slug[0] : undefined} />
-      <div className="flex w-full items-center justify-center gap-2 mb-10">
+      <CategoryContainer
+        currentCategory={params.slug[params.slug.length - 1]}
+        categoryData={categoryData}
+        childCategories={childCategories}
+        parentCategory={params.slug.length > 1 ? params.slug[0] : undefined}
+      />
+      {categoryData.length === 12 || currentPage !== 1 ? (
+        <div className="flex w-full items-center justify-center gap-2 mb-10">
           <button
             className={`p-3 font-semibold text-white  ${
               currentPage === 1 ? "opacity-50" : ""
@@ -68,21 +95,19 @@ export default function CategoryPage({ params }: { params: any }) {
             onClick={handlePreviousPage}
             disabled={currentPage === 1}
           >
-            <button className="items-center flex">
-              <Dropdown className="w-9 h-9 rotate-90" />
-            </button>
+            <Dropdown className="w-9 h-9 rotate-90" />
           </button>
+
           <span>{`Sida ${currentPage}`}</span>
           <button
+            style={{ transform: "rotate(270deg)" }}
             className="p-3 font-semibold text-white "
             onClick={handleNextPage}
           >
-            <button className="items-center flex" style={{ transform: "rotate(270deg)" }}>
-              <Dropdown className="w-9 h-9" />
-            </button>
+            <Dropdown className="w-9 h-9" />
           </button>
         </div>
-      </div>
-  )
-
+      ) : null}
+    </div>
+  );
 }

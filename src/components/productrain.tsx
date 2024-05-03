@@ -73,7 +73,7 @@ const ProductRain: NextPage<Props> = ({
             </div>
           )}
           <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-2 md:gap-7 p-2 gap-x-2  md:p-4 items-center justify-between">
-            {[...products].reverse().map((product, index) => (
+           {products.map((product, index) => (
               <div key={index}>
                 <ProductCard handleFavourite={handleFavourite} product={product} />
               </div>
