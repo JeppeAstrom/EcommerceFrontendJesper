@@ -1,11 +1,6 @@
 "use client";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Context } from "@/app/context/cartContext";
-import {
-  GetProduct,
-  GetProductGroup,
-  getProductsFromCategory,
-} from "@/utils/productService";
 import { Product, ProductGroup } from "@/types/product";
 import Link from "next/link";
 import Carousel from "@/components/carousel";
