@@ -45,7 +45,7 @@ const AddToCart = async (productId:number, name:string, imageUrl:string, descrip
     return cartItemId;
     }
     catch(error){
-        console.error('Error adding to cart:', error);
+   
     }
     }
 
@@ -67,7 +67,7 @@ const GetCart = async  () => {
         const Cart:Cart = await response.json();
         return Cart;
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+  
         
     }
 }
@@ -89,7 +89,7 @@ const DecreaseItem = async  (cartItemId:number) => {
         const response = await fetch(url, requestOptions);
         return response;
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+  
         
     }
 }
@@ -111,7 +111,7 @@ const DeleteItem = async  (cartItemId:number) => {
         const response = await fetch(url, requestOptions);
         return response;
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+     
         
     }
 }
@@ -133,7 +133,7 @@ const ResetCart = async  () => {
         const response = await fetch(url, requestOptions);
         return response;
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+   
         
     }
 }

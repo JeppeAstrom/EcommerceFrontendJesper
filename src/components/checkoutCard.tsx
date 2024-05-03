@@ -60,7 +60,7 @@ useEffect(() => {
           );
         }
       } catch (error) {
-        console.error("Failed to fetch favourites:", error);
+
       }
     } else {
       const favouriteProducts: Product[] = getFavouritesFromLocalStorage();

@@ -65,7 +65,7 @@ const ProductCard: NextPage<Props> = ({
         );
         setProductGroup(ProductGroup);
       } catch (error) {
-        console.error("Error fetching product:", error);
+
       }
     };
     fetchData();
@@ -90,7 +90,7 @@ const ProductCard: NextPage<Props> = ({
             setFavourite(favouriteProducts.some((p) => p.id === product.id));
           }
         } catch (error) {
-          console.error("Failed to fetch favourites:", error);
+    
         }
       } else {
         const favouriteProducts: Product[] = getFavouritesFromLocalStorage();

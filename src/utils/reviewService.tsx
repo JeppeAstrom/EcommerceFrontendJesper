@@ -58,7 +58,7 @@ const PostReview = async (rating:number, comment:string, productId:number) => {
     return response
     }
     catch(error){
-        console.error('Error posting review:', error);
+
     }
     }
 

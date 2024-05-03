@@ -50,10 +50,10 @@ const OrderHistoryCard: NextPage<Props> = ({ product, size }) => {
                 }, 1500);
               
             } else {
-                console.error('Failed to post review:');
+              
             }
         } catch (error) {
-            console.error('Error posting review:', error);
+         
         } finally {
             setIsLoading(false);
         }

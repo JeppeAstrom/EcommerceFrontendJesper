@@ -27,7 +27,7 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
     return orderId;
     }
     catch(error){
-        console.error('Error posting order:', error);
+
     }
     }
 
@@ -60,7 +60,7 @@ const PostOrder = async (paymentDetailId:number, addressId:number, totalPrice:nu
             const Orders:OrderHistory[]  = await response.json();
             return Orders;
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+         
             
         }
     }

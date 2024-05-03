@@ -26,7 +26,7 @@ const PostPayment = async (cardName:string, CardNumber:string, Cvv:string, ExpDa
     return paymentId;
     }
     catch(error){
-        console.error('Error posting address:', error);
+  
     }
     }
 
@@ -54,7 +54,7 @@ const PostPayment = async (cardName:string, CardNumber:string, Cvv:string, ExpDa
             const payment:PaymentDetail = await response.json();
             return payment;
         } catch (error) {
-            console.error('Error fetching payment:', error);
+        
             return null;
         }
     };

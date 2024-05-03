@@ -74,7 +74,7 @@ function CartContext({ children }: { children: ReactNode }) {
         try {
           cartStorage = JSON.parse(cartStorageJSON);
         } catch (error) {
-          console.error("Error parsing cart storage JSON:", error);
+      
         }
       }
       setCartItems(cartStorage);
@@ -175,7 +175,7 @@ function CartContext({ children }: { children: ReactNode }) {
       try {
         return JSON.parse(favouritesStorageJSON);
       } catch (error) {
-        console.error("Error parsing favourites storage JSON:", error);
+ 
       }
     }
 
@@ -190,7 +190,7 @@ function CartContext({ children }: { children: ReactNode }) {
       try {
         favouritesStorage = JSON.parse(favouritesStorageJSON);
       } catch (error) {
-        console.error("Error accessing local storage:", error);
+  
         return;
       }
     }
@@ -224,7 +224,7 @@ function CartContext({ children }: { children: ReactNode }) {
           JSON.stringify(filteredFavourites)
         );
       } catch (error) {
-        console.error("Error parsing cart storage JSON:", error);
+      
       }
     }
   };

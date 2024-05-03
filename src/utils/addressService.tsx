@@ -28,7 +28,7 @@ const addressId = responseData;
 return addressId;
 }
 catch(error){
-    console.error('Error posting address:', error);
+  
 }
 }
 
@@ -56,7 +56,7 @@ const GetAddress = async () => {
         const address:Address = await response.json();
         return address;
     } catch (error) {
-        console.error('Error fetching address:', error);
+   
         return null;
     }
 };
