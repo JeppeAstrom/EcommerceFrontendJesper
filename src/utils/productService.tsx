@@ -35,7 +35,7 @@ const GetProductGroup = async(id:string) => {
 }
 
 const getProductsFromCategory = async (category: string, gender: number, page: number = 1, pageSize: number = 10) => {
-  const apiRoute = `https://wa-okx-jesper-aa.azurewebsites.net/api/Products/${encodeURIComponent(category)}?genderType=${gender}&page=${page}&pageSize=${pageSize}`;
+  const apiRoute = `https://wa-okx-jesper-aa.azurewebsites.net/api/Products/${category}?genderType=${gender}&page=${page}&pageSize=${pageSize}`;
 
   try {
       const response = await fetch(apiRoute);
