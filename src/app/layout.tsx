@@ -5,8 +5,6 @@ import Header from "@/components/header";
 import AuthContext from "./context/authContext";
 import CartContext from "./context/cartContext";
 import Footer from "@/components/footer/footer";
-import { useRouter } from "next/router";
-
 
 const kanit = Open_Sans({
   weight: ['400', '700'],  subsets: ['latin'],
