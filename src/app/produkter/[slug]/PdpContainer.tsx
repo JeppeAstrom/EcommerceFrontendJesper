@@ -138,7 +138,7 @@ const PdpContainer: NextPage<Props> = ({
             setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct.id));
           }
         } catch (error) {
-          console.error("Failed to fetch favourites:", error);
+      
         }
       } else {
         const favouriteProducts: Product[] = getFavouritesFromLocalStorage();

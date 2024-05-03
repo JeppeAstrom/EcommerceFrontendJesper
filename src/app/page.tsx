@@ -52,18 +52,19 @@ const Home = () => {
     fetchCategories();
   }, []);
 
-  const fetchProducts = async (pageNum: number) => {
-    setLoading(true);
-    try {
-      const productList = await GetAllProducts(pageNum, pageSize);
-      setProducts(productList);
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    }
-    setLoading(false);
-  };
+
 
   useEffect(() => {
+    const fetchProducts = async (pageNum: number) => {
+      setLoading(true);
+      try {
+        const productList = await GetAllProducts(pageNum, pageSize);
+        setProducts(productList);
+      } catch (error) {
+       
+      }
+      setLoading(false);
+    };
     fetchProducts(page);
   }, [page]);
 
