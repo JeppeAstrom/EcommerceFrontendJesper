@@ -119,25 +119,23 @@ const PdpContainer: NextPage<Props> = ({
   }, [wrapperRef]);
 
   const [favourite, setFavourite] = useState<boolean>(false);
+
   const toggleFavourite = async () => {
-    if (isLoggedIn) {
-      const response = await AddToFavourites(fetchedProduct.id);
-    } else {
-      addProductToFavouritesLocalStorage(fetchedProduct);
-    }
-    setFavourite(!favourite);
+    // if (isLoggedIn) {
+    //   const response = await AddToFavourites(fetchedProduct.id);
+    // } else {
+    //   addProductToFavouritesLocalStorage(fetchedProduct);
+    // }
+    // setFavourite(!favourite);
   };
 
   useEffect(() => {
     const fetchAndSetFavourites = async () => {
       if (isLoggedIn) {
         try {
-          const favouriteProducts: Product[] | undefined =
-            await GetFavourites();
+          const favouriteProducts: Product[] | undefined = await GetFavourites();
           if (favouriteProducts) {
-            setFavourite(
-              favouriteProducts.some((p) => p.id === fetchedProduct.id)
-            );
+            setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct.id));
           }
         } catch (error) {
           console.error("Failed to fetch favourites:", error);
@@ -147,7 +145,6 @@ const PdpContainer: NextPage<Props> = ({
         setFavourite(favouriteProducts.some((p) => p.id === fetchedProduct.id));
       }
     };
-
     fetchAndSetFavourites();
   }, [
     isLoggedIn,
@@ -156,6 +153,7 @@ const PdpContainer: NextPage<Props> = ({
     setFavourite,
     isAuthenticated,
   ]);
+  
 
   const addToCart = (product: CartItem) => {
     handleAddToCart(product, product);
@@ -322,7 +320,7 @@ const PdpContainer: NextPage<Props> = ({
                         price: fetchedProduct.price,
                         chosenSize: selectedSize
                           ? selectedSize
-                          : fetchedProduct.chosenSize,
+                          : fetchedProduct.sizes[0].size,
                       };
                       addToCart(cartItem);
                     }}
