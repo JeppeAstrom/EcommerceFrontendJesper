@@ -32,7 +32,7 @@ export default async function ProductPage({ params }: { params: any }) {
     const [review, productGroup, product] = await Promise.all([reviewPromise, productGroupPromise, productPromise]);
     if (!product) throw new Error('Failed to load product details.');
 
-    const categoryName = product.parentCategory || product.categories?.[0]?.name || 'defaultCategory';
+    const categoryName = product.parentCategory ? product.parentCategory : product.categories[0].name
     const recommendedProducts: Product[] = await getProductsFromCategory(categoryName, product.genderType);
 
     return <PdpContainer fetchedProduct={product} productGroup={productGroup} reviews={review} recommendedProducts={recommendedProducts}/>;
