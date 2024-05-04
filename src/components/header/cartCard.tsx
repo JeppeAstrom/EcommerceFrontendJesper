@@ -129,7 +129,7 @@ const CartCard: NextPage<Props> = ({
             <div className="gap-2 flex justify-end w-full items-center">
           
                 <div className="flex border border-black w-[80px] text-sm py-1 absolute right-2 bottom-0">
-                  <p className="text-sm justify-start ml-2">{isLoggedIn ? cartItem.quantity : 1} </p>
+                  <p className="text-sm justify-start ml-2">{cartItem.quantity} </p>
                   <div className="flex justify-end w-full gap-1">
                     <button onClick={() => removeFromCart(cartItem)}>
                       <Minus className="w-5 h-5" />

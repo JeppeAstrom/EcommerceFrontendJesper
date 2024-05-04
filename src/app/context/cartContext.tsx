@@ -92,38 +92,59 @@ function CartContext({ children }: { children: ReactNode }) {
     };
 
     fetchProductsAndCategories();
-  }, [isLoggedIn]);
-
+  }, [isLoggedIn, isAuthenticated]);
+ 
   useEffect(() => {
     localStorage.setItem("cartDropshippinggod", JSON.stringify(cartItems));
   }, [cartItems]);
 
- async function handleAddToCart(getCurrentItem: CartItem, lastAddedItem:Product, skipNotification?: string) {
-    if(isLoggedIn){
-       const response = await AddToCart(getCurrentItem.productId, getCurrentItem.name, getCurrentItem.imageUrl, getCurrentItem.description, getCurrentItem.price, getCurrentItem.chosenSize);
-       GetCartItems();
-       setLastAddedItem(lastAddedItem);
+  async function handleAddToCart(getCurrentItem:CartItem, lastAddedItem:Product, skipNotification?:string) {
+    if (isLoggedIn) {
+      const response = await AddToCart(
+        getCurrentItem.productId,
+        getCurrentItem.name,
+        getCurrentItem.imageUrl,
+        getCurrentItem.description,
+        getCurrentItem.price,
+        getCurrentItem.chosenSize
+      );
+  
+      GetCartItems();
+      setLastAddedItem(lastAddedItem);
+    } else {
+      setCartItems((currentItems) => {
+        let updatedCartItems = [];
+        
+        if (currentItems) {
+          const existingItemIndex = currentItems.findIndex(item =>
+            item.productId === getCurrentItem.productId && item.chosenSize === getCurrentItem.chosenSize
+          );
+  
+          if (existingItemIndex !== -1) {
+            updatedCartItems = currentItems.map((item, index) => {
+              if (index === existingItemIndex) {
+                return { ...item, quantity: item.quantity + 1 };
+              }
+              return item;
+            });
+          } else {
+            updatedCartItems = [...currentItems, { ...getCurrentItem, quantity: 1 }];
+          }
+        } else {
+          updatedCartItems = [{ ...getCurrentItem, quantity: 1 }];
+        }
+        if (!skipNotification) {
+          setLastAddedItem(lastAddedItem);
+        }
+  
+        return updatedCartItems;
+      });
     }
-    else{
-    setCartItems((currentItems) => {
-      if (currentItems) {
-        if (!skipNotification) {
-          if (getCurrentItem.chosenSize) {
-            setLastAddedItem(lastAddedItem);
-          }
-        }
-        return [...currentItems, getCurrentItem];
-      } else {
-        if (!skipNotification) {
-          if (getCurrentItem.chosenSize !== null) {
-            setLastAddedItem(lastAddedItem);
-          }
-        }
-        return [getCurrentItem];
-      }
-    });
-}
   }
+  
+  
+  
+  
 
   function getCart() {
     return cartItems;
@@ -138,29 +159,31 @@ function CartContext({ children }: { children: ReactNode }) {
     }
     else{
       if (cartItems) {
-        const sortedCart = cartItems.filter((p) => p.id !== cartItem.id);
-        setCartItems(sortedCart);
-      }
+        const updatedCart = cartItems.filter(item => item.id !== cartItem.id || item.chosenSize !== cartItem.chosenSize);
+        setCartItems(updatedCart);
+      } 
     }
   }
 
-  async function removeFromCart(product: CartItem) {
-    if(isLoggedIn){
-      if(product.id){
+  async function removeFromCart(product:CartItem) {
+    if (isLoggedIn) {
+      if (product.id) {
         const response = await DecreaseItem(product.id);
         GetCartItems();
       }
+    } else {
+      const index = cartItems?.findIndex(item => item.id === product.id && item.chosenSize === product.chosenSize);
+  
+      if (index !== undefined && index !== -1 && cartItems) {
+        const updatedCartItems = [...cartItems];
+        if (updatedCartItems[index].quantity > 1) {
+          updatedCartItems[index].quantity -= 1;
+        } else {
+          updatedCartItems.splice(index, 1);
+        }
+        setCartItems(updatedCartItems);
+      }
     }
-    else{
-    const index = cartItems?.indexOf(product);
-    if (index !== undefined && index !== -1 && cartItems) {
-      const updatedCartItems = [
-        ...cartItems.slice(0, index),
-        ...cartItems.slice(index + 1),
-      ];
-      setCartItems(updatedCartItems);
-    }
-  }
   }
   
   function resetCart() {
