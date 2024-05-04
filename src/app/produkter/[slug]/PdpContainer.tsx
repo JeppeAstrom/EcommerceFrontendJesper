@@ -207,7 +207,7 @@ const PdpContainer: NextPage<Props> = ({
 
               <>
                 {productGroup?.products &&
-                  productGroup.products.length > 1 &&
+                  productGroup.products.length >= 1 &&
                   visibleProducts && (
                     <div className="pt-4 grid grid-cols-4 gap-4 lg:w-[320px] justify-evenly items-center">
                       {[...visibleProducts]
