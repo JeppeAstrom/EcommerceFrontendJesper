@@ -21,6 +21,7 @@ import { AuthContext } from "@/app/context/authContext";
 import Service from "@/app/icons/service";
 import Image from "next/image";
 import { CartItem } from "@/utils/cartService";
+import { Product } from "@/types/product";
 
 const Header = () => {
   const { isAuthenticated }: any = useContext(AuthContext);
@@ -52,13 +53,17 @@ const Header = () => {
   };
 
   useEffect(() => {
-    if (cartItems) {
+    if (cartItems && isLoggedin) {
       const totalCount = (cartItems as CartItem[]).reduce((acc, item) => acc + item.quantity, 0);
       setCartCount(totalCount);
-  } else {
-      setCartCount(0);
   }
-  }, [cartItems]);
+  else if(cartItems && !isLoggedin) {
+    setCartCount(cartItems.length)
+  }
+  else{
+    setCartCount(0);
+  }
+  }, [cartItems,isLoggedin]);
 
   useEffect(() => {
     if (!lastAddedItem) return;

@@ -43,7 +43,7 @@ const Favourites = () => {
     };
 
     fetchFavourites();
-}, [isLoggedIn, favourites]);
+    }, [isLoggedIn, getFavouritesFromLocalStorage]);
 
 
     if (isLoading || !favourites) {

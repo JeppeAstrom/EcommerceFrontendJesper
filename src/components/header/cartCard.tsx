@@ -21,7 +21,6 @@ interface Props {
 
 const CartCard: NextPage<Props> = ({
   cartItem,
-  quantity,
   handleToggleCart,
 }) => {
   const context = useContext(Context);
@@ -79,6 +78,8 @@ const CartCard: NextPage<Props> = ({
     isAuthenticated,
   ]);
 
+
+
   return (
     <>
       <div className="flex flex-row p-2 lg:p-2 py-3 pr-6 w-full">
@@ -128,7 +129,7 @@ const CartCard: NextPage<Props> = ({
             <div className="gap-2 flex justify-end w-full items-center">
           
                 <div className="flex border border-black w-[80px] text-sm py-1 absolute right-2 bottom-0">
-                  <p className="text-sm justify-start ml-2">{cartItem.quantity} </p>
+                  <p className="text-sm justify-start ml-2">{isLoggedIn ? cartItem.quantity : 1} </p>
                   <div className="flex justify-end w-full gap-1">
                     <button onClick={() => removeFromCart(cartItem)}>
                       <Minus className="w-5 h-5" />

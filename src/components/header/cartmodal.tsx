@@ -1,6 +1,6 @@
 import { Context } from "@/app/context/cartContext";
 import { NextPage } from "next";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import CloseIcon from "@/app/icons/closeIcon";
 import HorizontalCard from "../horizontalCard";
 import { Product } from "@/types/product";
@@ -12,6 +12,7 @@ import Image from "next/image";
 import { TransitionEvent } from "react";
 import CartCard from "./cartCard";
 import { CartItem } from "@/utils/cartService";
+import { AuthContext } from "@/app/context/authContext";
 
 interface Props {
   handleToggleCart: () => void;
@@ -19,6 +20,23 @@ interface Props {
 }
 
 const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
+
+
+  const { isAuthenticated }: any = useContext(AuthContext);
+  const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
+
+
+  useEffect(() => {
+    const checkAuthentication = async () => {
+      const isLoggedin = await isAuthenticated();
+      setIsLoggedIn(isLoggedin);
+    };
+
+    checkAuthentication();  
+  }, [isAuthenticated]);
+
+
+
   const modalRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -86,12 +104,12 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
               <div className="justify-between flex">
                 <span className="font-semibold">Totalt</span>
                 <span className="font-semibold">
-                  {cartItems &&
+                  {cartItems && isLoggedin ?
                     (cartItems as CartItem[]).reduce(
                       (total, product) =>
                         total + product.price * product.quantity,
-                      0
-                    )}
+                      0 
+                    ) : (cartItems as CartItem[]).reduce((total, item) => total + item.price, 0)}
                   kr
                 </span>
               </div>
