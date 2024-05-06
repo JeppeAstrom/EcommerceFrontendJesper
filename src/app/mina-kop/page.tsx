@@ -57,7 +57,7 @@ const MyPurchases = () => {
   return (
     <div className="w-full lg:flex px-4 mb-10">
       <div className="lg:min-w-[150px] pt-8 sm:max-lg:w-full md:relative sm:relative">
-      <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">Beställningar</span>
+      <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">Mina köp</span>
         <button
           onClick={toggleMenu}
           className="flex gap-2 md:mt-16 text-normal text-black"
