@@ -69,7 +69,7 @@ export default function Profile() {
     <div className="w-full lg:flex px-4 mb-10">
       <div className="lg:min-w-[150px] pt-8 sm:max-lg:w-full md:relative sm:relative">
         <span className="font-semibold text-3xl hidden md:flex sm:font-semibold">
-          Beställningar
+          Min profil
         </span>
         <button
           onClick={toggleMenu}
