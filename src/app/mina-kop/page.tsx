@@ -45,6 +45,10 @@ const MyPurchases = () => {
 
   const sideMenuItems = [
     {
+      href: "/min-profil",
+      title: "min profil",
+    },
+    {
       href: "/mina-kop",
       title: "mina köp",
     },
@@ -58,7 +62,7 @@ const MyPurchases = () => {
           onClick={toggleMenu}
           className="flex gap-2 md:mt-16 text-normal text-black"
         >
-          <span className="border-b border-black">Mina köp</span>
+          <span className="border-b border-black">Mina sidor</span>
           <Dropdown
             className={`w-7 h-7 ${
               isOpen ? "rotate-180 transition-all" : "transition-all"

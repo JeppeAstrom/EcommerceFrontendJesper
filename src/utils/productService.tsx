@@ -7,7 +7,7 @@ const GetAllProducts = async (page: number = 1, pageSize: number = 12) => {
   try {
       const response = await fetch(apiRoute);
       if (!response.ok) {
-     
+     return [];
       }
       const productList: Product[] = await response.json();
       return productList;

@@ -159,7 +159,7 @@ const Header = () => {
                     </Link>
                   {isLoggedin ? (
                     <Link
-                      href="/mina-kop"
+                      href="/min-profil"
                       className="lg:hidden  flex"
                     >
                       <Person className="h-8 w-8 lg:hidden" />
@@ -202,7 +202,7 @@ const Header = () => {
                   <div className="gap-7 justify-end flex">
                     {isLoggedin ? (
                       <Link
-                        href="/mina-kop"
+                        href="/min-profil"
                         className="items-center gap-2 hidden lg:flex"
                       >
                         <Person className="h-8 w-8" />
