@@ -47,9 +47,12 @@ export default function CategoryPage({ params }: { params: any }) {
   const [categoryData, setCategoryData] = useState<Product[]>([]);
   const [childCategories, setChildCategories] = useState([]);
 //test
-  const mounted = useRef(false);
+  // const mounted = useRef(false);
   useEffect(() => {
-
+    // if (!mounted.current) {
+    //   mounted.current = true;
+    //   return;
+    // }
     
     async function fetchData() {
       const childCategoriesData = await getChildCategoriesFromName(
