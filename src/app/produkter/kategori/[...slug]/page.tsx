@@ -49,28 +49,28 @@ export default function CategoryPage({ params }: { params: any }) {
 //test
   const mounted = useRef(false);
   useEffect(() => {
-    if (!mounted.current) {
-      mounted.current = true;
-      return;
-    }
-    
     async function fetchData() {
-      const childCategoriesData = await getChildCategoriesFromName(
-        currentCategory
-      );
-      setChildCategories(childCategoriesData);
-
-      const data = await getProductsFromCategory(
-        currentCategory,
-        gender,
-        currentPage
-      );
-      setCategoryData(prevProducts => [...prevProducts, ...data]);
-      setIsLoading(false);
+      try {
+        console.log('Fetching data for:', currentCategory, gender, currentPage);
+        const childCategoriesData = await getChildCategoriesFromName(currentCategory);
+        setChildCategories(childCategoriesData);
+  
+        const data = await getProductsFromCategory(currentCategory, gender, currentPage);
+        setCategoryData(prevProducts => [...prevProducts, ...data]);
+        setIsLoading(false);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+        setIsLoading(false);  // Ensure loading is set to false even on error
+      }
     }
-
-    fetchData();
+  
+    if (mounted.current) {
+      fetchData();
+    } else {
+      mounted.current = true;
+    }
   }, [currentCategory, gender, currentPage]);
+  
 
   const handleNextPage = () => {
     setCurrentPage((prevPage) => prevPage + 1);
