@@ -46,7 +46,7 @@ export default function CategoryPage({ params }: { params: any }) {
 
   const [categoryData, setCategoryData] = useState<Product[]>([]);
   const [childCategories, setChildCategories] = useState([]);
-
+//test
   const mounted = useRef(false);
   useEffect(() => {
     if (!mounted.current) {
