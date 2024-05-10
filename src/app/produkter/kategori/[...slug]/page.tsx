@@ -5,7 +5,7 @@ import {
   getProductsFromCategory,
 } from "@/utils/productService";
 import CategoryContainer from "../categoryContainer";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import page from "../../[slug]/page";
 import { Category } from "@/types/category";
 import { Product } from "@/types/product";
@@ -47,7 +47,13 @@ export default function CategoryPage({ params }: { params: any }) {
   const [categoryData, setCategoryData] = useState<Product[]>([]);
   const [childCategories, setChildCategories] = useState([]);
 
+  const mounted = useRef(false);
   useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
+    
     async function fetchData() {
       const childCategoriesData = await getChildCategoriesFromName(
         currentCategory
@@ -59,7 +65,7 @@ export default function CategoryPage({ params }: { params: any }) {
         gender,
         currentPage
       );
-      setCategoryData(data);
+      setCategoryData(prevProducts => [...prevProducts, ...data]);
       setIsLoading(false);
     }
 
@@ -70,9 +76,6 @@ export default function CategoryPage({ params }: { params: any }) {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
-  const handlePreviousPage = () => {
-    setCurrentPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
-  };
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -89,22 +92,11 @@ export default function CategoryPage({ params }: { params: any }) {
       {categoryData.length === 12 || currentPage !== 1 ? (
         <div className="flex w-full items-center justify-center gap-2 mb-10">
           <button
-            className={`p-3 font-semibold text-white  ${
-              currentPage === 1 ? "opacity-50" : ""
-            }`}
-            onClick={handlePreviousPage}
-            disabled={currentPage === 1}
-          >
-            <Dropdown className="w-9 h-9 rotate-90" />
-          </button>
-
-          <span>{`Sida ${currentPage}`}</span>
-          <button
-            style={{ transform: "rotate(270deg)" }}
-            className="p-3 font-semibold text-white "
+     
+            className="p-3 font-semibold text-white bg-black px-6"
             onClick={handleNextPage}
           >
-            <Dropdown className="w-9 h-9" />
+            Visa mer
           </button>
         </div>
       ) : null}

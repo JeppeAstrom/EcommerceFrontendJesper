@@ -52,15 +52,18 @@ const Home = () => {
     fetchCategories();
   }, []);
 
-
-
+  const mounted = useRef(false);
   useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+      return;
+    }
     const fetchProducts = async (pageNum: number) => {
       setLoading(true);
-     
+      
         const productList = await GetAllProducts(pageNum, pageSize);
-        setProducts(productList);
-    
+        setProducts(prevProducts => [...prevProducts, ...productList]);
+     
       setLoading(false);
     };
     fetchProducts(page);
@@ -68,12 +71,6 @@ const Home = () => {
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
-    productRainRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handlePreviousPage = () => {
-    setPage((prevPage) => (prevPage > 1 ? prevPage - 1 : 1));
-    productRainRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
@@ -144,20 +141,12 @@ const Home = () => {
 
         {!loading && (
   <div className="flex w-full items-center justify-center gap-2 mb-10">
-      <button
-        className={`p-3 ${page === 1 ? "opacity-50" : ""}`}
-        onClick={handlePreviousPage}
-        disabled={page === 1}
-      >
-        <Dropdown className="w-9 h-9 rotate-90" />
-      </button>
-    <span>{`Sida ${page}`}</span>
+
     <button
-      style={{ transform: "rotate(270deg)" }}
-      className="p-3"
+        className="p-3 font-semibold bg-black text-white px-6"
       onClick={handleNextPage}
     >
-      <Dropdown className="w-9 h-9" />
+      Visa mer
     </button>
   </div>
 )}

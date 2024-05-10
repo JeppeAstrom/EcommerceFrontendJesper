@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 const MyPurchases = () => {
   const router = useRouter();
   const { isAuthenticated, handleLogout }: any = useContext(AuthContext);
-  const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
+
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const [orderHistory, setOrderHistory] = useState<any>();
   const handleReroute = () => {
@@ -31,7 +31,10 @@ const MyPurchases = () => {
     fetchOrderHistory();
   }, []);
   
-  const toggleMenu = () => setIsOpen((prev) => !prev);
+  const toggleMenu = () => setIsOpen((prev) => !prev)
+
+
+  const [isLoggedin, setIsLoggedIn] = useState<boolean>(false);
   useEffect(() => {
     const checkAuthentication = async () => {
       const isLoggedin = await isAuthenticated();
