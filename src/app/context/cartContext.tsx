@@ -81,10 +81,10 @@ function CartContext({ children }: { children: ReactNode }) {
     }
 
     const fetchProductsAndCategories = async () => {
-      const products = await GetAllProducts();
+      const products:any = await GetAllProducts();
       const categories = await getMainCategories();
       if (products) {
-        setAllProducts(products);
+        setAllProducts(products.products);
       }
       if (categories) {
         setCategories(categories);
