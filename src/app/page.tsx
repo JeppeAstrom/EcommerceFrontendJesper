@@ -41,7 +41,7 @@ const Home = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  const [productCount, setProductCount] = useState<number>();
   const pageSize = 12;
 
   useEffect(() => {
@@ -61,8 +61,9 @@ const Home = () => {
     const fetchProducts = async (pageNum: number) => {
       setLoading(true);
       
-        const productList = await GetAllProducts(pageNum, pageSize);
-        setProducts(prevProducts => [...prevProducts, ...productList]);
+        const productList:any = await GetAllProducts(pageNum, pageSize);
+        setProductCount(productList.productCount)
+        setProducts(prevProducts => [...prevProducts, ...productList.products]);
      
       setLoading(false);
     };
@@ -72,6 +73,17 @@ const Home = () => {
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
   };
+
+  const IsMoreProducts = () => {
+    const currentAmount = page * pageSize;
+    if(productCount && currentAmount < productCount){
+      return true
+    }
+    else{
+      return false;
+    }
+  }
+
 
   return (
     <div className="px-4">
@@ -141,13 +153,14 @@ const Home = () => {
 
         {!loading && (
   <div className="flex w-full items-center justify-center gap-2 mb-10">
-
+    {IsMoreProducts() && (
     <button
         className="p-3 font-semibold bg-black text-white px-6"
       onClick={handleNextPage}
     >
       Visa mer
     </button>
+    )}
   </div>
 )}
 

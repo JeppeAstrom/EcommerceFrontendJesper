@@ -46,6 +46,7 @@ export default function CategoryPage({ params }: { params: any }) {
 
   const [categoryData, setCategoryData] = useState<Product[]>([]);
   const [childCategories, setChildCategories] = useState([]);
+  const [productCount, setProductCount] = useState<number>();
 //test
   // const mounted = useRef(false);
   useEffect(() => {
@@ -60,12 +61,13 @@ export default function CategoryPage({ params }: { params: any }) {
       );
       setChildCategories(childCategoriesData);
 
-      const data = await getProductsFromCategory(
+      const data:any = await getProductsFromCategory(
         currentCategory,
         gender,
         currentPage
       );
-      setCategoryData(prevProducts => [...prevProducts, ...data]);
+      setProductCount(data.productCount);
+      setCategoryData(prevProducts => [...prevProducts, ...data.products]);
       setIsLoading(false);
     }
 
@@ -76,6 +78,16 @@ export default function CategoryPage({ params }: { params: any }) {
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
+  
+  const IsMoreProducts = () => {
+    const currentAmount = currentPage * 12;
+    if(productCount && currentAmount < productCount){
+      return true
+    }
+    else{
+      return false;
+    }
+  }
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -89,7 +101,7 @@ export default function CategoryPage({ params }: { params: any }) {
         childCategories={childCategories}
         parentCategory={params.slug.length > 1 ? params.slug[0] : undefined}
       />
-      {categoryData.length === 12 || currentPage !== 1 ? (
+      {IsMoreProducts() && (
         <div className="flex w-full items-center justify-center gap-2 mb-10">
           <button
      
@@ -99,7 +111,7 @@ export default function CategoryPage({ params }: { params: any }) {
             Visa mer
           </button>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
