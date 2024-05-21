@@ -75,7 +75,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             className="w-8 h-8 cursor-pointer justify-center"
           />
         </div>
-        <div className="flex flex-col py-5 pt-2 h-[75dvh] md:h-[80vh] overflow-y-auto">
+        <div className="flex flex-col py-5 pt-2 h-[75dvh] overflow-y-auto">
           {cartItems && cartItems.length > 0 ? (
             (cartItems as CartItem[]).map((cartItem, index) => {
               return (
@@ -98,7 +98,7 @@ const CartModal: NextPage<Props> = ({ handleToggleCart, isOpen }) => {
             </div>
           )}
         </div>
-        <div className="px-5 pb-2 bg-white absolute w-full bottom-0 pt-2 border border-t-gray-300">
+        <div className="px-5 pb-2 z-10 bg-white absolute w-full bottom-0 pt-2 border border-t-gray-300">
           {cartItems && cartItems.length > 0 ? (
             <div className="flex flex-col gap-4">
               <div className="justify-between flex">
